@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+body {
+    background-color: #fafafa;
+}
+
+.arrow-svg {
+    fill: white;
+    filter: drop-shadow(1px 1px 2px rgb(0 0 0 / 0.4));
+}
+
+#countdown {
+    position: relative;
+    margin: auto;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+}
+
+#countdown-number {
+    color: gray;
+    display: inline-block;
+    line-height: 40px;
+}
+
+.countdown-svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+.countdown-svg circle {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 2px;
+    fill: none;
+}
+
+@keyframes countdown {
+    from {
+        stroke-dashoffset: 0px;
+    }
+    to {
+        stroke-dashoffset: 113px;
+    }
+}
+
+.container {
+    display: flex;
+    justify-content: flex-end; /* Align the button to the right */
+    margin-top: 20px;
+  }
+  
+.circular-button {
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  border: none;
+  border-radius: 50%; /* Makes the button circular */
+  cursor: pointer;
+}
+
+.custom-flag-select {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .toggle-button {
+    padding: 10px;
+    /* background-color: #f0f0f0; */
+    /* border: 1px solid #ccc; */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .flags-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 200px;
+    z-index: 1;
+  }
+  
+  .flag-card {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    padding-bottom: 4px;
+  }
+  
+  .flag-card:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .flag-icon {
+    margin-right: 10px;
+  }
+  
+  .flag-name {
+    margin-left: 10px;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }

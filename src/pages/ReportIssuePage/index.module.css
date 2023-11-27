@@ -1,0 +1,53 @@
+.Pick_Image_Section {
+  border-radius: 0.3125rem;
+  border: 1px solid #f7931a;
+  background: #000;
+  width: 15rem;
+  height: 13rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4rem;
+  gap: 1rem;
+}
+
+.Pick_Image_Section > img {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+.Pick_Image_Section > p {
+  color: #fff;
+  text-align: center;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  width: 65%;
+}
+
+.Pick_Image_White_Section{
+    border-radius: 0.3125rem;
+  border: 1px solid #000;
+  background: #fff;
+  color: black;
+  width: 15rem;
+  height: 13rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4rem;
+  gap: 1rem;
+}
+
+.Pick_Image_White_Section > p{
+    color: rgb(28, 28, 28);
+    color: #000;
+    text-align: center;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    width: 65%;
+}

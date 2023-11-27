@@ -1,0 +1,17 @@
+.BonusFree{
+    position: absolute;
+    z-index: 5;
+    height: 83vh;
+    overflow: hidden;
+}
+
+.NotVisible{
+    display: none;
+}
+
+@media (max-width: 600px){
+    .BonusImage{
+        width: 100vw;
+        height: 90vh;
+    }
+}

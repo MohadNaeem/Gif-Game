@@ -670,7 +670,7 @@ const TablePage = () => {
   useEffect(() => {
     if (isPaused) {
       const timer = setTimeout(() => {
-        setIndex(-1)
+        setIndex(-1);
         setIsFlip(true);
       }, 2000);
 
@@ -867,21 +867,25 @@ const TablePage = () => {
           {isBonusRound && (
             <div>
               <img
+                loading="lazy"
                 className="absolute top-0 right-0 h-[80vh] w-[15px] xsm:w-[20px] mt-4 z-10"
                 src={rightBlueBorder}
                 alt="right border"
               />
               <img
+                loading="lazy"
                 className="absolute bottom-[-83vh] xsm:bottom-[-84vh] left-0 w-full pl-[2px] z-10"
                 src={bottomBlueBorder}
                 alt="bottom border"
               />
               <img
+                loading="lazy"
                 className="absolute top-0 left-0 h-[80vh] w-[15px] xsm:w-[20px] mt-4"
                 src={leftBlueBorder}
                 alt="left border"
               />
               <img
+                loading="lazy"
                 className="absolute top-0 right-0 w-full"
                 src={topBlueBorder}
                 alt="top border"
@@ -893,21 +897,25 @@ const TablePage = () => {
           {isFreeRound && (
             <div>
               <img
+                loading="lazy"
                 className="absolute top-0 right-0  h-[81vh] xsm:h-[80vh] w-[12px] xsm:w-[13px] xsm:mr-[1px] mt-3 xsm:mt-4  z-10"
                 src={rightGoldBorder}
                 alt="right border"
               />
               <img
+                loading="lazy"
                 className="absolute bottom-[-83vh] xsm:bottom-[-83vh] left-0 w-full ml-[1px] xsm:ml z-10"
                 src={bottomGoldBorder}
                 alt="bottom border"
               />
               <img
+                loading="lazy"
                 className="absolute top-0 left-0 h-[81vh] xsm:h-[80vh] w-[12px] xsm:w-[13px] mt-3 xsm:mt-4"
                 src={leftGoldBorder}
                 alt="left border"
               />
               <img
+                loading="lazy"
                 className="absolute top-0 right-0 w-full"
                 src={topGoldBorder}
                 alt="top border"
@@ -957,6 +965,7 @@ const TablePage = () => {
                       isPaused ? (
                         box1Ratio > box2Ratio ? (
                           <img
+                            loading="lazy"
                             src={GifData[index]?.waitingOne}
                             className={
                               GifData[index]?.sideOneTwo
@@ -967,6 +976,7 @@ const TablePage = () => {
                         ) : box1Ratio < box2Ratio ? (
                           <div className={Styles?.BitCoinOne}>
                             <img
+                              loading="lazy"
                               style={{ transform: "scale(1.7)" }}
                               src={ConclusionData?.BitCoinOne}
                               className={Styles?.LeftPotionGifWinner}
@@ -975,6 +985,7 @@ const TablePage = () => {
                           </div>
                         ) : (
                           <img
+                            loading="lazy"
                             src={GifData[index].waitingOne}
                             className={
                               GifData[index].sideOneTwo
@@ -985,6 +996,7 @@ const TablePage = () => {
                         )
                       ) : !isOneWaiting ? (
                         <img
+                          loading="lazy"
                           src={GifData[index].pressedOne}
                           className={
                             GifData[index].sideOneTwo
@@ -994,6 +1006,7 @@ const TablePage = () => {
                         />
                       ) : (
                         <img
+                          loading="lazy"
                           src={GifData[index].waitingOne}
                           className={
                             GifData[index].sideOneTwo
@@ -1004,6 +1017,7 @@ const TablePage = () => {
                       )
                     ) : (
                       <img
+                        loading="lazy"
                         onClick={() => handleOneClick()}
                         src={GifData[index]?.thummbnailOne}
                         className={
@@ -1056,6 +1070,7 @@ const TablePage = () => {
                       isPaused ? (
                         box1Ratio < box2Ratio ? (
                           <img
+                            loading="lazy"
                             style={
                               GifData[index]?.designChangeTwo
                                 ? {
@@ -1079,6 +1094,7 @@ const TablePage = () => {
                           isCoinShowing && (
                             <div className={Styles.BitCoin}>
                               <img
+                                loading="lazy"
                                 src={ConclusionData.BitCoinTwo}
                                 className={Styles.rightPortionWinBitCoin}
                                 style={{
@@ -1091,6 +1107,7 @@ const TablePage = () => {
                           )
                         ) : (
                           <img
+                            loading="lazy"
                             style={
                               GifData[index].designChangeTwo
                                 ? {
@@ -1113,6 +1130,7 @@ const TablePage = () => {
                         )
                       ) : !isTwoWaiting ? (
                         <img
+                          loading="lazy"
                           src={GifData[index].pressedTwo}
                           style={
                             GifData[index].designChangeTwo
@@ -1134,6 +1152,7 @@ const TablePage = () => {
                         />
                       ) : (
                         <img
+                          loading="lazy"
                           src={GifData[index]?.waitingTwo}
                           style={
                             GifData[index]?.designChangeTwo
@@ -1156,6 +1175,7 @@ const TablePage = () => {
                       )
                     ) : (
                       <img
+                        loading="lazy"
                         src={GifData[index]?.thumbnailTwo}
                         style={
                           GifData[index]?.designChangeTwo

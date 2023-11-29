@@ -115,8 +115,8 @@ export const GifData = [
     thumbnailTwo: candleOnThumbnail,
     pressedTwo: candleOnPressed,
     waitingTwo: candleOnWaiting,
-    timerOne: 1650,
-    timerTwo: 2050,
+    timerOne: 1400,
+    timerTwo: 1400,
     rotateTwo: true,
     styles: {
       className: "candleGif",
@@ -129,8 +129,8 @@ export const GifData = [
     thumbnailTwo: EvoultionThumbnail,
     pressedTwo: EvoultionPressed,
     waitingTwo: EvoultionWaiting,
-    timerOne: 1750,
-    timerTwo: 2450,
+    timerOne: 1650,
+    timerTwo: 2500,
     designChangeTwo: true,
     styles: {
       className: "adamEvilStyles",
@@ -157,7 +157,7 @@ export const GifData = [
     thumbnailTwo: badThumbnail,
     pressedTwo: badPressed,
     waitingTwo: badWaiting,
-    timerOne: 1400,
+    timerOne: 1300,
     timerTwo: 1550,
     styles: {
       className: "goodEvilStyles",
@@ -170,7 +170,7 @@ export const GifData = [
     thumbnailTwo: fastThumbail,
     pressedTwo: fastPressed,
     waitingTwo: fastWaiting,
-    timerOne: 2330,
+    timerOne: 2000,
     timerTwo: 2320,
     styles: {
       className: "fastHealthyStyles",

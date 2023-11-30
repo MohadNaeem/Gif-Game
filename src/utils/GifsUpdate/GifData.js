@@ -20,7 +20,7 @@ import YodaThumbnail from "../../assets/gif/Sorted Gifs/Dark Force vs Light Forc
 import YodaPress from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Yoda/yoda-press.gif";
 import YodaWaiting from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Yoda/yoda-waiting.gif";
 import candleOnThumbnail from "../../assets/gif/Sorted Gifs/candles/lights Up/light up.png";
-import candleOnPressed from "../../assets/gif/Sorted Gifs/candles/lights Up/light-up-press (1).gif";
+import candleOnPressed from "../../assets/gif/Sorted Gifs/candles/lights Up/light-up-press.gif";
 import candleOnWaiting from "../../assets/gif/Sorted Gifs/candles/lights Up/ligth-up-waiting.gif";
 import goodThumbnail from "../../assets/gif/Sorted Gifs/Good vs Evil/Good/good thumbnail.png";
 import goodPressed from "../../assets/gif/Sorted Gifs/Good vs Evil/Good/good-press.gif";

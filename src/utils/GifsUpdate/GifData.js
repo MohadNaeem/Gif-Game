@@ -115,8 +115,8 @@ export const GifData = [
     thumbnailTwo: candleOnThumbnail,
     pressedTwo: candleOnPressed,
     waitingTwo: candleOnWaiting,
-    timerOne: 1400,
-    timerTwo: 1400,
+    timerOne: 1300,
+    timerTwo: 1300,
     rotateTwo: true,
     styles: {
       className: "candleGif",

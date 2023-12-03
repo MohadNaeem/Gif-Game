@@ -98,9 +98,24 @@ import AnimatedNumber from "react-animated-numbers";
 const database = getDatabase(app);
 const fireStore = getFirestore(app);
 
+function preloadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = function () {
+      resolve(img);
+    };
+    img.onerror = img.onabort = function () {
+      reject(src);
+    };
+    img.src = src;
+    window[src] = img;
+  });
+}
+
 const TablePage = () => {
   const currentTable = useParams().number;
   const tableTime = parseInt(useParams().time);
+
   const navigate = useNavigate();
 
   const userAuthID = localStorage.getItem("userAuthID");
@@ -144,6 +159,7 @@ const TablePage = () => {
   const [tableResultType, setTableResultType] = useState("BACKGROUND_COLORED");
   const [btn1Clicked, setBtn1Clicked] = useState(false);
   const [btn2Clicked, setBtn2Clicked] = useState(false);
+  const [assetsLoaded, setAssetsLoaded] = useState(false);
 
   const [isBonusRound, setIsBonusRound] = useState(false);
   const [isFreeRound, setIsFreeRound] = useState(false);
@@ -154,6 +170,33 @@ const TablePage = () => {
   const [isFlip, setIsFlip] = useState(false);
 
   const [isCoinShowing, setIsCoinShowing] = useState(true);
+
+  useEffect(() => {
+    let isCancelled = false;
+    async function effect() {
+      if (isCancelled) {
+        return;
+      }
+      const imagesPromiseList = [];
+      for (const i of GifData) {
+        imagesPromiseList.push(preloadImage(i.thummbnailOne));
+        imagesPromiseList.push(preloadImage(i.thumbnailTwo));
+        imagesPromiseList.push(preloadImage(i.pressedOne));
+        imagesPromiseList.push(preloadImage(i.pressedTwo));
+        imagesPromiseList.push(preloadImage(i.waitingOne));
+        imagesPromiseList.push(preloadImage(i.waitingTwo));
+      }
+      await Promise.all(imagesPromiseList);
+      if (isCancelled) {
+        return;
+      }
+      setAssetsLoaded(true);
+    }
+    effect();
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
 
   // Final Result Calc
   const finalResult = async () => {
@@ -737,7 +780,7 @@ const TablePage = () => {
   }, [isPaused]);
 
   return userAuthID ? (
-    loadingLiveUsers === true || loading === true ? (
+    loadingLiveUsers === true || loading === true || !assetsLoaded ? (
       <LoadingSpinner />
     ) : (
       <div className="sm:w-[500px] h-[100vh] sm:mx-auto overflow-y-scroll overflow-x-hidden scrollbar-hide">

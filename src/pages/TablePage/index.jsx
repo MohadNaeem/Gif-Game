@@ -246,8 +246,9 @@ const TablePage = () => {
       }
       await Promise.all(imagesPromiseList);
       for (var i in audioFiles) {
-        await preloadAudio(audioFiles[i]);
+        preloadAudio(audioFiles[i]);
       }
+      await Promise.all(audioFiles)
       if (isCancelled) {
         return;
       }

@@ -118,12 +118,33 @@ function preloadImage(src) {
   });
 }
 
+async function preloadAudio(url) {
+  return new Promise((resolve, reject) => {
+    var audio = new Audio();
+    audio.onload = function () {
+      resolve(audio);
+    };
+    audio.onerror = audio.onabort = function () {
+      reject(url);
+    };
+    audio.src = url;
+    window[url] = audio;
+  });
+}
+
 const TablePage = () => {
   const currentTable = useParams().number;
   const tableTime = parseInt(useParams().time);
   const audioRef = useRef();
 
   const navigate = useNavigate();
+  const audioFiles = [
+    TimerSound,
+    WinSound,
+    LoseSound,
+    ButtonClickSound,
+    DrawSound,
+  ];
 
   const userAuthID = localStorage.getItem("userAuthID");
   const [liveUserSnapshots, loadingLiveUsers, error] = useList(
@@ -224,6 +245,9 @@ const TablePage = () => {
         imagesPromiseList.push(preloadImage(i.waitingTwo));
       }
       await Promise.all(imagesPromiseList);
+      for (var i in audioFiles) {
+        await preloadAudio(audioFiles[i]);
+      }
       if (isCancelled) {
         return;
       }

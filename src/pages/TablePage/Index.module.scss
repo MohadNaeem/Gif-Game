@@ -165,7 +165,11 @@
 }
 
 .rightPortionWinBitCoin {
-  margin-left: -3.625rem;
+  margin-left: -15rem;
+  scale: 3.5;
+  @media (max-width: 576px) {
+    margin-left: -13rem;
+  }
 }
 
 .BitCoinOne {
@@ -180,6 +184,7 @@
   margin-left: 2.188rem;
   margin-top: 6rem;
   transform: scale(1.4);
+  scale: 3.5;
 }
 
 @media ((max-width: 370px ) and (min-width: 320px)) {
@@ -395,4 +400,70 @@
 
 .fastHealthyStyles {
   background-color: lightblue;
+}
+
+.thorLokiStyles {
+  background-color: lightcyan;
+  @media ((max-width: 576px)) {
+    .LeftPotionGif {
+      position: relative;
+      height: 100vh;
+      margin-top: -6rem;
+      width: 50vw;
+    }
+    .rightPortionGif {
+      height: 100vh;
+      width: 50vw;
+      margin-top: -12.5rem !important;
+    }
+  }
+}
+
+.upDownStyles {
+  background-color: black;
+  .LeftPotionGif {
+    scale: 1.25;
+  }
+  .rightPortionGif {
+    scale: 1.25;
+  }
+}
+
+.dragonCharizardStyles {
+  background-color: black;
+  .LeftPotionGif {
+    scale: 1.25;
+    transform: rotateY(-180deg);
+    margin-left: 2rem;
+  }
+  .rightPortionGif {
+    scale: 1.25;
+    margin-left: -1.5rem;
+  }
+  @media ((max-width: 576px)) {
+    .LeftPotionGif {
+      scale: 0.9;
+      transform: rotateY(-180deg);
+      margin-left: 2rem;
+    }
+    .rightPortionGif {
+      scale: 1;
+      margin-left: -0.5rem;
+      margin-top: -10rem;
+    }
+  }
+}
+.yodaVaderStyles {
+  background-color: gray;
+}
+
+.rightLeftTriangle {
+  .LeftPotionGif {
+    scale: 1;
+    margin-right: -7rem;
+  }
+  .rightPortionGif {
+    scale: 1;
+    margin-left: -7rem;
+  }
 }

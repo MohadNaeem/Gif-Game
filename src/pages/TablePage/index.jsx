@@ -78,6 +78,11 @@ import Popup, {
 import { generateRandomTable } from "../../utils/TableDesign/TableSelect.js";
 import OverlayMessage from "./OverlayMessage";
 import leftBlueBorder from "../../assets/icons/border/blue_border/left.png";
+import WinSound from "../../assets/audios/Conclusion/winsound.wav";
+import LoseSound from "../../assets/audios/Conclusion/losesound.wav";
+import DrawSound from "../../assets/audios/Conclusion/drawsound.wav";
+import ButtonClickSound from "../../assets/audios/Conclusion/buttonclick.wav";
+import TimerSound from "../../assets/audios/Conclusion/timer.wav";
 import topBlueBorder from "../../assets/icons/border/blue_border/top.png";
 import rightBlueBorder from "../../assets/icons/border/blue_border/right.png";
 import bottomBlueBorder from "../../assets/icons/border/blue_border/bottom.png";
@@ -94,6 +99,7 @@ import { GifData, ConclusionData } from "../../utils/GifsUpdate/GifData";
 import Styles from "./Index.module.scss";
 import WinEffect from "./WinEffect";
 import AnimatedNumber from "react-animated-numbers";
+import { useRef } from "react";
 
 const database = getDatabase(app);
 const fireStore = getFirestore(app);
@@ -115,6 +121,7 @@ function preloadImage(src) {
 const TablePage = () => {
   const currentTable = useParams().number;
   const tableTime = parseInt(useParams().time);
+  const audioRef = useRef();
 
   const navigate = useNavigate();
 
@@ -131,6 +138,7 @@ const TablePage = () => {
 
   const [time, setTime] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
+  const [currentSound, setCurrentSound] = useState("");
   const [tableAmount, setTableAmount] = useAtom(InputTableAmount);
   const [finalResultCalled, setFinalResultCalled] = useState(false);
   const [tokenBalance, setTokenBalance] = useState(0);
@@ -170,6 +178,35 @@ const TablePage = () => {
   const [isFlip, setIsFlip] = useState(false);
 
   const [isCoinShowing, setIsCoinShowing] = useState(true);
+
+  const audioPlayer = (type) => {
+    switch (type) {
+      case "win":
+        if (audioRef.current) audioRef.current.src = WinSound;
+        audioRef?.current?.play();
+        break;
+      case "lose":
+        if (audioRef.current) audioRef.current.src = LoseSound;
+        audioRef?.current?.play();
+        break;
+      case "countdown":
+        if (audioRef.current) audioRef.current.src = TimerSound;
+        audioRef?.current?.play();
+        break;
+      case "draw":
+        if (audioRef.current) audioRef.current.src = DrawSound;
+        audioRef?.current?.play();
+        break;
+      case "buttonclick":
+        if (audioRef.current) audioRef.current.src = ButtonClickSound;
+        audioRef?.current?.play();
+      default:
+        break;
+    }
+    // setTimeout(() => {
+    //   audioRef?.current?.play();
+    // }, 50);
+  };
 
   useEffect(() => {
     let isCancelled = false;
@@ -229,6 +266,7 @@ const TablePage = () => {
     if (!isSpectator) {
       if (win === 0) {
         setResult("draw");
+        audioPlayer("draw");
         await updateDoc(userRef, {
           [`allGamesPlayed.draws`]: increment(1),
         });
@@ -238,6 +276,7 @@ const TablePage = () => {
         setTimeout(() => updateTableDesign(), 3000);
       } else if (playerBox === win) {
         setResult("win");
+        audioPlayer("win");
         const updatedBalance = tokenBalance + tableAmount;
         setTokenBalance(updatedBalance);
         isBonusRound
@@ -257,6 +296,7 @@ const TablePage = () => {
         }
       } else if (playerBox !== win) {
         setResult("lose");
+        audioPlayer("lose");
         const updatedBalance =
           isFreeRound || isBonusRound
             ? tokenBalance
@@ -271,6 +311,7 @@ const TablePage = () => {
         } else {
           setBonusBalance(tableAmount - tokenBalance);
           setTokenBalance(0);
+          audioPlayer("draw");
           updateDoc(userRef, {
             bonusBalance: bonusBalance - (tableAmount - tokenBalance),
             tokenBalance: 0,
@@ -328,6 +369,7 @@ const TablePage = () => {
   const handleBox1Click = () => {
     const player = document.getElementById("player");
     player.setAttribute("style", "top: -150px");
+    audioPlayer("buttonclick");
 
     set(
       ref(
@@ -343,6 +385,7 @@ const TablePage = () => {
   };
   const handleBox2Click = () => {
     const player = document.getElementById("player");
+    audioPlayer("buttonclick");
     player.setAttribute("style", "top: 48px");
 
     set(
@@ -361,6 +404,7 @@ const TablePage = () => {
     // e.stopPropagation()
     setBtn1Clicked(true);
     setBtn2Clicked(false);
+    audioPlayer("buttonclick");
     set(
       ref(
         database,
@@ -375,6 +419,7 @@ const TablePage = () => {
   const handleButton2Click = () => {
     !lockChoice && setBtn2Clicked(true);
     !lockChoice && setBtn1Clicked(false);
+    audioPlayer("buttonclick");
     set(
       ref(
         database,
@@ -502,6 +547,7 @@ const TablePage = () => {
     // Automatically decrement the timer value every second
     let intervalId;
     if (time > 0 && !isPaused) {
+      audioPlayer("countdown");
       intervalId = setInterval(() => {
         set(ref(getDatabase(), `timer${currentTable}`), time - 1);
       }, 1000);
@@ -531,6 +577,7 @@ const TablePage = () => {
           setLockChoice(true);
           if (playerBox === -1 || playerBox === 0) {
             setIsSpectator(true);
+            audioPlayer("draw");
             set(
               ref(
                 database,
@@ -784,6 +831,7 @@ const TablePage = () => {
       <LoadingSpinner />
     ) : (
       <div className="sm:w-[500px] h-[100vh] sm:mx-auto overflow-y-scroll overflow-x-hidden scrollbar-hide">
+        <audio ref={audioRef} />
         <div className="flex justify-between my-2 mx-1">
           <Link to="/live">
             <div className="mt-[5px]">
@@ -1020,7 +1068,7 @@ const TablePage = () => {
                           <div className={Styles?.BitCoinOne}>
                             <img
                               loading="eager"
-                              style={{ transform: "scale(1.7)" }}
+                              style={{ transform: "scale(1.7)", scale: 2 }}
                               src={ConclusionData?.BitCoinOne}
                               className={Styles?.LeftPotionGifWinner}
                             />
@@ -1143,6 +1191,7 @@ const TablePage = () => {
                                 style={{
                                   transform: "scale(1.4)",
                                   marginTop: "6rem",
+                                  scale: 2,
                                 }}
                               />
                               <WinEffect side="right" value={tableAmount} />

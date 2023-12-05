@@ -6,17 +6,17 @@ import EvoultionPressed from "../../assets/gif/Sorted Gifs/Adam&eve VS Evolution
 import EvoultionWaiting from "../../assets/gif/Sorted Gifs/Adam&eve VS Evolution/Evolution/evolution-waiting.gif";
 import CandleOffThumbnail from "../../assets/gif/Sorted Gifs/candles/Lights off/non light.png";
 import CandleOffPressed from "../../assets/gif/Sorted Gifs/candles/Lights off/non-light-press.gif";
-import DragonThumbnail from "../../assets/gif/Sorted Gifs/Charizard/Blue Dragon/DragonThumbnail.jpg";
+import DragonThumbnail from "../../assets/gif/Sorted Gifs/Charizard/Blue Dragon/DragonThumbnail.png";
 import DragonPress from "../../assets/gif/Sorted Gifs/Charizard/Blue Dragon/blue-dragon-press.gif";
 import DragonWaiting from "../../assets/gif/Sorted Gifs/Charizard/Blue Dragon/blue-dragon-waiting.gif";
 import CharizardThumbnail from "../../assets/gif/Sorted Gifs/Charizard/Charizard/Charizard.jpg";
 import CharizardPress from "../../assets/gif/Sorted Gifs/Charizard/Charizard/charizard-press.gif";
 import CharizardWaiting from "../../assets/gif/Sorted Gifs/Charizard/Charizard/charizard-waiting.gif";
 import CandleOffWaiting from "../../assets/gif/Sorted Gifs/candles/Lights off/non-light-waiting.gif";
-import VaderPressThumbnail from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Vader/vader-press1mb.png";
+import VaderPressThumbnail from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Vader/vader-press.png";
 import VaderPress from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Vader/vader-press.gif";
 import VaderWaiting from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Vader/vader-waiting.gif";
-import YodaThumbnail from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Yoda/yoda-press-thumbnail.jpg";
+import YodaThumbnail from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Yoda/yoda-press.png";
 import YodaPress from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Yoda/yoda-press.gif";
 import YodaWaiting from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Yoda/yoda-waiting.gif";
 import candleOnThumbnail from "../../assets/gif/Sorted Gifs/candles/lights Up/light up.png";
@@ -176,48 +176,58 @@ export const GifData = [
       className: "fastHealthyStyles",
     },
   },
-  // {
-  //   thummbnailOne: thorThumbnail,
-  //   pressedOne: thorPressed,
-  //   waitingOne: thorWaiting,
-  //   thumbnailTwo: lokiThumbnail,
-  //   pressedTwo: lokiPressed,
-  //   waitingTwo: lokiWaiting,
-  //   timerOne: 1000,
-  //   timerTwo: 1200,
-  // },
-  // {
-  //   thummbnailOne: UpThumbnail,
-  //   pressedOne: UpPressed,
-  //   waitingOne: UpPressed,
-  //   thumbnailTwo: DownThumbnail,
-  //   pressedTwo: DownPressed,
-  //   waitingTwo: DownPressed,
-  //   timerOne: time1,
-  //   timerTwo: time2,
-  // },
-  // {
-  //   thummbnailOne: UpThumbnail,
-  //   pressedOne: UpPressed,
-  //   waitingOne: UpPressed,
-  //   thumbnailTwo: DownThumbnail,
-  //   pressedTwo: DownPressed,
-  //   waitingTwo: DownPressed,
-  //   timerOne: time1,
-  //   timerTwo: time2,
-  // },
-  // {
-  //   thumbnailTwo: DragonThumbnail,
-  //   pressedTwo: DragonPress,
-  //   waitingTwo: DragonWaiting,
-  //   thummbnailOne: CharizardThumbnail,
-  //   pressedOne: CharizardPress,
-  //   waitingOne: CharizardWaiting,
-  //   timerOne: 1100,
-  //   timerTwo: 1100,
-  //   // rotateOne: true,
-  //   // rotateTwo: true,
-  // },
+  {
+    thummbnailOne: thorThumbnail,
+    pressedOne: thorPressed,
+    waitingOne: thorWaiting,
+    thumbnailTwo: lokiThumbnail,
+    pressedTwo: lokiPressed,
+    waitingTwo: lokiWaiting,
+    timerOne: 1100,
+    timerTwo: 1100,
+    styles: {
+      className: "thorLokiStyles",
+    },
+  },
+  {
+    thummbnailOne: UpThumbnail,
+    pressedOne: UpPressed,
+    waitingOne: UpPressed,
+    thumbnailTwo: DownThumbnail,
+    pressedTwo: DownPressed,
+    waitingTwo: DownPressed,
+    timerOne: time1,
+    timerTwo: time2,
+    styles: {
+      className: "upDownStyles",
+    },
+  },
+  {
+    thummbnailOne: DownThumbnail,
+    pressedOne: DownPressed,
+    waitingOne: DownPressed,
+    thumbnailTwo: UpThumbnail,
+    pressedTwo: UpPressed,
+    waitingTwo: UpPressed,
+    timerOne: time1,
+    timerTwo: time2,
+    styles: {
+      className: "upDownStyles",
+    },
+  },
+  {
+    thumbnailTwo: DragonThumbnail,
+    pressedTwo: DragonPress,
+    waitingTwo: DragonWaiting,
+    thummbnailOne: CharizardThumbnail,
+    pressedOne: CharizardPress,
+    waitingOne: CharizardWaiting,
+    timerOne: 1000,
+    timerTwo: 1000,
+    styles: {
+      className: "dragonCharizardStyles",
+    },
+  },
   // {
   //   thummbnailOne: VaderPressThumbnail,
   //   pressedOne: VaderPress,
@@ -225,9 +235,11 @@ export const GifData = [
   //   thumbnailTwo: YodaThumbnail,
   //   pressedTwo: YodaPress,
   //   waitingTwo: YodaWaiting,
-  //   timerOne: 1600,
+  //   timerOne: 2000,
   //   timerTwo: 900,
-  //   // rotateTwo: true,
+  //   styles: {
+  //     className: "yodaVaderStyles",
+  //   },
   // },
   // {
   //   thummbnailOne: EarthThumbnail,
@@ -262,8 +274,9 @@ export const GifData = [
   //   waitingTwo: RightTriangleWaiting,
   //   timerOne: 800,
   //   timerTwo: 800,
-  //   // sideOneTwo: true,
-  //   // rotateTwo: true,
+  //   styles: {
+  //     className: "rightLeftTriangle",
+  //   },
   // },
   // {
   //   thummbnailOne: LionSheep,

@@ -2,6 +2,7 @@
   padding-top: 1rem;
   padding-left: 1rem;
   padding-bottom: 1.75rem;
+  height: 100vh;
 }
 
 .MainSectionWithoutFree {
@@ -146,15 +147,16 @@
 .SpecialHotCold {
   width: 60vw;
   height: 80vh;
-  margin-left: 4rem;
+  scale: 2;
+  margin-left: 7.5rem;
 }
 
 .SpecialHotColdTwo {
   width: 60vw;
   height: 80vh;
-  scale: 1.5;
+  scale: 2.15;
   margin-top: -8rem;
-  margin-left: -5.25rem;
+  margin-left: -8.5rem;
 }
 
 .BitCoin {
@@ -165,10 +167,10 @@
 }
 
 .rightPortionWinBitCoin {
-  margin-left: -15rem;
+  margin-left: -12rem;
   scale: 3.5;
   @media (max-width: 576px) {
-    margin-left: -13rem;
+    margin-left: -10rem;
   }
 }
 
@@ -314,37 +316,39 @@
 }
 .coldHotGif {
   background-color: rgb(149, 219, 242);
-  @media ((max-width: 420px )) {
-    .rightPortionGif {
-      height: 100vh;
-      width: 50vw;
-      img {
-        scale: 2;
-      }
-    }
+  @media ((max-width: 576px )) {
     .SpecialHotCold {
       width: 60vw;
-      scale: 1.25;
+      scale: 2;
       height: 80vh;
-      margin-left: 4rem;
+      margin-left: 5.5rem;
     }
 
     .SpecialHotColdTwo {
       width: 60vw;
       height: 80vh;
-      scale: 2;
+      scale: 2.75;
       margin-top: -8rem;
-      margin-left: -5rem;
+      margin-left: -6rem;
     }
   }
 
-  @media ((max-width: 576px) and (min-width: 421px)) {
-    .rightPortionGif {
-      width: 50vw;
-      height: 100vh;
-      scale: 1.5;
-    }
-  }
+  // @media ((max-width: 576px) and (min-width: 421px)) {
+  //   .rightPortionGif {
+  //     width: 50vw;
+  //     height: 100vh;
+  //     img{
+  //       scale: 4.5;
+  //       transform: scaleX(4.5);
+  //     }
+  //   }
+  //   .LeftPotionGif {
+  //     img {
+  //       scale: 5;
+  //       transform: scaleX(5);
+  //     }
+  //   }
+  // }
 }
 
 .goodEvilStyles {
@@ -354,7 +358,7 @@
     height: 100vh;
     scale: 1.15;
     margin-top: -1rem;
-    margin-left: -1.5rem;
+    margin-left: -1.25rem;
     width: 50vw;
   }
   .rightPortionGif {
@@ -369,13 +373,14 @@
       height: 100vh;
       scale: 1.25;
       margin-top: -1rem;
-      margin-left: -2rem;
+      margin-left: -1.25rem;
       width: 50vw;
     }
     .rightPortionGif {
       height: 100vh;
       width: 50vw;
       scale: 1.25;
+      margin-left: 2rem;
       margin-top: -7.5rem !important;
     }
   }
@@ -432,24 +437,38 @@
 .dragonCharizardStyles {
   background-color: black;
   .LeftPotionGif {
-    scale: 1.25;
-    transform: rotateY(-180deg);
-    margin-left: 2rem;
+    scale: 1;
+    transform: rotateY1(180deg);
+    margin-left: 4.5rem;
   }
   .rightPortionGif {
-    scale: 1.25;
-    margin-left: -1.5rem;
+    scale: 1;
+    margin-left: -4rem;
+    margin-top: -6.25rem;
+  }
+  .box1main {
+    width: 100vw !important;
+    overflow: visible !important;
+    border: none;
+  }
+
+  .BoxMain2 {
+    width: 100vw;
+    overflow: visible !important;
+    border: none;
   }
   @media ((max-width: 576px)) {
     .LeftPotionGif {
-      scale: 0.9;
-      transform: rotateY(-180deg);
-      margin-left: 2rem;
+      transform: rotateY1(180deg);
+      margin-left: 4rem;
+      margin-top: -1rem;
     }
     .rightPortionGif {
-      scale: 1;
-      margin-left: -0.5rem;
-      margin-top: -10rem;
+      margin-left: -3rem;
+      margin-top: -7rem !important;
+    }
+    .Box {
+      height: 100vh;
     }
   }
 }

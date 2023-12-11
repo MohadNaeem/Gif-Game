@@ -8,6 +8,7 @@
   background: #000;
   display: flex;
   justify-content: center;
+  height: 100vh;
 }
 
 .Main_Section {
@@ -66,13 +67,13 @@
   align-items: center;
 }
 
-.Top_Dark_Section > div > div{
-    display: flex;
+.Top_Dark_Section > div > div {
+  display: flex;
   font-weight: 500;
   font-size: 16px;
   padding-top: 1px;
   padding-bottom: 1px;
-  color: #FFF;
+  color: #fff;
   align-items: center;
 }
 

@@ -83,11 +83,13 @@ import LoseSound from "../../assets/audios/Conclusion/losesound.wav";
 import DrawSound from "../../assets/audios/Conclusion/drawsound.wav";
 import ButtonClickSound from "../../assets/audios/Conclusion/buttonclick.wav";
 import TimerSound from "../../assets/audios/Conclusion/timer.wav";
+import MapChangeSound from "../../assets/audios/Conclusion/mapchange.wav";
 import topBlueBorder from "../../assets/icons/border/blue_border/top.png";
 import rightBlueBorder from "../../assets/icons/border/blue_border/right.png";
 import bottomBlueBorder from "../../assets/icons/border/blue_border/bottom.png";
 import leftGoldBorder from "../../assets/icons/border/gold_border/left.png";
 import topGoldBorder from "../../assets/icons/border/gold_border/top.png";
+import SwapSound from "../../assets/audios/Conclusion/mapchange.wav";
 import rightGoldBorder from "../../assets/icons/border/gold_border/right.png";
 import bottomGoldBorder from "../../assets/icons/border/gold_border/bottom.png";
 import OverlayMessageRound from "./OverlayMessageRound";
@@ -221,7 +223,14 @@ const TablePage = () => {
       case "buttonclick":
         if (audioRef.current) audioRef.current.src = ButtonClickSound;
         audioRef?.current?.play();
+      case "mapchange":
+        if (audioRef.current) audioRef.current.src = MapChangeSound;
+        audioRef?.current?.play();
+      case "swapsound":
+        if (audioRef.current) audioRef.current.src = SwapSound;
+        audioRef?.current?.play();
       default:
+        if (audioRef.current) audioRef?.current?.pause();
         break;
     }
     // setTimeout(() => {
@@ -245,10 +254,11 @@ const TablePage = () => {
         imagesPromiseList.push(preloadImage(i.waitingTwo));
       }
       await Promise.all(imagesPromiseList);
+      const audioPromiseList = [];
       for (var i in audioFiles) {
-        preloadAudio(audioFiles[i]);
+        audioPromiseList.push(preloadAudio(audioFiles[i]));
       }
-      await Promise.all(audioFiles)
+      // await Promise.all(audioFiles);
       if (isCancelled) {
         return;
       }
@@ -394,7 +404,7 @@ const TablePage = () => {
   const handleBox1Click = () => {
     const player = document.getElementById("player");
     player.setAttribute("style", "top: -150px");
-    audioPlayer("buttonclick");
+    // audioPlayer("buttonclick");
 
     set(
       ref(
@@ -410,7 +420,7 @@ const TablePage = () => {
   };
   const handleBox2Click = () => {
     const player = document.getElementById("player");
-    audioPlayer("buttonclick");
+    // audioPlayer("buttonclick");
     player.setAttribute("style", "top: 48px");
 
     set(
@@ -429,7 +439,7 @@ const TablePage = () => {
     // e.stopPropagation()
     setBtn1Clicked(true);
     setBtn2Clicked(false);
-    audioPlayer("buttonclick");
+    // audioPlayer("buttonclick");
     set(
       ref(
         database,
@@ -444,7 +454,7 @@ const TablePage = () => {
   const handleButton2Click = () => {
     !lockChoice && setBtn2Clicked(true);
     !lockChoice && setBtn1Clicked(false);
-    audioPlayer("buttonclick");
+    // audioPlayer("buttonclick");
     set(
       ref(
         database,
@@ -566,6 +576,7 @@ const TablePage = () => {
   // timer, result, pause
   useEffect(() => {
     if (time === null) {
+      audioPlayer();
       return;
     }
 
@@ -622,7 +633,7 @@ const TablePage = () => {
       setModalOpen(false);
       setShowResult(true);
       setIsCoinShowing(true);
-
+      audioPlayer();
       setTimeout(() => {
         set(ref(getDatabase(), `timer${currentTable}`), tableTime);
         setIsPaused(false);
@@ -786,6 +797,7 @@ const TablePage = () => {
     if (isPaused) {
       const timer = setTimeout(() => {
         setIndex(-1);
+        audioPlayer("swapsound");
         setIsFlip(true);
       }, 2000);
 
@@ -1093,7 +1105,11 @@ const TablePage = () => {
                           <div className={Styles?.BitCoinOne}>
                             <img
                               loading="eager"
-                              style={{ transform: "scale(1.7)", scale: 2 }}
+                              style={{
+                                transform: "scale(1.1)",
+                                marginTop: "13rem",
+                                scale: 1.5,
+                              }}
                               src={ConclusionData?.BitCoinOne}
                               className={Styles?.LeftPotionGifWinner}
                             />
@@ -1214,9 +1230,9 @@ const TablePage = () => {
                                 src={ConclusionData.BitCoinTwo}
                                 className={Styles.rightPortionWinBitCoin}
                                 style={{
-                                  transform: "scale(1.4)",
-                                  marginTop: "6rem",
-                                  scale: 2,
+                                  transform: "scale(1.1)",
+                                  marginTop: "13rem",
+                                  scale: 1.5,
                                 }}
                               />
                               <WinEffect side="right" value={tableAmount} />

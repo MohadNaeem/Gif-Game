@@ -222,8 +222,8 @@ export const GifData = [
     thummbnailOne: CharizardThumbnail,
     pressedOne: CharizardPress,
     waitingOne: CharizardWaiting,
-    timerOne: 1000,
-    timerTwo: 1000,
+    timerOne: 2200,
+    timerTwo: 2200,
     styles: {
       className: "dragonCharizardStyles",
     },

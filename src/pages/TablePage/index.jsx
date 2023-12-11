@@ -148,6 +148,8 @@ const TablePage = () => {
     DrawSound,
   ];
 
+  const conclusionGifs = [];
+
   const userAuthID = localStorage.getItem("userAuthID");
   const [liveUserSnapshots, loadingLiveUsers, error] = useList(
     ref(database, `users/table${currentTable}/players`)
@@ -254,6 +256,12 @@ const TablePage = () => {
         imagesPromiseList.push(preloadImage(i.waitingTwo));
       }
       await Promise.all(imagesPromiseList);
+      const conclusionImagesPromiseList = [];
+
+      for (const i of Object.values(ConclusionData)) {
+        conclusionImagesPromiseList.push(preloadImage(i));
+      }
+      await Promise.all(conclusionImagesPromiseList);
       const audioPromiseList = [];
       for (var i in audioFiles) {
         audioPromiseList.push(preloadAudio(audioFiles[i]));

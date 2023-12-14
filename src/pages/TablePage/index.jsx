@@ -239,7 +239,11 @@ const TablePage = () => {
         // if (audioRef.current) audioRef.current.src = WinSound;
         // audioRef?.current?.play();
         // preloadedAudio[1]?.play();
-        preloadedAudio.filter((item) => item.type === "win")[0]?.audio?.play();
+        if (audioRef.current)
+          audioRef.current.src = preloadedAudio.filter(
+            (item) => item.type === "win"
+          )[0]?.audio?.src;
+        audioRef?.current?.play();
         break;
       case "lose":
         // if (audioRef.current) audioRef.current.src = LoseSound;
@@ -248,9 +252,9 @@ const TablePage = () => {
         break;
       case "countdown":
         if (audioRef.current)
-          audioRef.current.src = preloadedAudio
-            .filter((item) => item.type === "countdown")[0]
-            ?.audio?.src;
+          audioRef.current.src = preloadedAudio.filter(
+            (item) => item.type === "countdown"
+          )[0]?.audio?.src;
         audioRef?.current?.play();
         // preloadedAudio[1]?.play();
         // preloadedAudio

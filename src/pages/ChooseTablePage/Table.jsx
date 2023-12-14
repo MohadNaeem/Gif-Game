@@ -20,8 +20,10 @@ import {
 import app from "../../config/firebase";
 import { useList } from "react-firebase-hooks/database";
 import { ref, set, get, getDatabase } from "firebase/database";
+import ClickSound from "../../assets/audios/Conclusion/buttonclick.wav";
 import { useRecoilState } from "recoil";
 import { Atom } from "../../Atom/Atom";
+import { useRef } from "react";
 
 const database = getDatabase(app);
 
@@ -45,6 +47,7 @@ const Table = ({
   const [tableAmountMain, setTableAmountMain] = useAtom(InputTableAmount);
   const [tableLockChoice, setTableLockChoice] = useAtom(InputTableLockChoice);
   const navigate = useNavigate();
+  const audioRef = useRef();
 
   const [darkMode, setDarkMode] = useRecoilState(Atom);
 
@@ -153,11 +156,17 @@ const Table = ({
 
         <div className="w-full flex justify-center cursor-pointer">
           {currentLock ? (
-            <LockClosedIcon style={darkMode ? {color:"#ffbf00"}:{}} className="h-5 w-5 text-gray-500 mr-1" />
+            <LockClosedIcon
+              style={darkMode ? { color: "#ffbf00" } : {}}
+              className="h-5 w-5 text-gray-500 mr-1"
+            />
           ) : totalBalance >= tableAmount ? (
             <div
               className="bg-green-400 w-fit h-[28px] font-bold text-center text-white rounded-full py-1 px-3 text-[13px]"
-              onClick={() => handleJoinClick()}
+              onClick={() => {
+                audioRef.current.play();
+                handleJoinClick();
+              }}
               style={
                 darkMode ? { backgroundColor: "#0FBE00", color: "white" } : {}
               }
@@ -173,6 +182,7 @@ const Table = ({
           )}
         </div>
       </div>
+      <audio ref={audioRef} src={ClickSound} />
     </div>
   );
 };

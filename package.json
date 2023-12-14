@@ -31,6 +31,7 @@
     "react-router-dom": "^6.8.1",
     "recoil": "^0.7.7",
     "sass": "^1.69.5",
+    "use-sound": "^4.0.1",
     "vite-plugin-svgr": "^2.4.0"
   },
   "devDependencies": {

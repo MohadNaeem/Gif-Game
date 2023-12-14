@@ -1,6 +1,7 @@
 import { useState, useEffect, useLayoutEffect } from "react";
 import { useAtom } from "jotai";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import useSound from "use-sound";
 import app from "../../config/firebase";
 import {
   getDatabase,
@@ -167,6 +168,7 @@ const TablePage = () => {
   const currentTable = useParams().number;
   const tableTime = parseInt(useParams().time);
   const audioRef = useRef();
+  const winRef = useRef();
 
   const navigate = useNavigate();
   const audioFiles = [
@@ -192,6 +194,7 @@ const TablePage = () => {
   const [time, setTime] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
   const [currentSound, setCurrentSound] = useState("");
+  const [play] = useSound(WinSound);
   const [tableAmount, setTableAmount] = useAtom(InputTableAmount);
   const [preloadedAudio, setPreloadedAudio] = useState([]);
   const [finalResultCalled, setFinalResultCalled] = useState(false);
@@ -239,11 +242,12 @@ const TablePage = () => {
         // if (audioRef.current) audioRef.current.src = WinSound;
         // audioRef?.current?.play();
         // preloadedAudio[1]?.play();
-        if (audioRef.current)
-          audioRef.current.src = preloadedAudio.filter(
-            (item) => item.type === "win"
-          )[0]?.audio?.src;
-        audioRef?.current?.play();
+        // if (audioRef.current)
+        //   audioRef.current.src = preloadedAudio.filter(
+        //     (item) => item.type === "win"
+        //   )[0]?.audio?.src;
+        // winRef?.current?.play();
+        play();
         break;
       case "lose":
         // if (audioRef.current) audioRef.current.src = LoseSound;
@@ -251,10 +255,10 @@ const TablePage = () => {
         preloadedAudio.filter((item) => item.type === "lose")[0]?.audio?.play();
         break;
       case "countdown":
-        if (audioRef.current)
-          audioRef.current.src = preloadedAudio.filter(
-            (item) => item.type === "countdown"
-          )[0]?.audio?.src;
+        // if (audioRef.current)
+        //   audioRef.current.src = preloadedAudio.filter(
+        //     (item) => item.type === "countdown"
+        //   )[0]?.audio?.src;
         audioRef?.current?.play();
         // preloadedAudio[1]?.play();
         // preloadedAudio
@@ -268,13 +272,13 @@ const TablePage = () => {
         preloadedAudio.filter((item) => item.type === "draw")[0]?.audio?.play();
         break;
       case "buttonclick":
-        if (audioRef.current) audioRef.current.src = ButtonClickSound;
+        // if (audioRef.current) audioRef.current.src = ButtonClickSound;
         audioRef?.current?.play();
       case "mapchange":
-        if (audioRef.current) audioRef.current.src = MapChangeSound;
+        // if (audioRef.current) audioRef.current.src = MapChangeSound;
         audioRef?.current?.play();
       case "swapsound":
-        if (audioRef.current) audioRef.current.src = SwapSound;
+        // if (audioRef.current) audioRef.current.src = SwapSound;
         audioRef?.current?.play();
       default:
         if (audioRef.current) audioRef?.current?.pause();
@@ -935,7 +939,8 @@ const TablePage = () => {
       <LoadingSpinner />
     ) : (
       <div className="sm:w-[500px] h-[100vh] sm:mx-auto overflow-y-scroll overflow-x-hidden scrollbar-hide">
-        <audio ref={audioRef} preload="auto" />
+        <audio ref={audioRef} preload="auto" src={TimerSound} />
+        <audio ref={winRef} preload="auto" src={WinSound} />
         <div className="flex justify-between my-2 mx-1">
           <Link to="/live">
             <div className="mt-[5px]">

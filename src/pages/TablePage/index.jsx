@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { useAtom } from "jotai";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import app from "../../config/firebase";
@@ -120,18 +120,47 @@ function preloadImage(src) {
   });
 }
 
-async function preloadAudio(url) {
-  return new Promise((resolve, reject) => {
-    var audio = new Audio();
-    audio.onload = function () {
-      resolve(audio);
-    };
-    audio.onerror = audio.onabort = function () {
-      reject(url);
-    };
-    audio.src = url;
-    window[url] = audio;
-  });
+// async function preloadAudio(url) {
+//   return new Promise((resolve, reject) => { cwq
+//     const audio = new Audio();
+//     audio.onload = function () {
+//       resolve(audio);
+//     };
+//     audio.onerror = audio.onabort = function () {
+//       reject(url);
+//     };
+//     audio.src = url;
+//     window[url] = audio;
+//   });
+// }s
+// function preloadAudio(url) {
+//   var audio = new Audio();
+//   // once this file loads, it will call loadedAudio()
+//   // the file will be kept by the browser as cache
+//   audio.addEventListener("canplaythrough", loadedAudio, true);
+//   audio.src = url;
+//   audio.loop = true;
+//   audio.play();
+//   // window[url] = audio;
+// }
+function loadedAudio() {
+  console.log("Loaded One");
+}
+
+async function preloadAudio(incomingAudio) {
+  const audio = new Audio(incomingAudio.url);
+  audio.onload = async function () {
+    await resolve(audio);
+  };
+  audio.onerror = audio.onabort = function () {
+    reject(incomingAudio.url);
+  };
+  audio.src = incomingAudio.url;
+  if (incomingAudio.type === "countdown") {
+    audio.loop = true;
+  }
+  window[incomingAudio.url] = audio;
+  return { ...incomingAudio, audio: audio };
 }
 
 const TablePage = () => {
@@ -141,11 +170,10 @@ const TablePage = () => {
 
   const navigate = useNavigate();
   const audioFiles = [
-    TimerSound,
-    WinSound,
-    LoseSound,
-    ButtonClickSound,
-    DrawSound,
+    { type: "lose", url: LoseSound },
+    { type: "draw", url: DrawSound },
+    { type: "win", url: WinSound },
+    { type: "countdown", url: TimerSound },
   ];
 
   const conclusionGifs = [];
@@ -165,6 +193,7 @@ const TablePage = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [currentSound, setCurrentSound] = useState("");
   const [tableAmount, setTableAmount] = useAtom(InputTableAmount);
+  const [preloadedAudio, setPreloadedAudio] = useState([]);
   const [finalResultCalled, setFinalResultCalled] = useState(false);
   const [tokenBalance, setTokenBalance] = useState(0);
   const [bonusBalance, setBonusBalance] = useState(0);
@@ -207,20 +236,32 @@ const TablePage = () => {
   const audioPlayer = (type) => {
     switch (type) {
       case "win":
-        if (audioRef.current) audioRef.current.src = WinSound;
-        audioRef?.current?.play();
+        // if (audioRef.current) audioRef.current.src = WinSound;
+        // audioRef?.current?.play();
+        // preloadedAudio[1]?.play();
+        preloadedAudio.filter((item) => item.type === "win")[0]?.audio?.play();
         break;
       case "lose":
-        if (audioRef.current) audioRef.current.src = LoseSound;
-        audioRef?.current?.play();
+        // if (audioRef.current) audioRef.current.src = LoseSound;
+        // audioRef?.current?.play();
+        preloadedAudio.filter((item) => item.type === "lose")[0]?.audio?.play();
         break;
       case "countdown":
-        if (audioRef.current) audioRef.current.src = TimerSound;
+        if (audioRef.current)
+          audioRef.current.src = preloadedAudio
+            .filter((item) => item.type === "countdown")[0]
+            ?.audio?.src;
         audioRef?.current?.play();
+        // preloadedAudio[1]?.play();
+        // preloadedAudio
+        //   .filter((item) => item.type === "countdown")[0]
+        //   ?.audio?.play();
         break;
       case "draw":
-        if (audioRef.current) audioRef.current.src = DrawSound;
-        audioRef?.current?.play();
+        // if (audioRef.current) audioRef.current.src = DrawSound;
+        // audioRef?.current?.play();
+        // preloadedAudio[3]?.play();
+        preloadedAudio.filter((item) => item.type === "draw")[0]?.audio?.play();
         break;
       case "buttonclick":
         if (audioRef.current) audioRef.current.src = ButtonClickSound;
@@ -233,11 +274,11 @@ const TablePage = () => {
         audioRef?.current?.play();
       default:
         if (audioRef.current) audioRef?.current?.pause();
+        preloadedAudio.forEach((sound) => {
+          sound?.audio?.pause();
+        });
         break;
     }
-    // setTimeout(() => {
-    //   audioRef?.current?.play();
-    // }, 50);
   };
 
   useEffect(() => {
@@ -263,9 +304,11 @@ const TablePage = () => {
       }
       await Promise.all(conclusionImagesPromiseList);
       const audioPromiseList = [];
-      for (var i in audioFiles) {
-        audioPromiseList.push(preloadAudio(audioFiles[i]));
-      }
+      audioFiles.map(async (audio) => {
+        const data = await preloadAudio(audio);
+        setPreloadedAudio((prevState) => [...prevState, data]);
+      });
+
       // await Promise.all(audioFiles);
       if (isCancelled) {
         return;
@@ -635,6 +678,9 @@ const TablePage = () => {
         }
       }
     } else if (time === 0) {
+      // preloadedAudio
+      //   .filter((item) => item.type === "countdown")[0]
+      //   ?.audio?.pause();
       setFinalResultCalled(true);
       !finalResultCalled && finalResult();
       setIsPaused(true);
@@ -802,12 +848,21 @@ const TablePage = () => {
   const [whichPart, setWhichPart] = useState("");
 
   useEffect(() => {
+    return () => {
+      console.log("exeec");
+      preloadedAudio
+        .filter((item) => item.type === "countdown")[0]
+        ?.audio?.pause();
+    };
+  }, []);
+
+  useEffect(() => {
     if (isPaused) {
       const timer = setTimeout(() => {
         setIndex(-1);
         audioPlayer("swapsound");
         setIsFlip(true);
-      }, 1100);
+      }, 1800);
 
       return () => {
         clearTimeout(timer);
@@ -876,7 +931,7 @@ const TablePage = () => {
       <LoadingSpinner />
     ) : (
       <div className="sm:w-[500px] h-[100vh] sm:mx-auto overflow-y-scroll overflow-x-hidden scrollbar-hide">
-        <audio ref={audioRef} />
+        <audio ref={audioRef} preload="auto" />
         <div className="flex justify-between my-2 mx-1">
           <Link to="/live">
             <div className="mt-[5px]">

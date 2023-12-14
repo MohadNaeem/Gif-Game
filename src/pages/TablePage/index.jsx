@@ -807,7 +807,7 @@ const TablePage = () => {
         setIndex(-1);
         audioPlayer("swapsound");
         setIsFlip(true);
-      }, 2000);
+      }, 1100);
 
       return () => {
         clearTimeout(timer);

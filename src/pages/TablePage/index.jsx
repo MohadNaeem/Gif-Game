@@ -247,6 +247,7 @@ const TablePage = () => {
         //     (item) => item.type === "win"
         //   )[0]?.audio?.src;
         // winRef?.current?.play();
+        // preloadedAudio.filter((item) => item.type === "win")[0]?.audio?.play();
         play();
         break;
       case "lose":

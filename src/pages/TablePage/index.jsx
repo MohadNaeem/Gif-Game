@@ -196,6 +196,7 @@ const TablePage = () => {
   const [currentSound, setCurrentSound] = useState("");
   const [play] = useSound(WinSound);
   const [playLose] = useSound(LoseSound);
+  const [TimerPlay] = useSound(TimerSound);
   const [tableAmount, setTableAmount] = useAtom(InputTableAmount);
   const [preloadedAudio, setPreloadedAudio] = useState([]);
   const [finalResultCalled, setFinalResultCalled] = useState(false);
@@ -266,6 +267,7 @@ const TablePage = () => {
         //   audioRef.current.src = preloadedAudio.filter(
         //     (item) => item.type === "countdown"
         //   )[0]?.audio?.src;
+        audioRef.current.loop = true
         audioRef?.current?.play();
         // preloadedAudio[1]?.play();
         // preloadedAudio

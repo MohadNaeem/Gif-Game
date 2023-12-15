@@ -267,7 +267,7 @@ const TablePage = () => {
         //   audioRef.current.src = preloadedAudio.filter(
         //     (item) => item.type === "countdown"
         //   )[0]?.audio?.src;
-        audioRef.current.loop = true
+        if (audioRef.current) audioRef.current.loop = true;
         audioRef?.current?.play();
         // preloadedAudio[1]?.play();
         // preloadedAudio

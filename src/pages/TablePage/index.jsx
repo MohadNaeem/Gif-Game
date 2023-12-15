@@ -172,9 +172,9 @@ const TablePage = () => {
 
   const navigate = useNavigate();
   const audioFiles = [
+    { type: "win", url: WinSound },
     { type: "lose", url: LoseSound },
     { type: "draw", url: DrawSound },
-    { type: "win", url: WinSound },
     { type: "countdown", url: TimerSound },
   ];
 
@@ -195,6 +195,7 @@ const TablePage = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [currentSound, setCurrentSound] = useState("");
   const [play] = useSound(WinSound);
+  const [playLose] = useSound(LoseSound);
   const [tableAmount, setTableAmount] = useAtom(InputTableAmount);
   const [preloadedAudio, setPreloadedAudio] = useState([]);
   const [finalResultCalled, setFinalResultCalled] = useState(false);
@@ -244,16 +245,21 @@ const TablePage = () => {
         // preloadedAudio[1]?.play();
         // if (audioRef.current)
         //   audioRef.current.src = preloadedAudio.filter(
-        //     (item) => item.type === "win"
+        //     (item) => item.type === "win"s
         //   )[0]?.audio?.src;
         // winRef?.current?.play();
         // preloadedAudio.filter((item) => item.type === "win")[0]?.audio?.play();
+        // document.getElementById("win-sound").click();
+        // const audio = new Audio();
+        // audio.src = WinSound;
+        // audio.play();
         play();
         break;
       case "lose":
         // if (audioRef.current) audioRef.current.src = LoseSound;
         // audioRef?.current?.play();
-        preloadedAudio.filter((item) => item.type === "lose")[0]?.audio?.play();
+        // preloadedAudio.filter((item) => item.type === "lose")[0]?.audio?.play();
+        playLose();
         break;
       case "countdown":
         // if (audioRef.current)
@@ -353,11 +359,6 @@ const TablePage = () => {
     setBox1Ratio(box1Res);
     setBox2Ratio(box2Res);
 
-    await updateDoc(userRef, {
-      [`allGamesPlayed.secondsPlayed`]: increment(tableTime),
-    });
-
-    // Current player result and updating token balance accordingly
     if (!isSpectator) {
       if (win === 0) {
         setResult("draw");
@@ -436,6 +437,11 @@ const TablePage = () => {
         }
       }
     }
+    await updateDoc(userRef, {
+      [`allGamesPlayed.secondsPlayed`]: increment(tableTime),
+    });
+
+    // Current player result and updating token balance accordingly
 
     if (!isSpectator) {
       await updateDoc(userRef, {
@@ -1549,6 +1555,11 @@ const TablePage = () => {
             </div>
           </div>
         )}
+        <button
+          onClick={play}
+          id="win-sound"
+          style={{ visibility: "hidden" }}
+        ></button>
         <Popup />
       </div>
     )

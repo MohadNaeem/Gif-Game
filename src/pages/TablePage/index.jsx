@@ -192,6 +192,7 @@ const TablePage = () => {
     : [];
 
   const [time, setTime] = useState(null);
+  const [letUserIn, setLetUserIn] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [currentSound, setCurrentSound] = useState("");
   const [play] = useSound(WinSound);
@@ -241,43 +242,20 @@ const TablePage = () => {
   const audioPlayer = (type) => {
     switch (type) {
       case "win":
-        // if (audioRef.current) audioRef.current.src = WinSound;
-        // audioRef?.current?.play();
-        // preloadedAudio[1]?.play();
-        // if (audioRef.current)
-        //   audioRef.current.src = preloadedAudio.filter(
-        //     (item) => item.type === "win"s
-        //   )[0]?.audio?.src;
-        // winRef?.current?.play();
-        // preloadedAudio.filter((item) => item.type === "win")[0]?.audio?.play();
-        // document.getElementById("win-sound").click();
-        // const audio = new Audio();
-        // audio.src = WinSound;
-        // audio.play();
-        play();
+        setTimeout(() => {
+          play();
+        }, 500);
         break;
       case "lose":
-        // if (audioRef.current) audioRef.current.src = LoseSound;
-        // audioRef?.current?.play();
-        // preloadedAudio.filter((item) => item.type === "lose")[0]?.audio?.play();
-        playLose();
+        setTimeout(() => {
+          playLose();
+        }, 1000);
         break;
       case "countdown":
-        // if (audioRef.current)
-        //   audioRef.current.src = preloadedAudio.filter(
-        //     (item) => item.type === "countdown"
-        //   )[0]?.audio?.src;
         if (audioRef.current) audioRef.current.loop = true;
         audioRef?.current?.play();
-        // preloadedAudio[1]?.play();
-        // preloadedAudio
-        //   .filter((item) => item.type === "countdown")[0]
-        //   ?.audio?.play();
         break;
       case "draw":
-        // if (audioRef.current) audioRef.current.src = DrawSound;
-        // audioRef?.current?.play();
-        // preloadedAudio[3]?.play();
         preloadedAudio.filter((item) => item.type === "draw")[0]?.audio?.play();
         break;
       case "buttonclick":
@@ -376,7 +354,7 @@ const TablePage = () => {
         setResult("win");
         audioPlayer("win");
         const updatedBalance = tokenBalance + tableAmount;
-        setTokenBalance(updatedBalance);
+        setTokenBalance((prevState) => prevState + tableAmount);
         isBonusRound
           ? await updateDoc(userRef, { bonusBalance: updatedBalance })
           : await updateDoc(userRef, { tokenBalance: updatedBalance });
@@ -421,11 +399,6 @@ const TablePage = () => {
         //   ? await updateDoc(userRef, { bonusBalance: updatedBalance })
         //   : await updateDoc(userRef, { tokenBalance: updatedBalance })
 
-        await updateDoc(userRef, {
-          [`allGamesPlayed.loses`]: increment(1),
-        });
-        if (!isBonusRound || !isFreeRound) setLoseCount(loseCount + 1);
-        setWinCount(0);
         if (loseCount + 1 === 10) {
           updateDoc(userRef, {
             [`reward2status.table`]: currentTable,
@@ -433,11 +406,16 @@ const TablePage = () => {
             [`reward2status.current`]: "unclaimed",
           });
         } else if (loseCount + 1 === 3) {
-          setTimeout(() => setIsBonusRound(true), 3000);
+          setTimeout(() => setIsBonusRound(true), 2500);
         } else if (loseCount + 1 === 8) {
-          setTimeout(() => setIsFreeRound(true), 3000);
+          setTimeout(() => setIsFreeRound(true), 2500);
         }
       }
+      await updateDoc(userRef, {
+        [`allGamesPlayed.loses`]: increment(1),
+      });
+      if (!isBonusRound || !isFreeRound) setLoseCount(loseCount + 1);
+      setWinCount(0);
     }
     await updateDoc(userRef, {
       [`allGamesPlayed.secondsPlayed`]: increment(tableTime),
@@ -634,10 +612,10 @@ const TablePage = () => {
     // Clean up the Firebase Realtime Database reference when the component unmounts
     return () => {
       onValue(timerRef, () => {}); // Remove the listener
-      if (time !== null) {
-        set(ref(getDatabase(), `timer${currentTable}`), time); // Update the timer value on disconnect
-        onDisconnect(ref(getDatabase(), `timer${currentTable}`)).cancel(); // Cancel the onDisconnect event
-      }
+      set(ref(getDatabase(), `timer${currentTable}`), tableTime); // Update the timer value on disconnect
+      onDisconnect(ref(getDatabase(), `timer${currentTable}`)).cancel(); // Cancel the onDisconnect event
+      // if (time !== null) {
+      // }
     };
   }, []);
 
@@ -752,7 +730,7 @@ const TablePage = () => {
           navigate(`/table/${currentTable}/error`);
           setModalOpen(false);
         }
-      }, 3000);
+      }, 6000);
     }
 
     // Clean up the interval when the component unmounts or the timer value becomes null

@@ -9,14 +9,17 @@ import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { Atom } from "../../Atom/Atom";
 import { LiveIcon, BitcoinIcon } from "../../assets/icons";
+import ButtonClickSound from "../../assets/audios/Conclusion/buttonclick.wav";
+import useSound from "use-sound";
 
 const BottomNavItem = ({ title, path, index }) => {
   const { formatMessage } = useIntl();
 
   const [darkMode, setDarkMode] = useRecoilState(Atom);
+  const [play] = useSound(ButtonClickSound);
 
   return (
-    <Link to={path}>
+    <Link to={path} onClick={() => play()}>
       <div className="flex justify-center">
         {title == formatMessage({ id: "GoLive" }) ? (
           <LiveIcon

@@ -25,6 +25,7 @@ import WinSound from "../../assets/audios/Conclusion/winsound.wav";
 import { useRecoilState } from "recoil";
 import { Atom } from "../../Atom/Atom";
 import { useRef } from "react";
+import useSound from "use-sound";
 
 const database = getDatabase(app);
 
@@ -51,6 +52,7 @@ const Table = ({
   const audioRef = useRef();
 
   const [darkMode, setDarkMode] = useRecoilState(Atom);
+  const [play] = useSound(ClickSound);
 
   const [snapshotsTable, loadingTable1, error1] = useList(
     ref(database, `users/table${tableNum}/players`)
@@ -165,7 +167,7 @@ const Table = ({
             <div
               className="bg-green-400 w-fit h-[28px] font-bold text-center text-white rounded-full py-1 px-3 text-[13px]"
               onClick={() => {
-                audioRef.current.play();
+                play();
                 handleJoinClick();
               }}
               style={

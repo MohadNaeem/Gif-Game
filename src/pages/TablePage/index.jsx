@@ -603,7 +603,6 @@ const TablePage = () => {
         setTime(initialTime);
       }
     });
-
     // Listen for updates to the timer value
     onValue(timerRef, (snapshot) => {
       setTime(snapshot.val());
@@ -614,6 +613,7 @@ const TablePage = () => {
       onValue(timerRef, () => {}); // Remove the listener
       set(ref(getDatabase(), `timer${currentTable}`), tableTime); // Update the timer value on disconnect
       onDisconnect(ref(getDatabase(), `timer${currentTable}`)).cancel(); // Cancel the onDisconnect event
+      // This thing has been changed to make sure user always enters at 10
       // if (time !== null) {
       // }
     };
@@ -1127,6 +1127,14 @@ const TablePage = () => {
               <div
                 className={Styles.box1main}
                 onClick={(e) => !lockChoice && handleButton1Click(e)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  zIndex:
+                    btn1Clicked &&
+                    GifData[index]?.styles?.enableZindexing &&
+                    15,
+                }}
               >
                 <div
                   className="self-start"
@@ -1240,7 +1248,14 @@ const TablePage = () => {
               <div
                 className={Styles.BoxMain2}
                 onClick={() => !lockChoice && handleButton2Click()}
-                style={{ display: "flex", alignItems: "center" }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  zIndex:
+                    btn2Clicked &&
+                    GifData[index]?.styles?.enableZindexing &&
+                    15,
+                }}
               >
                 <div
                   className="self-end mr-2 mt-3 mb-[48px]"

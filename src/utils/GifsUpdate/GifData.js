@@ -267,7 +267,7 @@ export const GifData = [
     timerOne: 800,
     timerTwo: 800,
     styles: {
-      className: "",
+      className: "rightLeftRoad",
     },
     // sideOneTwo: true,
     // rotateTwo: true,

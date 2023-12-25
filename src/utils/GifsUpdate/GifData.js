@@ -6,14 +6,15 @@ import EvoultionPressed from "../../assets/gif/Sorted Gifs/Adam&eve VS Evolution
 import EvoultionWaiting from "../../assets/gif/Sorted Gifs/Adam&eve VS Evolution/Evolution/evolution-waiting.gif";
 import CandleOffThumbnail from "../../assets/gif/Sorted Gifs/candles/Lights off/non light.png";
 import CandleOffPressed from "../../assets/gif/Sorted Gifs/candles/Lights off/non-light-press.gif";
+import DragonCharizard from "../../assets/gif/Sorted Gifs/Charizard/CharizardDragon.png";
 import DragonThumbnail from "../../assets/gif/Sorted Gifs/Charizard/Blue Dragon/DragonThumbnail.png";
 import DragonPress from "../../assets/gif/Sorted Gifs/Charizard/Blue Dragon/blue-dragon-press.gif";
 import DragonWaiting from "../../assets/gif/Sorted Gifs/Charizard/Blue Dragon/blue-dragon-waiting.gif";
-import CharizardThumbnail from "../../assets/gif/Sorted Gifs/Charizard/Charizard/Charizard.jpg";
 import CharizardPress from "../../assets/gif/Sorted Gifs/Charizard/Charizard/charizard-press.gif";
 import CharizardWaiting from "../../assets/gif/Sorted Gifs/Charizard/Charizard/charizard-waiting.gif";
 import CandleOffWaiting from "../../assets/gif/Sorted Gifs/candles/Lights off/non-light-waiting.gif";
 import VaderPressThumbnail from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Vader/vader-press.png";
+import VaderYodaThumbnail from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/YodaVader.png";
 import VaderPress from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Vader/vader-press.gif";
 import VaderWaiting from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Vader/vader-waiting.gif";
 import YodaThumbnail from "../../assets/gif/Sorted Gifs/Dark Force vs Light Force/Yoda/yoda-press.png";
@@ -101,6 +102,16 @@ import ScienceWaiting from "../../assets/gif/Sorted Gifs/science vs religion/sci
 import ReigionThumnail from "../../assets/gif/Sorted Gifs/science vs religion/religion/Religion-Thumbnail.jpg";
 import ReigionPressed from "../../assets/gif/Sorted Gifs/science vs religion/religion/Religion-Pressed.gif";
 import ReigionWaiting from "../../assets/gif/Sorted Gifs/science vs religion/religion/Religion-Waiting.gif";
+import LoveMoneyThumbnail from "../../assets/gif/Sorted Gifs/Love vs Money/love-press.png";
+import LovePress from "../../assets/gif/Sorted Gifs/Love vs Money/Love/love-press.gif";
+import LoveWait from "../../assets/gif/Sorted Gifs/Love vs Money/Love/love-waiting.gif";
+import MoneyPress from "../../assets/gif/Sorted Gifs/Love vs Money/Money/money-press.gif";
+import MoneyWait from "../../assets/gif/Sorted Gifs/Love vs Money/Money/money-waiting.gif";
+import MailPress from "../../assets/gif/Sorted Gifs/Mail vs Letter/mail-press.gif";
+import MailWaiting from "../../assets/gif/Sorted Gifs/Mail vs Letter/mail-waiting.gif";
+import MailLetter from "../../assets/gif/Sorted Gifs/Mail vs Letter/MailLetter.png";
+import LetterPress from "../../assets/gif/Sorted Gifs/Mail vs Letter/letter-press.gif";
+import LetterWaiting from "../../assets/gif/Sorted Gifs/Mail vs Letter/letter-waiting.gif";
 import Lock from "../../assets/gif/Conclusion gifs/Lock.gif";
 import Spectator from "../../assets/gif/Conclusion gifs/Spectator.gif";
 
@@ -216,21 +227,20 @@ export const GifData = [
     },
   },
   {
-    thumbnailTwo: DragonThumbnail,
+    thumbnail: DragonCharizard,
     pressedTwo: DragonPress,
     waitingTwo: DragonWaiting,
-    thummbnailOne: CharizardThumbnail,
     pressedOne: CharizardPress,
     waitingOne: CharizardWaiting,
     timerOne: 2200,
     timerTwo: 2200,
     styles: {
       className: "dragonCharizardStyles",
-      enableZindexing: true,
+      variant: "SingleBox",
     },
   },
   {
-    thummbnailOne: VaderPressThumbnail,
+    thumbnail: VaderYodaThumbnail,
     pressedOne: VaderPress,
     waitingOne: VaderWaiting,
     thumbnailTwo: YodaThumbnail,
@@ -240,7 +250,20 @@ export const GifData = [
     timerTwo: 1800,
     styles: {
       className: "yodaVaderStyles",
-      enableZindexing: true,
+      variant: "SingleBox",
+    },
+  },
+  {
+    thumbnail: LoveMoneyThumbnail,
+    pressedOne: LovePress,
+    waitingOne: LoveWait,
+    pressedTwo: MoneyPress,
+    waitingTwo: MoneyWait,
+    timerOne: 1700,
+    timerTwo: 1700,
+    styles: {
+      className: "loveMoneyStyles",
+      variant: "SingleBox",
     },
   },
   {
@@ -272,31 +295,46 @@ export const GifData = [
     // sideOneTwo: true,
     // rotateTwo: true,
   },
-  // {
-  //   thummbnailOne: LeftTriangleThumbnail,
-  //   pressedOne: LeftTrianglePress,
-  //   waitingOne: LeftTriangleWaiting,
-  //   thumbnailTwo: RightTriangleThumbnail,
-  //   pressedTwo: RightTrianglePress,
-  //   waitingTwo: RightTriangleWaiting,
-  //   timerOne: 800,
-  //   timerTwo: 800,
-  //   styles: {
-  //     className: "rightLeftTriangle",
-  //   },
-  // },
-  // {
-  //   thummbnailOne: LionSheep,
-  //   pressedOne: LionPress,
-  //   waitingOne: LionWaiting,
-  //   thumbnailTwo: LionSheep,
-  //   pressedTwo: SheepPress,
-  //   waitingTwo: SheepWaiting,
-  //   timerOne: 1100,
-  //   timerTwo: 1100,
-  //   // sideOneTwo: true,
-  //   // rotateTwo: true,
-  // },
+  {
+    thummbnailOne: LeftTriangleThumbnail,
+    pressedOne: LeftTrianglePress,
+    waitingOne: LeftTriangleWaiting,
+    thumbnailTwo: RightTriangleThumbnail,
+    pressedTwo: RightTrianglePress,
+    waitingTwo: RightTriangleWaiting,
+    timerOne: 800,
+    timerTwo: 800,
+    styles: {
+      className: "rightLeftTriangle",
+    },
+  },
+  {
+    thumbnail: LionSheep,
+    pressedOne: LionPress,
+    waitingOne: LionWaiting,
+    thumbnailTwo: LionSheep,
+    pressedTwo: SheepPress,
+    waitingTwo: SheepWaiting,
+    timerOne: 1000,
+    timerTwo: 1000,
+    styles: {
+      className: "lionSheepStyles",
+      variant: "SingleBox",
+    },
+  },
+  {
+    thumbnail: MailLetter,
+    pressedOne: LetterPress,
+    waitingOne: LetterWaiting,
+    pressedTwo: MailPress,
+    waitingTwo: MailWaiting,
+    timerOne: 1600,
+    timerTwo: 2000,
+    styles: {
+      className: "mailLetterStyles",
+      variant: "SingleBox",
+    },
+  },
   // {
   //   thummbnailOne: CityThumbnail,
   //   pressedOne: CityPress,

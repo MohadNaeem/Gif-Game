@@ -108,6 +108,7 @@ const database = getDatabase(app);
 const fireStore = getFirestore(app);
 
 function preloadImage(src) {
+  if (src === undefined) return;
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = function () {
@@ -169,6 +170,7 @@ const TablePage = () => {
   const tableTime = parseInt(useParams().time);
   const audioRef = useRef();
   const winRef = useRef();
+  const divRef = useRef(null);
 
   const navigate = useNavigate();
   const audioFiles = [
@@ -197,7 +199,7 @@ const TablePage = () => {
   const [currentSound, setCurrentSound] = useState("");
   const [play] = useSound(WinSound);
   const [playLose] = useSound(LoseSound);
-  const [TimerPlay] = useSound(TimerSound);
+  const [TimerPlay, { stop }] = useSound(TimerSound);
   const [tableAmount, setTableAmount] = useAtom(InputTableAmount);
   const [preloadedAudio, setPreloadedAudio] = useState([]);
   const [finalResultCalled, setFinalResultCalled] = useState(false);
@@ -252,8 +254,9 @@ const TablePage = () => {
         }, 1000);
         break;
       case "countdown":
-        if (audioRef.current) audioRef.current.loop = true;
-        audioRef?.current?.play();
+        // if (audioRef.current) audioRef.current.loop = true;
+        // audioRef?.current?.play();
+        TimerPlay();
         break;
       case "draw":
         preloadedAudio.filter((item) => item.type === "draw")[0]?.audio?.play();
@@ -268,6 +271,7 @@ const TablePage = () => {
         // if (audioRef.current) audioRef.current.src = SwapSound;
         audioRef?.current?.play();
       default:
+        stop();
         if (audioRef.current) audioRef?.current?.pause();
         preloadedAudio.forEach((sound) => {
           sound?.audio?.pause();
@@ -406,9 +410,9 @@ const TablePage = () => {
             [`reward2status.current`]: "unclaimed",
           });
         } else if (loseCount + 1 === 3) {
-          setTimeout(() => setIsBonusRound(true), 2500);
+          setTimeout(() => setIsBonusRound(true), 2000);
         } else if (loseCount + 1 === 8) {
-          setTimeout(() => setIsFreeRound(true), 2500);
+          setTimeout(() => setIsFreeRound(true), 2000);
         }
       }
       await updateDoc(userRef, {
@@ -449,7 +453,7 @@ const TablePage = () => {
   // Box Clicks
   const handleBox1Click = () => {
     const player = document.getElementById("player");
-    player.setAttribute("style", "top: -150px");
+    player?.setAttribute("style", "top: -150px");
     // audioPlayer("buttonclick");
 
     set(
@@ -467,7 +471,7 @@ const TablePage = () => {
   const handleBox2Click = () => {
     const player = document.getElementById("player");
     // audioPlayer("buttonclick");
-    player.setAttribute("style", "top: 48px");
+    player?.setAttribute("style", "top: 48px");
 
     set(
       ref(
@@ -591,6 +595,28 @@ const TablePage = () => {
 
   // use Effects
 
+  const handleClick = (e) => {
+    const divWidth = divRef.current.getBoundingClientRect().width;
+    const halfDivWidth = divWidth / 2;
+    const mouseXPos =
+      window.innerWidth <= 560
+        ? e.nativeEvent.offsetX * 2
+        : e.nativeEvent.offsetX;
+    if (mouseXPos <= halfDivWidth) {
+      if (!lockChoice) {
+        setWhichPart("first");
+        setIsOneWaiting(false);
+        handleButton1Click();
+      }
+    } else {
+      if (!lockChoice) {
+        setWhichPart("second");
+        setIsTwoWaiting(false);
+        handleButton2Click();
+      }
+    }
+  };
+
   // timer
   useEffect(() => {
     // Get a reference to the Firebase Realtime Database 'timer' node
@@ -610,6 +636,7 @@ const TablePage = () => {
 
     // Clean up the Firebase Realtime Database reference when the component unmounts
     return () => {
+      stop();
       onValue(timerRef, () => {}); // Remove the listener
       set(ref(getDatabase(), `timer${currentTable}`), tableTime); // Update the timer value on disconnect
       onDisconnect(ref(getDatabase(), `timer${currentTable}`)).cancel(); // Cancel the onDisconnect event
@@ -673,9 +700,6 @@ const TablePage = () => {
         }
       }
     } else if (time === 0) {
-      // preloadedAudio
-      //   .filter((item) => item.type === "countdown")[0]
-      //   ?.audio?.pause();
       setFinalResultCalled(true);
       !finalResultCalled && finalResult();
       setIsPaused(true);
@@ -730,7 +754,7 @@ const TablePage = () => {
           navigate(`/table/${currentTable}/error`);
           setModalOpen(false);
         }
-      }, 6000);
+      }, 7000);
     }
 
     // Clean up the interval when the component unmounts or the timer value becomes null
@@ -857,7 +881,7 @@ const TablePage = () => {
         setIndex(-1);
         audioPlayer("swapsound");
         setIsFlip(true);
-      }, 1800);
+      }, 4500);
 
       return () => {
         clearTimeout(timer);
@@ -926,7 +950,7 @@ const TablePage = () => {
       <LoadingSpinner />
     ) : (
       <div className="sm:w-[500px] h-[100vh] sm:mx-auto overflow-y-scroll overflow-x-hidden scrollbar-hide">
-        <audio ref={audioRef} preload="auto" src={TimerSound} />
+        {/* <audio ref={audioRef} preload="auto" src={TimerSound} /> */}
         <audio ref={winRef} preload="auto" src={WinSound} />
         <div className="flex justify-between my-2 mx-1">
           <Link to="/live">
@@ -997,6 +1021,7 @@ const TablePage = () => {
                   <OverlayMessage
                     // message="YOU WON! 🎉"
                     message={ConclusionData.bonusWinner}
+                    x
                     scale={1}
                     bonus={true}
                   />
@@ -1124,85 +1149,64 @@ const TablePage = () => {
               className={isFlip ? Styles.BoxFlip : Styles.Box}
             >
               {/* box1 */}
-              <div
-                className={Styles.box1main}
-                onClick={(e) => !lockChoice && handleButton1Click(e)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  zIndex:
-                    btn1Clicked &&
-                    GifData[index]?.styles?.enableZindexing &&
-                    15,
-                }}
-              >
+              {GifData[index]?.styles?.variant === "SingleBox" ? (
                 <div
-                  className="self-start"
-                  style={{ zIndex: "50", position: "absolute" }}
+                  ref={divRef}
+                  onClick={handleClick}
+                  className={Styles.MainBox}
                 >
-                  <div className="h-fit flex py-1 px-2 rounded-lg ml-4 mt-4 bg-red-500">
-                    <UserGroupIcon className="w-4 h-5 text-white mr-2" />
-                    <span className="font-semibold text-white text-[14px]">
-                      {liveUsers.length}{" "}
-                      <span className="text-[13px]">LIVE</span>
-                    </span>
+                  <div
+                    className="flex justify-between"
+                    style={{ width: "100%" }}
+                  >
+                    <div
+                      // className="self-start"
+                      style={{ zIndex: "50" }}
+                    >
+                      <div className="h-fit flex py-1 px-2 rounded-lg ml-4 mt-4 bg-red-500">
+                        <UserGroupIcon className="w-4 h-5 text-white mr-2" />
+                        <span className="font-semibold text-white text-[14px]">
+                          {liveUsers.length}{" "}
+                          <span className="text-[13px]">LIVE</span>
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="mr-2 mt-3" style={{ zIndex: 10 }}>
+                        <ProgressRing
+                          progress={calculateRingProgress()}
+                          timer={time}
+                          tableTime={tableTime}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-                {console.log("isOne Waiting  ", isOneWaiting)}
-                {console.log("isTwo Waiting ", isTwoWaiting)}
-                <span className={`text-[30px] text-gray-600 font-semibold`}>
-                  {console.log(tableButtonsType)}
-                  {tableButtonsType === "YELLOW_LR" ||
-                  tableButtonsType == "TURQ_12" ||
-                  tableButtonsType === "PINK_LR" ||
-                  tableButtonsType === "GRAY_12" ? (
-                    btn1Clicked ? (
-                      isPaused ? (
-                        box1Ratio > box2Ratio ? (
-                          <img
-                            loading="eager"
-                            src={GifData[index]?.waitingOne}
-                            className={
-                              GifData[index]?.sideOneTwo
-                                ? Styles?.SpecialHotCold
-                                : Styles?.LeftPotionGif
-                            }
-                          />
-                        ) : box1Ratio < box2Ratio ? (
-                          <div className={Styles?.BitCoinOne}>
-                            <img
-                              loading="eager"
-                              style={{
-                                transform: "scale(1.1)",
-                                marginTop: "13rem",
-                                scale: 1.5,
-                              }}
-                              src={ConclusionData?.BitCoinOne}
-                              className={Styles?.LeftPotionGifWinner}
-                            />
-                            <WinEffect side="left" value={tableAmount} />
-                          </div>
-                        ) : (
-                          <img
-                            loading="eager"
-                            src={GifData[index].waitingOne}
-                            className={
-                              GifData[index].sideOneTwo
-                                ? Styles.SpecialHotCold
-                                : Styles.LeftPotionGif
-                            }
-                          />
-                        )
-                      ) : !isOneWaiting ? (
+                  {btn1Clicked ? (
+                    isPaused ? (
+                      box1Ratio > box2Ratio ? (
                         <img
                           loading="eager"
-                          src={GifData[index].pressedOne}
+                          src={GifData[index]?.waitingOne}
                           className={
-                            GifData[index].sideOneTwo
-                              ? Styles.SpecialHotCold
-                              : Styles.LeftPotionGif
+                            GifData[index]?.sideOneTwo
+                              ? Styles?.SpecialHotCold
+                              : Styles?.LeftPotionGif
                           }
                         />
+                      ) : box1Ratio < box2Ratio ? (
+                        <div className={Styles?.BitCoinOne}>
+                          <img
+                            loading="eager"
+                            style={{
+                              transform: "scale(1.1)",
+                              marginTop: "13rem",
+                              scale: 1.5,
+                            }}
+                            src={ConclusionData?.BitCoinOne}
+                            className={Styles?.LeftPotionGifWinner}
+                          />
+                          <WinEffect side="left" value={tableAmount} />
+                        </div>
                       ) : (
                         <img
                           loading="eager"
@@ -1214,153 +1218,32 @@ const TablePage = () => {
                           }
                         />
                       )
+                    ) : !isOneWaiting ? (
+                      <img
+                        loading="eager"
+                        src={GifData[index].pressedOne}
+                        className={
+                          GifData[index].sideOneTwo
+                            ? Styles.SpecialHotCold
+                            : Styles.LeftPotionGif
+                        }
+                      />
                     ) : (
                       <img
                         loading="eager"
-                        onClick={() => handleOneClick()}
-                        src={GifData[index]?.thummbnailOne}
+                        src={GifData[index].waitingOne}
                         className={
-                          GifData[index]?.sideOneTwo
+                          GifData[index].sideOneTwo
                             ? Styles.SpecialHotCold
                             : Styles.LeftPotionGif
                         }
                       />
                     )
-                  ) : (
-                    " "
-                  )}
-                  {/* box1 res */}
-                  <div
-                    // className={`flex flex-row relative top-[10%] left-[10%] justify-center ${
-                    //   showResult ? "visible" : "invisible"
-                    // } `}
-                    className={isPaused ? Styles.Result : Styles.HiddenResult}
-                  >
-                    <div
-                    // className="rounded-md border border-gray-300 text-gray-600 shadow-md px-3 py-1 bg-white  text-[17px]"
-                    >
-                      {box1Ratio} %
-                    </div>
-                  </div>
-                </span>
-              </div>
-              {/* box2 */}
-              <div
-                className={Styles.BoxMain2}
-                onClick={() => !lockChoice && handleButton2Click()}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  zIndex:
-                    btn2Clicked &&
-                    GifData[index]?.styles?.enableZindexing &&
-                    15,
-                }}
-              >
-                <div
-                  className="self-end mr-2 mt-3 mb-[48px]"
-                  style={{ zIndex: 10 }}
-                >
-                  <ProgressRing
-                    progress={calculateRingProgress()}
-                    timer={time}
-                    tableTime={tableTime}
-                  />
-                </div>
-                <span className="text-[30px] mb-[50px] text-gray-600 font-semibold ">
-                  {tableButtonsType === "YELLOW_LR" ||
-                  tableButtonsType === "PINK_LR" ||
-                  tableButtonsType === "TURQ_12" ||
-                  tableButtonsType === "GRAY_12" ? (
-                    btn2Clicked ? (
-                      isPaused ? (
-                        box1Ratio < box2Ratio ? (
-                          <img
-                            loading="eager"
-                            style={
-                              GifData[index]?.designChangeTwo
-                                ? {
-                                    transform: "scale(0.8)",
-                                    marginTop: "-25px",
-                                  }
-                                : GifData[index]?.rotateTwo
-                                ? {
-                                    transform: "rotateY(180deg)",
-                                  }
-                                : {}
-                            }
-                            src={GifData[index]?.waitingTwo}
-                            className={
-                              GifData[index]?.sideOneTwo
-                                ? Styles.SpecialHotColdTwo
-                                : Styles.rightPortionGif
-                            }
-                          />
-                        ) : box1Ratio > box2Ratio ? (
-                          isCoinShowing && (
-                            <div className={Styles.BitCoin}>
-                              <img
-                                loading="eager"
-                                src={ConclusionData.BitCoinTwo}
-                                className={Styles.rightPortionWinBitCoin}
-                                style={{
-                                  transform: "scale(1.1)",
-                                  marginTop: "13rem",
-                                  scale: 1.5,
-                                }}
-                              />
-                              <WinEffect side="right" value={tableAmount} />
-                            </div>
-                          )
-                        ) : (
-                          <img
-                            loading="eager"
-                            style={
-                              GifData[index].designChangeTwo
-                                ? {
-                                    transform: "scale(0.8)",
-                                    marginTop: "-25px",
-                                  }
-                                : GifData[index].rotateTwo
-                                ? {
-                                    transform: "rotateY(180deg)",
-                                  }
-                                : {}
-                            }
-                            src={GifData[index].waitingTwo}
-                            className={
-                              GifData[index].sideOneTwo
-                                ? Styles.SpecialHotColdTwo
-                                : Styles.rightPortionGif
-                            }
-                          />
-                        )
-                      ) : !isTwoWaiting ? (
+                  ) : btn2Clicked ? (
+                    isPaused ? (
+                      box1Ratio < box2Ratio ? (
                         <img
                           loading="eager"
-                          src={GifData[index].pressedTwo}
-                          style={
-                            GifData[index].designChangeTwo
-                              ? {
-                                  transform: "scale(0.8)",
-                                  marginTop: "-25px",
-                                }
-                              : GifData[index].rotateTwo
-                              ? {
-                                  transform: "rotateY(180deg)",
-                                }
-                              : {}
-                          }
-                          className={
-                            GifData[index].sideOneTwo
-                              ? Styles.SpecialHotColdTwo
-                              : Styles.rightPortionGif
-                          }
-                        />
-                      ) : (
-                        <img
-                          loading="eager"
-                          src={GifData[index]?.waitingTwo}
                           style={
                             GifData[index]?.designChangeTwo
                               ? {
@@ -1373,17 +1256,78 @@ const TablePage = () => {
                                 }
                               : {}
                           }
+                          src={GifData[index]?.waitingTwo}
                           className={
                             GifData[index]?.sideOneTwo
                               ? Styles.SpecialHotColdTwo
                               : Styles.rightPortionGif
                           }
                         />
+                      ) : box1Ratio > box2Ratio ? (
+                        isCoinShowing && (
+                          <div className={Styles.BitCoinPortion}>
+                            <img
+                              loading="eager"
+                              src={ConclusionData.BitCoinTwo}
+                              className={Styles.rightPortionBitCoin}
+                              style={{
+                                transform: "scale(1.1)",
+                                marginTop: "5rem",
+                                scale: 1.5,
+                              }}
+                            />
+                            <WinEffect side="right" value={tableAmount} />
+                          </div>
+                        )
+                      ) : (
+                        <img
+                          loading="eager"
+                          style={
+                            GifData[index].designChangeTwo
+                              ? {
+                                  transform: "scale(0.8)",
+                                  marginTop: "-25px",
+                                }
+                              : GifData[index].rotateTwo
+                              ? {
+                                  transform: "rotateY(180deg)",
+                                }
+                              : {}
+                          }
+                          src={GifData[index].waitingTwo}
+                          className={
+                            GifData[index].sideOneTwo
+                              ? Styles.SpecialHotColdTwo
+                              : Styles.rightPortionGif
+                          }
+                        />
                       )
+                    ) : !isTwoWaiting ? (
+                      <img
+                        loading="eager"
+                        src={GifData[index].pressedTwo}
+                        style={
+                          GifData[index].designChangeTwo
+                            ? {
+                                transform: "scale(0.8)",
+                                marginTop: "-25px",
+                              }
+                            : GifData[index].rotateTwo
+                            ? {
+                                transform: "rotateY(180deg)",
+                              }
+                            : {}
+                        }
+                        className={
+                          GifData[index].sideOneTwo
+                            ? Styles.SpecialHotColdTwo
+                            : Styles.rightPortionGif
+                        }
+                      />
                     ) : (
                       <img
                         loading="eager"
-                        src={GifData[index]?.thumbnailTwo}
+                        src={GifData[index]?.waitingTwo}
                         style={
                           GifData[index]?.designChangeTwo
                             ? {
@@ -1396,7 +1340,6 @@ const TablePage = () => {
                               }
                             : {}
                         }
-                        onClick={handleTwoClick}
                         className={
                           GifData[index]?.sideOneTwo
                             ? Styles.SpecialHotColdTwo
@@ -1405,17 +1348,314 @@ const TablePage = () => {
                       />
                     )
                   ) : (
-                    " "
+                    <img
+                      src={GifData[index]?.thumbnail}
+                      style={{
+                        opacity: time === 0 && 0.9,
+                      }}
+                    />
                   )}
-                  {/* box2 res */}
-                  {console.log("box 2 vote is ", box2Ratio)}
+                </div>
+              ) : (
+                <>
                   <div
-                    className={isPaused ? Styles.Result : Styles.HiddenResult}
+                    className={Styles.box1main}
+                    onClick={(e) => !lockChoice && handleButton1Click(e)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      zIndex:
+                        btn1Clicked &&
+                        GifData[index]?.styles?.enableZindexing &&
+                        15,
+                    }}
                   >
-                    <div>{box2Ratio} %</div>
+                    <div
+                      className="self-start"
+                      style={{ zIndex: "50", position: "absolute" }}
+                    >
+                      <div className="h-fit flex py-1 px-2 rounded-lg ml-4 mt-4 bg-red-500">
+                        <UserGroupIcon className="w-4 h-5 text-white mr-2" />
+                        <span className="font-semibold text-white text-[14px]">
+                          {liveUsers.length}{" "}
+                          <span className="text-[13px]">LIVE</span>
+                        </span>
+                      </div>
+                    </div>
+                    {console.log("isOne Waiting  ", isOneWaiting)}
+                    {console.log("isTwo Waiting ", isTwoWaiting)}
+                    <span className={`text-[30px] text-gray-600 font-semibold`}>
+                      {console.log(tableButtonsType)}
+                      {tableButtonsType === "YELLOW_LR" ||
+                      tableButtonsType == "TURQ_12" ||
+                      tableButtonsType === "PINK_LR" ||
+                      tableButtonsType === "GRAY_12" ? (
+                        btn1Clicked ? (
+                          isPaused ? (
+                            box1Ratio > box2Ratio ? (
+                              <img
+                                loading="eager"
+                                src={GifData[index]?.waitingOne}
+                                className={
+                                  GifData[index]?.sideOneTwo
+                                    ? Styles?.SpecialHotCold
+                                    : Styles?.LeftPotionGif
+                                }
+                              />
+                            ) : box1Ratio < box2Ratio ? (
+                              <div className={Styles?.BitCoinOne}>
+                                <img
+                                  loading="eager"
+                                  style={{
+                                    transform: "scale(1.1)",
+                                    marginTop: "13rem",
+                                    scale: 1.5,
+                                  }}
+                                  src={ConclusionData?.BitCoinOne}
+                                  className={Styles?.LeftPotionGifWinner}
+                                />
+                                <WinEffect side="left" value={tableAmount} />
+                              </div>
+                            ) : (
+                              <img
+                                loading="eager"
+                                src={GifData[index].waitingOne}
+                                className={
+                                  GifData[index].sideOneTwo
+                                    ? Styles.SpecialHotCold
+                                    : Styles.LeftPotionGif
+                                }
+                              />
+                            )
+                          ) : !isOneWaiting ? (
+                            <img
+                              loading="eager"
+                              src={GifData[index].pressedOne}
+                              className={
+                                GifData[index].sideOneTwo
+                                  ? Styles.SpecialHotCold
+                                  : Styles.LeftPotionGif
+                              }
+                            />
+                          ) : (
+                            <img
+                              loading="eager"
+                              src={GifData[index].waitingOne}
+                              className={
+                                GifData[index].sideOneTwo
+                                  ? Styles.SpecialHotCold
+                                  : Styles.LeftPotionGif
+                              }
+                            />
+                          )
+                        ) : (
+                          <img
+                            loading="eager"
+                            onClick={() => handleOneClick()}
+                            src={GifData[index]?.thummbnailOne}
+                            className={
+                              GifData[index]?.sideOneTwo
+                                ? Styles.SpecialHotCold
+                                : Styles.LeftPotionGif
+                            }
+                          />
+                        )
+                      ) : (
+                        " "
+                      )}
+                      {/* box1 res */}
+                      <div
+                        // className={`flex flex-row relative top-[10%] left-[10%] justify-center ${
+                        //   showResult ? "visible" : "invisible"
+                        // } `}
+                        className={
+                          isPaused ? Styles.Result : Styles.HiddenResult
+                        }
+                      >
+                        <div
+                        // className="rounded-md border border-gray-300 text-gray-600 shadow-md px-3 py-1 bg-white  text-[17px]"
+                        >
+                          {box1Ratio} %
+                        </div>
+                      </div>
+                    </span>
                   </div>
-                </span>
-              </div>
+                  <div
+                    className={Styles.BoxMain2}
+                    onClick={() => !lockChoice && handleButton2Click()}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      zIndex:
+                        btn2Clicked &&
+                        GifData[index]?.styles?.enableZindexing &&
+                        15,
+                    }}
+                  >
+                    <div
+                      className="self-end mr-2 mt-3 mb-[48px]"
+                      style={{ zIndex: 10 }}
+                    >
+                      <ProgressRing
+                        progress={calculateRingProgress()}
+                        timer={time}
+                        tableTime={tableTime}
+                      />
+                    </div>
+                    <span className="text-[30px] mb-[50px] text-gray-600 font-semibold ">
+                      {tableButtonsType === "YELLOW_LR" ||
+                      tableButtonsType === "PINK_LR" ||
+                      tableButtonsType === "TURQ_12" ||
+                      tableButtonsType === "GRAY_12" ? (
+                        btn2Clicked ? (
+                          isPaused ? (
+                            box1Ratio < box2Ratio ? (
+                              <img
+                                loading="eager"
+                                style={
+                                  GifData[index]?.designChangeTwo
+                                    ? {
+                                        transform: "scale(0.8)",
+                                        marginTop: "-25px",
+                                      }
+                                    : GifData[index]?.rotateTwo
+                                    ? {
+                                        transform: "rotateY(180deg)",
+                                      }
+                                    : {}
+                                }
+                                src={GifData[index]?.waitingTwo}
+                                className={
+                                  GifData[index]?.sideOneTwo
+                                    ? Styles.SpecialHotColdTwo
+                                    : Styles.rightPortionGif
+                                }
+                              />
+                            ) : box1Ratio > box2Ratio ? (
+                              isCoinShowing && (
+                                <div className={Styles.BitCoin}>
+                                  <img
+                                    loading="eager"
+                                    src={ConclusionData.BitCoinTwo}
+                                    className={Styles.rightPortionWinBitCoin}
+                                    style={{
+                                      transform: "scale(1.1)",
+                                      marginTop: "13rem",
+                                      scale: 1.5,
+                                    }}
+                                  />
+                                  <WinEffect side="right" value={tableAmount} />
+                                </div>
+                              )
+                            ) : (
+                              <img
+                                loading="eager"
+                                style={
+                                  GifData[index].designChangeTwo
+                                    ? {
+                                        transform: "scale(0.8)",
+                                        marginTop: "-25px",
+                                      }
+                                    : GifData[index].rotateTwo
+                                    ? {
+                                        transform: "rotateY(180deg)",
+                                      }
+                                    : {}
+                                }
+                                src={GifData[index].waitingTwo}
+                                className={
+                                  GifData[index].sideOneTwo
+                                    ? Styles.SpecialHotColdTwo
+                                    : Styles.rightPortionGif
+                                }
+                              />
+                            )
+                          ) : !isTwoWaiting ? (
+                            <img
+                              loading="eager"
+                              src={GifData[index].pressedTwo}
+                              style={
+                                GifData[index].designChangeTwo
+                                  ? {
+                                      transform: "scale(0.8)",
+                                      marginTop: "-25px",
+                                    }
+                                  : GifData[index].rotateTwo
+                                  ? {
+                                      transform: "rotateY(180deg)",
+                                    }
+                                  : {}
+                              }
+                              className={
+                                GifData[index].sideOneTwo
+                                  ? Styles.SpecialHotColdTwo
+                                  : Styles.rightPortionGif
+                              }
+                            />
+                          ) : (
+                            <img
+                              loading="eager"
+                              src={GifData[index]?.waitingTwo}
+                              style={
+                                GifData[index]?.designChangeTwo
+                                  ? {
+                                      transform: "scale(0.8)",
+                                      marginTop: "-25px",
+                                    }
+                                  : GifData[index]?.rotateTwo
+                                  ? {
+                                      transform: "rotateY(180deg)",
+                                    }
+                                  : {}
+                              }
+                              className={
+                                GifData[index]?.sideOneTwo
+                                  ? Styles.SpecialHotColdTwo
+                                  : Styles.rightPortionGif
+                              }
+                            />
+                          )
+                        ) : (
+                          <img
+                            loading="eager"
+                            src={GifData[index]?.thumbnailTwo}
+                            style={
+                              GifData[index]?.designChangeTwo
+                                ? {
+                                    transform: "scale(0.8)",
+                                    marginTop: "-25px",
+                                  }
+                                : GifData[index]?.rotateTwo
+                                ? {
+                                    transform: "rotateY(180deg)",
+                                  }
+                                : {}
+                            }
+                            onClick={handleTwoClick}
+                            className={
+                              GifData[index]?.sideOneTwo
+                                ? Styles.SpecialHotColdTwo
+                                : Styles.rightPortionGif
+                            }
+                          />
+                        )
+                      ) : (
+                        " "
+                      )}
+                      {/* box2 res */}
+                      {console.log("box 2 vote is ", box2Ratio)}
+                      <div
+                        className={
+                          isPaused ? Styles.Result : Styles.HiddenResult
+                        }
+                      >
+                        <div>{box2Ratio} %</div>
+                      </div>
+                    </span>
+                  </div>
+                </>
+              )}
+
               <span className="fixed bottom-[85px] right-0 md:right-[28%] lg:right-[34%] sm:bottom-[15%] mb-4 mr-4">
                 <div
                   className="border-[1px] p-3 border-gray-700 rounded-full shadow-md bg-white"

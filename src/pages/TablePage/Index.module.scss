@@ -206,7 +206,7 @@
 }
 
 .BitCoinPortion {
-  height: 50vh;
+  height: 100vh;
   position: absolute;
   left: 0;
   top: 0;
@@ -215,7 +215,7 @@
 .rightPortionBitCoin {
   margin-left: -8rem;
   // margin-bottom: 12rem;
-  margin-top: -50rem;
+  // margin-top: -50rem;
   scale: 1.5;
   @media (max-width: 576px) {
     margin-left: 0rem;
@@ -226,7 +226,7 @@
 }
 
 .BitCoinOne {
-  height: 80vh;
+  height: 100vh;
   width: 15.55vw;
   position: absolute;
   left: 0;
@@ -476,7 +476,8 @@
 .thorLokiStyles {
   .box1main,
   .BoxMain2 {
-    background-color: lightcyan;
+    background-color: #182b3a;
+    background-image: linear-gradient(315deg, #182b3a 0%, #20a4f3 74%);    
   }
   @media ((max-width: 576px)) {
     .LeftPotionGif {
@@ -510,23 +511,28 @@
   .MainBox {
     background-color: black;
     img {
-      scale: 1.1;
+      scale: 1.4;
+      width: 20vw;
+      // transform: scaleX(2);
+      // margin-top: -3rem;
     }
   }
   .LeftPotionGif {
     margin-left: 0;
-    margin-top: 0;
+    margin-top: -6rem;
   }
   .rightPortionGif {
     margin-left: 0;
-    margin-top: 0 !important;
+    margin-top: -6rem !important;
   }
 
   @media ((max-width: 576px)) {
     .MainBox {
       background-color: black;
       img {
-        scale: 1;
+        scale: 1.4;
+        width: 50vw;
+        transform: scaleX(2);
       }
     }
     .LeftPotionGif {
@@ -552,14 +558,26 @@
       margin-left: 0;
       margin-top: 0 !important;
     }
-    .Box {
-      height: 100vh;
+    .MainBox {
+      background-color: black;
+      img {
+        scale: 1.4;
+        width: 35vw;
+        height: 100vh;
+      }
     }
   }
 }
 .yodaVaderStyles {
   .MainBox {
-    background-color: gray;
+    // background-color: gray;
+    background-color: #2b4162;
+    background-image: linear-gradient(315deg, #2b4162 0%, #12100e 74%);
+
+    img {
+      margin-top: -6rem;
+      height: 100vh;
+    }
   }
   .LeftPotionGif {
     margin-left: 0;
@@ -571,31 +589,39 @@
   }
   @media (max-width: 560px) {
     .LeftPotionGif {
-      transform: scaleX(1.8);
+      transform: scaleX(2);
       margin-left: 0rem;
-      margin-top: 0rem !important;
+      margin-top: -6rem !important;
     }
     .rightPortionGif {
-      transform: scaleX(1.8);
+      transform: scaleX(2);
       margin-left: 0rem;
-      margin-top: 0rem !important;
+      margin-top: -6rem !important;
     }
   }
   @media (max-width: 420px) {
     .LeftPotionGif {
-      transform: scaleX(1.8);
+      transform: scaleX(2);
       margin-left: 0rem;
-      margin-top: 0rem !important;
+      margin-top: -6rem !important;
     }
     .rightPortionGif {
-      transform: scaleX(1.8);
+      transform: scaleX(2);
       margin-left: 0rem;
-      margin-top: 0rem !important;
+      margin-top: -6rem !important;
     }
   }
 }
 
 .mailLetterStyles {
+  .MainBox {
+    img {
+      margin-left: 0rem;
+      margin-top: -6rem;
+      height: 88vh;
+      width: 100vw;
+    }
+  }
   .LeftPotionGif {
     margin-left: 0;
     margin-top: 0;
@@ -605,38 +631,61 @@
     margin-top: 0;
   }
   @media (max-width: 560px) {
+    .MainBox {
+      img {
+        margin-left: 0rem;
+        margin-top: -6rem !important;
+        height: 88vh !important;
+        width: 100vw;
+      }
+    }
     .LeftPotionGif {
-      transform: scaleX(2);
+      transform: scaleX(1);
       margin-left: 0rem;
       margin-top: 0rem !important;
     }
     .rightPortionGif {
-      transform: scaleX(2);
+      transform: scaleX(1);
       margin-left: 0rem;
       margin-top: 0rem !important;
     }
   }
   @media (max-width: 420px) {
     .LeftPotionGif {
-      transform: scaleX(2);
+      transform: scaleX(1);
       margin-left: 0rem;
       margin-top: 0rem !important;
     }
     .rightPortionGif {
-      transform: scaleX(2);
+      transform: scaleX(1);
       margin-left: 0rem;
       margin-top: 0rem !important;
     }
   }
 }
 .rightLeftTriangle {
+  background-color: darkred;
   .LeftPotionGif {
-    scale: 1;
-    margin-right: -7rem;
+    scale: 1.5;
+    margin-left: 8rem;
+    transform: scaleX(2);
+    height: 97vh;
+    width: 50vw;
+    margin-top: -5rem;
   }
   .rightPortionGif {
-    scale: 1;
-    margin-left: -7rem;
+    scale: 1.5;
+    transform: scaleX(2);
+    margin-left: -8rem;
+    height: 97vh;
+    width: 50vw;
+    margin-top: -11.25rem;
+  }
+  @media (max-width: 560px) {
+    .rightPortionGif {
+      width: 100vw;
+      margin-top: -11.25rem !important;
+    }
   }
 }
 
@@ -722,39 +771,47 @@
 }
 
 .lionSheepStyles {
-  .rightPortionGif {
-    margin-top: 0rem;
-    height: 80vh;
+  .MainBox {
+    img {
+      margin-top: -6rem;
+      height: 88vh;
+      width: 100vw;
+    }
   }
   @media (max-width: 560px) {
     .MainBox {
-      width: 100vw !important;
-      height: 72vh;
+      img {
+        margin-top: -6rem !important;
+        height: 88vh !important;
+      }
     }
     .LeftPotionGif {
       height: 72vh;
       margin-top: 0rem;
     }
     .rightPortionGif {
-      margin-top: 0rem;
+      // margin-top: 0rem;
       height: 72vh;
     }
   }
   @media ((max-width: 420px)) {
     .LeftPotionGif {
-      margin-top: 0rem !important;
+      // margin-top: 0rem !important;
       height: 72vh;
-      transform: scaleX(2);
+      transform: scaleX(1);
       // scale: 2;
     }
     .MainBox {
-      width: 100vw !important;
+      img {
+        margin-top: -6rem !important;
+        height: 88vh !important;
+      }
     }
     .rightPortionGif {
       // scale: 2;
-      transform: scaleX(2);
+      transform: scaleX(1);
       height: 72vh;
-      margin-top: 0rem !important;
+      // margin-top: 0rem !important;
     }
   }
 }
@@ -763,13 +820,14 @@
   .MainBox {
     background-color: aqua;
     img {
-      height: 72vh;
+      margin-top: -4rem;
+      height: 85vh;
     }
   }
 
   .rightPortionGif {
-    margin-top: 0rem;
-    height: 72vh;
+    margin-top: -4rem !important;
+    height: 85vh !important;
   }
   .LeftPortionGif {
     height: 72vh;
@@ -786,23 +844,121 @@
     }
     .rightPortionGif {
       // scale: 1.5;
-      margin-top: 0rem;
+      // margin-top: 0rem !important;
       transform: scaleX(2);
     }
   }
   @media ((max-width: 420px)) {
     .LeftPotionGif {
-      margin-top: 0rem !important;
+      margin-top: -4rem !important;
       transform: scaleX(2);
     }
     .MainBox {
       background-color: aqua;
       width: 100vw !important;
+      margin-top: 0rem;
     }
     .rightPortionGif {
       // scale: 1.5;
       transform: scaleX(2);
+      margin-top: -4rem !important;
+    }
+  }
+}
+
+.herbAloStyles {
+  .MainBox {
+    background-color: magenta;
+    img {
+      margin-left: 0rem;
+      margin-top: -6rem;
+      height: 88vh;
+      width: 100vw;
+    }
+  }
+  .LeftPotionGif {
+    margin-left: 0;
+    margin-top: 0;
+  }
+  .rightPortionGif {
+    margin-left: 0;
+    margin-top: 0;
+  }
+  @media (max-width: 560px) {
+    .MainBox {
+      img {
+        margin-left: 0rem;
+        margin-top: -6rem !important;
+        height: 88vh !important;
+        width: 100vw;
+      }
+    }
+    .LeftPotionGif {
+      transform: scaleX(1);
+      margin-left: 0rem;
       margin-top: 0rem !important;
+    }
+    .rightPortionGif {
+      transform: scaleX(1);
+      margin-left: 0rem;
+      margin-top: 0rem !important;
+    }
+  }
+  @media (max-width: 420px) {
+    .LeftPotionGif {
+      transform: scaleX(1);
+      margin-left: 0rem;
+      margin-top: 0rem !important;
+    }
+    .rightPortionGif {
+      transform: scaleX(1);
+      margin-left: 0rem;
+      margin-top: 0rem !important;
+    }
+  }
+}
+
+.swordElectionStyles {
+  @media (min-width: 576px) {
+    .LeftPotionGif {
+      margin-left: 0rem;
+      transform: scaleY(1.25);
+      margin-top: 6.25rem !important;
+    }
+    .rightPortionGif {
+      height: 80vh;
+      width: 50vw;
+      margin-top: -14.25rem;
+      transform: scaleY(1.25);
+    }
+  }
+  @media (max-width: 576px) {
+    .LeftPotionGif {
+      margin-left: 0rem;
+      margin-top: 0rem !important;
+    }
+    .rightPortionGif {
+      margin-left: 0rem;
+      margin-top: -15rem !important;
+    }
+  }
+  @media (max-width: 420px) {
+    .LeftPotionGif {
+      margin-left: 0rem;
+      margin-top: 0rem !important;
+    }
+    .rightPortionGif {
+      margin-left: 0rem;
+      margin-top: -14rem !important;
+    }
+  }
+}
+
+.oilFuelStyles {
+  @media (max-width: 420px) {
+    .rightPortionGif {
+      height: 95vh;
+      margin-top: -7rem !important;
     }
   }
 }

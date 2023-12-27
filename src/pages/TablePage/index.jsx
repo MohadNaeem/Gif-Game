@@ -197,9 +197,10 @@ const TablePage = () => {
   const [letUserIn, setLetUserIn] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [currentSound, setCurrentSound] = useState("");
+  const [timerOn, setTimerOn] = useState(false);
   const [play] = useSound(WinSound);
   const [playLose] = useSound(LoseSound);
-  const [TimerPlay, { stop }] = useSound(TimerSound);
+  const [TimerPlay, { stop, pause }] = useSound(TimerSound);
   const [tableAmount, setTableAmount] = useAtom(InputTableAmount);
   const [preloadedAudio, setPreloadedAudio] = useState([]);
   const [finalResultCalled, setFinalResultCalled] = useState(false);
@@ -257,6 +258,7 @@ const TablePage = () => {
         // if (audioRef.current) audioRef.current.loop = true;
         // audioRef?.current?.play();
         TimerPlay();
+        setTimerOn(true);
         break;
       case "draw":
         preloadedAudio.filter((item) => item.type === "draw")[0]?.audio?.play();
@@ -272,6 +274,8 @@ const TablePage = () => {
         audioRef?.current?.play();
       default:
         stop();
+        pause();
+        setTimerOn(false);
         if (audioRef.current) audioRef?.current?.pause();
         preloadedAudio.forEach((sound) => {
           sound?.audio?.pause();
@@ -636,7 +640,7 @@ const TablePage = () => {
 
     // Clean up the Firebase Realtime Database reference when the component unmounts
     return () => {
-      stop();
+      audioPlayer();
       onValue(timerRef, () => {}); // Remove the listener
       set(ref(getDatabase(), `timer${currentTable}`), tableTime); // Update the timer value on disconnect
       onDisconnect(ref(getDatabase(), `timer${currentTable}`)).cancel(); // Cancel the onDisconnect event
@@ -656,7 +660,8 @@ const TablePage = () => {
     // Automatically decrement the timer value every second
     let intervalId;
     if (time > 0 && !isPaused) {
-      audioPlayer("countdown");
+      console.log("played");
+      if (!timerOn) audioPlayer("countdown");
       intervalId = setInterval(() => {
         set(ref(getDatabase(), `timer${currentTable}`), time - 1);
       }, 1000);
@@ -1172,7 +1177,7 @@ const TablePage = () => {
                       </div>
                     </div>
                     <div>
-                      <div className="mr-2 mt-3" style={{ zIndex: 10 }}>
+                      <div className="mr-2 mt-3" style={{ zIndex: 50 }}>
                         <ProgressRing
                           progress={calculateRingProgress()}
                           timer={time}
@@ -1270,11 +1275,11 @@ const TablePage = () => {
                               loading="eager"
                               src={ConclusionData.BitCoinTwo}
                               className={Styles.rightPortionBitCoin}
-                              style={{
-                                transform: "scale(1.1)",
-                                marginTop: "5rem",
-                                scale: 1.5,
-                              }}
+                              // style={{
+                              //   transform: "scale(1.1)",
+                              //   marginTop: "5rem",
+                              //   scale: 1.5,
+                              // }}
                             />
                             <WinEffect side="right" value={tableAmount} />
                           </div>
@@ -1372,7 +1377,7 @@ const TablePage = () => {
                   >
                     <div
                       className="self-start"
-                      style={{ zIndex: "50", position: "absolute" }}
+                      style={{ zIndex: 50, position: "absolute" }}
                     >
                       <div className="h-fit flex py-1 px-2 rounded-lg ml-4 mt-4 bg-red-500">
                         <UserGroupIcon className="w-4 h-5 text-white mr-2" />
@@ -1406,11 +1411,11 @@ const TablePage = () => {
                               <div className={Styles?.BitCoinOne}>
                                 <img
                                   loading="eager"
-                                  style={{
-                                    transform: "scale(1.1)",
-                                    marginTop: "13rem",
-                                    scale: 1.5,
-                                  }}
+                                  // style={{
+                                  //   transform: "scale(1.1)",
+                                  //   marginTop: "13rem",
+                                  //   scale: 1.5,
+                                  // }}
                                   src={ConclusionData?.BitCoinOne}
                                   className={Styles?.LeftPotionGifWinner}
                                 />
@@ -1494,7 +1499,7 @@ const TablePage = () => {
                   >
                     <div
                       className="self-end mr-2 mt-3 mb-[48px]"
-                      style={{ zIndex: 10 }}
+                      style={{ zIndex: 50 }}
                     >
                       <ProgressRing
                         progress={calculateRingProgress()}
@@ -1540,7 +1545,7 @@ const TablePage = () => {
                                     className={Styles.rightPortionWinBitCoin}
                                     style={{
                                       transform: "scale(1.1)",
-                                      marginTop: "13rem",
+                                      marginTop: "10rem",
                                       scale: 1.5,
                                     }}
                                   />
@@ -1677,7 +1682,7 @@ const TablePage = () => {
                   </span>
                 </div>
 
-                <div className="mr-2 mt-2">
+                <div className="mr-2 mt-2" style={{ zIndex: 50 }}>
                   <ProgressRing
                     progress={calculateRingProgress()}
                     timer={time}

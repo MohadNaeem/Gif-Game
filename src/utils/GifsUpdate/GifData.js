@@ -71,10 +71,10 @@ import LeftWaiting from "../../assets/gif/Sorted Gifs/Left vs Right Road/Left/L_
 import RightThumbnail from "../../assets/gif/Sorted Gifs/Left vs Right Road/Right/R_Press.jpg";
 import RightPress from "../../assets/gif/Sorted Gifs/Left vs Right Road/Right/R_Press.gif";
 import RightWaiting from "../../assets/gif/Sorted Gifs/Left vs Right Road/Right/R_Waiting.gif";
-import LeftTriangleThumbnail from "../../assets/gif/Sorted Gifs/Left vs Right Traingle/Left/L_Press.jpg";
+import LeftTriangleThumbnail from "../../assets/gif/Sorted Gifs/Left vs Right Traingle/Left/L_Press.png";
 import LeftTrianglePress from "../../assets/gif/Sorted Gifs/Left vs Right Traingle/Left/L_Press.gif";
 import LeftTriangleWaiting from "../../assets/gif/Sorted Gifs/Left vs Right Traingle/Left/L_Waiting.gif";
-import RightTriangleThumbnail from "../../assets/gif/Sorted Gifs/Left vs Right Traingle/Right/R_Press.jpg";
+import RightTriangleThumbnail from "../../assets/gif/Sorted Gifs/Left vs Right Traingle/Right/R_Press.png";
 import RightTrianglePress from "../../assets/gif/Sorted Gifs/Left vs Right Traingle/Right/R_Press.gif";
 import RightTriangleWaiting from "../../assets/gif/Sorted Gifs/Left vs Right Traingle/Right/R_Waiting.gif";
 import FreeRound from "../../assets/gif/Conclusion gifs/FREE ROUND.gif";
@@ -112,6 +112,28 @@ import MailWaiting from "../../assets/gif/Sorted Gifs/Mail vs Letter/mail-waitin
 import MailLetter from "../../assets/gif/Sorted Gifs/Mail vs Letter/MailLetter.png";
 import LetterPress from "../../assets/gif/Sorted Gifs/Mail vs Letter/letter-press.gif";
 import LetterWaiting from "../../assets/gif/Sorted Gifs/Mail vs Letter/letter-waiting.gif";
+import HerbPress from "../../assets/gif/Sorted Gifs/herb vs fpharma/herb/herb-press.gif";
+import HerbWaiting from "../../assets/gif/Sorted Gifs/herb vs fpharma/herb/herb-waiting.gif";
+import AloPress from "../../assets/gif/Sorted Gifs/herb vs fpharma/alo/alo-press-1.gif";
+import AloWaiting from "../../assets/gif/Sorted Gifs/herb vs fpharma/alo/alo-press.gif";
+import HerbAloThumbnail from "../../assets/gif/Sorted Gifs/herb vs fpharma/HerbAloThumbnail.png";
+import BluePillPress from "../../assets/gif/Sorted Gifs/pill/blue/blue-press.gif";
+import BluePillWaiting from "../../assets/gif/Sorted Gifs/pill/blue/blue-wating.gif";
+import RedPillPress from "../../assets/gif/Sorted Gifs/pill/red/red-press.gif";
+import RedPillWaiting from "../../assets/gif/Sorted Gifs/pill/red/red-waiting.gif";
+import RedBlueThumbnail from "../../assets/gif/Sorted Gifs/pill/BlueRedThumbnail.png";
+import FuelPress from "../../assets/gif/Sorted Gifs/Clean Energy: Fossil Fuels/natural-flue-press.gif";
+import FuelPressThumbnail from "../../assets/gif/Sorted Gifs/Clean Energy: Fossil Fuels/natural-flue-press.jpg";
+import FuelPressWaiting from "../../assets/gif/Sorted Gifs/Clean Energy: Fossil Fuels/natural-flue-waiting.gif";
+import OilPress from "../../assets/gif/Sorted Gifs/Clean Energy: Fossil Fuels/oil-pressing.gif";
+import OilPressThumbnail from "../../assets/gif/Sorted Gifs/Clean Energy: Fossil Fuels/oil-pressing.jpg";
+import OilPressWaiting from "../../assets/gif/Sorted Gifs/Clean Energy: Fossil Fuels/oil-waiting.gif";
+import ElectionPress from "../../assets/gif/Sorted Gifs/re public/election-press.gif";
+import ElectionThumbnail from "../../assets/gif/Sorted Gifs/re public/election-press.jpg";
+import ElectionWaiting from "../../assets/gif/Sorted Gifs/re public/election-waiting.gif";
+import SwordPress from "../../assets/gif/Sorted Gifs/re public/sword-press.gif";
+import SwordPressThumbnail from "../../assets/gif/Sorted Gifs/re public/sword-press.jpg";
+import SwordWaiting from "../../assets/gif/Sorted Gifs/re public/sword-waiting.gif";
 import Lock from "../../assets/gif/Conclusion gifs/Lock.gif";
 import Spectator from "../../assets/gif/Conclusion gifs/Spectator.gif";
 
@@ -119,113 +141,113 @@ const time1 = 2000;
 const time2 = 3000;
 
 export const GifData = [
-  // {
-  //   thummbnailOne: CandleOffThumbnail,
-  //   pressedOne: CandleOffPressed,
-  //   waitingOne: CandleOffWaiting,
-  //   thumbnailTwo: candleOnThumbnail,
-  //   pressedTwo: candleOnPressed,
-  //   waitingTwo: candleOnWaiting,
-  //   timerOne: 1200,
-  //   timerTwo: 1200,
-  //   rotateTwo: true,
-  //   styles: {
-  //     className: "candleGif",
-  //   },
-  // },
-  // {
-  //   thummbnailOne: AdamEveThumbnail,
-  //   pressedOne: AdamPressed,
-  //   waitingOne: AdamWait,
-  //   thumbnailTwo: EvoultionThumbnail,
-  //   pressedTwo: EvoultionPressed,
-  //   waitingTwo: EvoultionWaiting,
-  //   timerOne: 1650,
-  //   timerTwo: 2500,
-  //   designChangeTwo: true,
-  //   styles: {
-  //     className: "adamEvilStyles",
-  //   },
-  // },
-  // {
-  //   thummbnailOne: coldThumbnail,
-  //   pressedOne: coldPressed,
-  //   waitingOne: coldWaiting,
-  //   thumbnailTwo: hotThumbnail,
-  //   pressedTwo: hotPressed,
-  //   waitingTwo: hotWaiting,
-  //   timerOne: 600,
-  //   timerTwo: 750,
-  //   sideOneTwo: true,
-  //   styles: {
-  //     className: "coldHotGif",
-  //   },
-  // },
-  // {
-  //   thummbnailOne: goodThumbnail,
-  //   pressedOne: goodPressed,
-  //   waitingOne: goodWaiting,
-  //   thumbnailTwo: badThumbnail,
-  //   pressedTwo: badPressed,
-  //   waitingTwo: badWaiting,
-  //   timerOne: 1300,
-  //   timerTwo: 1550,
-  //   styles: {
-  //     className: "goodEvilStyles",
-  //   },
-  // },
-  // {
-  //   thummbnailOne: healthyThumbnail,
-  //   pressedOne: healthyPressed,
-  //   waitingOne: healthyWaiting,
-  //   thumbnailTwo: fastThumbail,
-  //   pressedTwo: fastPressed,
-  //   waitingTwo: fastWaiting,
-  //   timerOne: 2000,
-  //   timerTwo: 2320,
-  //   styles: {
-  //     className: "fastHealthyStyles",
-  //   },
-  // },
-  // {
-  //   thummbnailOne: thorThumbnail,
-  //   pressedOne: thorPressed,
-  //   waitingOne: thorWaiting,
-  //   thumbnailTwo: lokiThumbnail,
-  //   pressedTwo: lokiPressed,
-  //   waitingTwo: lokiWaiting,
-  //   timerOne: 1100,
-  //   timerTwo: 1100,
-  //   styles: {
-  //     className: "thorLokiStyles",
-  //   },
-  // },
-  // {
-  //   thummbnailOne: UpThumbnail,
-  //   pressedOne: UpPressed,
-  //   waitingOne: UpPressed,
-  //   thumbnailTwo: DownThumbnail,
-  //   pressedTwo: DownPressed,
-  //   waitingTwo: DownPressed,
-  //   timerOne: time1,
-  //   timerTwo: time2,
-  //   styles: {
-  //     className: "upDownStyles",
-  //   },
-  // },
-  // {
-  //   thummbnailOne: DownThumbnail,
-  //   pressedOne: DownPressed,
-  //   waitingOne: DownPressed,
-  //   thumbnailTwo: UpThumbnail,
-  //   pressedTwo: UpPressed,
-  //   waitingTwo: UpPressed,
-  //   timerOne: time1,
-  //   timerTwo: time2,
-  //   styles: {
-  //     className: "upDownStyles",
-  //   },
-  // },
+  {
+    thummbnailOne: CandleOffThumbnail,
+    pressedOne: CandleOffPressed,
+    waitingOne: CandleOffWaiting,
+    thumbnailTwo: candleOnThumbnail,
+    pressedTwo: candleOnPressed,
+    waitingTwo: candleOnWaiting,
+    timerOne: 1200,
+    timerTwo: 1200,
+    rotateTwo: true,
+    styles: {
+      className: "candleGif",
+    },
+  },
+  {
+    thummbnailOne: AdamEveThumbnail,
+    pressedOne: AdamPressed,
+    waitingOne: AdamWait,
+    thumbnailTwo: EvoultionThumbnail,
+    pressedTwo: EvoultionPressed,
+    waitingTwo: EvoultionWaiting,
+    timerOne: 1650,
+    timerTwo: 2500,
+    designChangeTwo: true,
+    styles: {
+      className: "adamEvilStyles",
+    },
+  },
+  {
+    thummbnailOne: coldThumbnail,
+    pressedOne: coldPressed,
+    waitingOne: coldWaiting,
+    thumbnailTwo: hotThumbnail,
+    pressedTwo: hotPressed,
+    waitingTwo: hotWaiting,
+    timerOne: 600,
+    timerTwo: 750,
+    sideOneTwo: true,
+    styles: {
+      className: "coldHotGif",
+    },
+  },
+  {
+    thummbnailOne: goodThumbnail,
+    pressedOne: goodPressed,
+    waitingOne: goodWaiting,
+    thumbnailTwo: badThumbnail,
+    pressedTwo: badPressed,
+    waitingTwo: badWaiting,
+    timerOne: 1300,
+    timerTwo: 1550,
+    styles: {
+      className: "goodEvilStyles",
+    },
+  },
+  {
+    thummbnailOne: healthyThumbnail,
+    pressedOne: healthyPressed,
+    waitingOne: healthyWaiting,
+    thumbnailTwo: fastThumbail,
+    pressedTwo: fastPressed,
+    waitingTwo: fastWaiting,
+    timerOne: 2000,
+    timerTwo: 2320,
+    styles: {
+      className: "fastHealthyStyles",
+    },
+  },
+  {
+    thummbnailOne: thorThumbnail,
+    pressedOne: thorPressed,
+    waitingOne: thorWaiting,
+    thumbnailTwo: lokiThumbnail,
+    pressedTwo: lokiPressed,
+    waitingTwo: lokiWaiting,
+    timerOne: 1100,
+    timerTwo: 1100,
+    styles: {
+      className: "thorLokiStyles",
+    },
+  },
+  {
+    thummbnailOne: UpThumbnail,
+    pressedOne: UpPressed,
+    waitingOne: UpPressed,
+    thumbnailTwo: DownThumbnail,
+    pressedTwo: DownPressed,
+    waitingTwo: DownPressed,
+    timerOne: time1,
+    timerTwo: time2,
+    styles: {
+      className: "upDownStyles",
+    },
+  },
+  {
+    thummbnailOne: DownThumbnail,
+    pressedOne: DownPressed,
+    waitingOne: DownPressed,
+    thumbnailTwo: UpThumbnail,
+    pressedTwo: UpPressed,
+    waitingTwo: UpPressed,
+    timerOne: time1,
+    timerTwo: time2,
+    styles: {
+      className: "upDownStyles",
+    },
+  },
   {
     thumbnail: DragonCharizard,
     pressedTwo: DragonPress,
@@ -266,75 +288,127 @@ export const GifData = [
       variant: "SingleBox",
     },
   },
-  // {
-  //   thummbnailOne: EarthThumbnail,
-  //   pressedOne: EarthPressed,
-  //   waitingOne: EarthWaiting,
-  //   thumbnailTwo: FlatEarthThumbnail,
-  //   pressedTwo: FlatEarthPressed,
-  //   waitingTwo: FlatEarthWaiting,
-  //   timerOne: 1200,
-  //   timerTwo: 1000,
-  //   styles: {
-  //     className: "earthFlatStyles",
-  //   },
-  //   // rotateTwo: true,
-  // },
-  // {
-  //   thummbnailOne: LeftThumbnail,
-  //   pressedOne: LeftPress,
-  //   waitingOne: LeftWaiting,
-  //   thumbnailTwo: RightThumbnail,
-  //   pressedTwo: RightPress,
-  //   waitingTwo: RightWaiting,
-  //   timerOne: 800,
-  //   timerTwo: 800,
-  //   styles: {
-  //     className: "rightLeftRoad",
-  //   },
-  //   // sideOneTwo: true,
-  //   // rotateTwo: true,
-  // },
-  // // {
-  // //   thummbnailOne: LeftTriangleThumbnail,
-  // //   pressedOne: LeftTrianglePress,
-  // //   waitingOne: LeftTriangleWaiting,
-  // //   thumbnailTwo: RightTriangleThumbnail,
-  // //   pressedTwo: RightTrianglePress,
-  // //   waitingTwo: RightTriangleWaiting,
-  // //   timerOne: 800,
-  // //   timerTwo: 800,
-  // //   styles: {
-  // //     className: "rightLeftTriangle",
-  // //   },
-  // // },
-  // {
-  //   thumbnail: LionSheep,
-  //   pressedOne: LionPress,
-  //   waitingOne: LionWaiting,
-  //   thumbnailTwo: LionSheep,
-  //   pressedTwo: SheepPress,
-  //   waitingTwo: SheepWaiting,
-  //   timerOne: 1000,
-  //   timerTwo: 1000,
-  //   styles: {
-  //     className: "lionSheepStyles",
-  //     variant: "SingleBox",
-  //   },
-  // },
-  // {
-  //   thumbnail: MailLetter,
-  //   pressedOne: LetterPress,
-  //   waitingOne: LetterWaiting,
-  //   pressedTwo: MailPress,
-  //   waitingTwo: MailWaiting,
-  //   timerOne: 1600,
-  //   timerTwo: 2000,
-  //   styles: {
-  //     className: "mailLetterStyles",
-  //     variant: "SingleBox",
-  //   },
-  // },
+  {
+    thummbnailOne: EarthThumbnail,
+    pressedOne: EarthPressed,
+    waitingOne: EarthWaiting,
+    thumbnailTwo: FlatEarthThumbnail,
+    pressedTwo: FlatEarthPressed,
+    waitingTwo: FlatEarthWaiting,
+    timerOne: 1200,
+    timerTwo: 1000,
+    styles: {
+      className: "earthFlatStyles",
+    },
+    // rotateTwo: true,
+  },
+  {
+    thummbnailOne: LeftThumbnail,
+    pressedOne: LeftPress,
+    waitingOne: LeftWaiting,
+    thumbnailTwo: RightThumbnail,
+    pressedTwo: RightPress,
+    waitingTwo: RightWaiting,
+    timerOne: 800,
+    timerTwo: 800,
+    styles: {
+      className: "rightLeftRoad",
+    },
+    // sideOneTwo: true,
+    // rotateTwo: true,
+  },
+  {
+    thummbnailOne: LeftTriangleThumbnail,
+    pressedOne: LeftTrianglePress,
+    waitingOne: LeftTriangleWaiting,
+    thumbnailTwo: RightTriangleThumbnail,
+    pressedTwo: RightTrianglePress,
+    waitingTwo: RightTriangleWaiting,
+    timerOne: 800,
+    timerTwo: 800,
+    styles: {
+      className: "rightLeftTriangle",
+    },
+  },
+  {
+    thummbnailOne: ElectionThumbnail,
+    pressedOne: ElectionPress,
+    waitingOne: ElectionWaiting,
+    thumbnailTwo: SwordPressThumbnail,
+    pressedTwo: SwordPress,
+    waitingTwo: SwordWaiting,
+    timerOne: 1600,
+    timerTwo: 1600,
+    styles: {
+      className: "swordElectionStyles",
+    },
+  },
+  {
+    thummbnailOne: OilPressThumbnail,
+    pressedOne: OilPress,
+    waitingOne: OilPressWaiting,
+    thumbnailTwo: FuelPressThumbnail,
+    pressedTwo: FuelPress,
+    waitingTwo: FuelPressWaiting,
+    timerOne: 2600,
+    timerTwo: 2200,
+    styles: {
+      className: "oilFuelStyles",
+    },
+  },
+  {
+    thumbnail: LionSheep,
+    pressedOne: LionPress,
+    waitingOne: LionWaiting,
+    thumbnailTwo: LionSheep,
+    pressedTwo: SheepPress,
+    waitingTwo: SheepWaiting,
+    timerOne: 1000,
+    timerTwo: 1000,
+    styles: {
+      className: "lionSheepStyles",
+      variant: "SingleBox",
+    },
+  },
+  {
+    thumbnail: MailLetter,
+    pressedOne: LetterPress,
+    waitingOne: LetterWaiting,
+    pressedTwo: MailPress,
+    waitingTwo: MailWaiting,
+    timerOne: 1600,
+    timerTwo: 2000,
+    styles: {
+      className: "mailLetterStyles",
+      variant: "SingleBox",
+    },
+  },
+  {
+    thumbnail: RedBlueThumbnail,
+    pressedOne: RedPillPress,
+    waitingOne: RedPillWaiting,
+    pressedTwo: BluePillPress,
+    waitingTwo: BluePillWaiting,
+    timerOne: 2000,
+    timerTwo: 2000,
+    styles: {
+      className: "mailLetterStyles",
+      variant: "SingleBox",
+    },
+  },
+  {
+    thumbnail: HerbAloThumbnail,
+    pressedOne: HerbPress,
+    waitingOne: HerbWaiting,
+    pressedTwo: AloPress,
+    waitingTwo: AloWaiting,
+    timerOne: 1800,
+    timerTwo: 1700,
+    styles: {
+      className: "herbAloStyles",
+      variant: "SingleBox",
+    },
+  },
   // {
   //   thummbnailOne: CityThumbnail,
   //   pressedOne: CityPress,

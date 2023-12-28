@@ -200,7 +200,9 @@ const TablePage = () => {
   const [timerOn, setTimerOn] = useState(false);
   const [play] = useSound(WinSound);
   const [playLose] = useSound(LoseSound);
-  const [TimerPlay, { stop, pause }] = useSound(TimerSound);
+  const [TimerPlay, { stop, pause }] = useSound(TimerSound, {
+    interrupt: true,
+  });
   const [tableAmount, setTableAmount] = useAtom(InputTableAmount);
   const [preloadedAudio, setPreloadedAudio] = useState([]);
   const [finalResultCalled, setFinalResultCalled] = useState(false);
@@ -275,7 +277,7 @@ const TablePage = () => {
       default:
         stop();
         pause();
-        setTimerOn(false);
+        // setTimerOn(false);
         if (audioRef.current) audioRef?.current?.pause();
         preloadedAudio.forEach((sound) => {
           sound?.audio?.pause();
@@ -660,8 +662,10 @@ const TablePage = () => {
     // Automatically decrement the timer value every second
     let intervalId;
     if (time > 0 && !isPaused) {
-      console.log("played");
-      if (!timerOn) audioPlayer("countdown");
+      audioPlayer("countdown");
+      if (!timerOn) {
+        console.log("played");
+      }
       intervalId = setInterval(() => {
         set(ref(getDatabase(), `timer${currentTable}`), time - 1);
       }, 1000);

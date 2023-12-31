@@ -327,6 +327,13 @@ const TablePage = () => {
     };
   }, []);
 
+  // useEffect(() => {
+  // if ("caches" in window) {
+  //   caches.keys().then((names) => {
+  //     console.log("Cache", window);
+  //   });
+  // }
+  // });
   // Final Result Calc
   const finalResult = async () => {
     var liveUsers = liveUserSnapshots.filter(
@@ -890,6 +897,16 @@ const TablePage = () => {
       const timer = setTimeout(() => {
         setIndex(-1);
         audioPlayer("swapsound");
+        window[GifData[index]?.pressedOne] = undefined;
+        window[GifData[index]?.pressedTwo] = undefined;
+        window[GifData[index]?.waitingOne] = undefined;
+        window[GifData[index]?.waitingTwo] = undefined;
+        if (GifData[index]?.styles.variant === "SingleBox") {
+          window[GifData[index]?.thumbnail] = undefined;
+        } else {
+          window[GifData[index]?.thummbnailOne] = undefined;
+          window[GifData[index]?.thumbnailTwo] = undefined;
+        }
         setIsFlip(true);
       }, 4500);
 

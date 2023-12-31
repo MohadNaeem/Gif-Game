@@ -300,6 +300,7 @@ const TablePage = () => {
         imagesPromiseList.push(preloadImage(i.pressedTwo));
         imagesPromiseList.push(preloadImage(i.waitingOne));
         imagesPromiseList.push(preloadImage(i.waitingTwo));
+        imagesPromiseList.push(preloadImage(i.thumbnail));
       }
       await Promise.all(imagesPromiseList);
       const conclusionImagesPromiseList = [];

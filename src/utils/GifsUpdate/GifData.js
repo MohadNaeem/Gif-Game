@@ -141,7 +141,7 @@ import YodaLoop from "../../assets/gif/Sorted Gifs/yoda vader fix/yoda-loop.mp4"
 import VaderPress from "../../assets/gif/Sorted Gifs/yoda vader fix/vader-press.mp4";
 import VaderLoop from "../../assets/gif/Sorted Gifs/yoda vader fix/vader-loop.mp4";
 
-const time1 = 2000;
+const time1 = 2000; 
 const time2 = 3000;
 
 export const GifData = [

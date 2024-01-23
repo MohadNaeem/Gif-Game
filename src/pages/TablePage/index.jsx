@@ -3,6 +3,7 @@ import { useAtom } from "jotai";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useSound from "use-sound";
 import app from "../../config/firebase";
+import VaderPress from "../../assets/gif/Sorted Gifs/yoda vader fix/vader-press.mp4";
 import {
   getDatabase,
   ref,
@@ -103,23 +104,45 @@ import Styles from "./Index.module.scss";
 import WinEffect from "./WinEffect";
 import AnimatedNumber from "react-animated-numbers";
 import { useRef } from "react";
+import ReactPlayer from "react-player";
 
 const database = getDatabase(app);
 const fireStore = getFirestore(app);
 
 function preloadImage(src) {
-  if (src === undefined) return;
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = function () {
-      resolve(img);
-    };
-    img.onerror = img.onabort = function () {
-      reject(src);
-    };
-    img.src = src;
-    window[src] = img;
-  });
+  // if (src === undefined) return;
+  // return new Promise((resolve, reject) => {
+  //   const img = new Image();
+  //   img.onload = function () {
+  //     resolve(img);
+  //   };
+  //   img.onerror = img.onabort = function () {
+  //     reject(src);
+  //   };
+  //   img.src = src;
+  //   window[src] = img;
+  // });
+  var req = new XMLHttpRequest();
+  req.open("GET", src, true);
+  req.responseType = "blob";
+
+  req.onload = function () {
+    // Onload is triggered even on 404
+    // so we need to check the status code
+    if (this.status === 200) {
+      var videoBlob = this.response;
+      var vid = URL.createObjectURL(videoBlob); // IE10+
+      // Video is now downloaded
+      // and we can set it as source on the video element
+      // window[src] = vid;
+      // video.src = vid;
+    }
+  };
+  req.onerror = function () {
+    // Error
+  };
+
+  req.send();
 }
 
 // async function preloadAudio(url) {
@@ -205,6 +228,7 @@ const TablePage = () => {
   });
   const [tableAmount, setTableAmount] = useAtom(InputTableAmount);
   const [preloadedAudio, setPreloadedAudio] = useState([]);
+  const [tempAllocations, setTempAllocations] = useState({});
   const [finalResultCalled, setFinalResultCalled] = useState(false);
   const [tokenBalance, setTokenBalance] = useState(0);
   const [bonusBalance, setBonusBalance] = useState(0);
@@ -232,7 +256,7 @@ const TablePage = () => {
   const [tableResultType, setTableResultType] = useState("BACKGROUND_COLORED");
   const [btn1Clicked, setBtn1Clicked] = useState(false);
   const [btn2Clicked, setBtn2Clicked] = useState(false);
-  const [assetsLoaded, setAssetsLoaded] = useState(false);
+  const [assetsLoaded, setAssetsLoaded] = useState(true);
 
   const [isBonusRound, setIsBonusRound] = useState(false);
   const [isFreeRound, setIsFreeRound] = useState(false);
@@ -327,6 +351,35 @@ const TablePage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    GifData.map((item) => {
+      [
+        "thumbnail",
+        "pressedOne",
+        "pressedTwo",
+        "waitingOne",
+        "waitingTwo",
+      ].forEach((keyItem) => {
+        fetch(item[keyItem])
+          .then((response) => response.blob())
+          .then((blob) => {
+            const url = blob;
+            setTempAllocations((prevAllocation) => {
+              let tempAlloc = { ...prevAllocation };
+              tempAlloc[keyItem] = url;
+              // window[url] = url;
+              return {
+                ...tempAlloc,
+              };
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching video:", error);
+          });
+      });
+    });
+  }, []);
+  console.log(tempAllocations);
   // useEffect(() => {
   // if ("caches" in window) {
   //   caches.keys().then((names) => {
@@ -644,9 +697,9 @@ const TablePage = () => {
       }
     });
     // Listen for updates to the timer value
-    onValue(timerRef, (snapshot) => {
-      setTime(snapshot.val());
-    });
+    // onValue(timerRef, (snapshot) => {
+    //   setTime(snapshot.val());
+    // });
 
     // Clean up the Firebase Realtime Database reference when the component unmounts
     return () => {
@@ -1211,14 +1264,20 @@ const TablePage = () => {
                   {btn1Clicked ? (
                     isPaused ? (
                       box1Ratio > box2Ratio ? (
-                        <img
-                          loading="eager"
-                          src={GifData[index]?.waitingOne}
-                          className={
-                            GifData[index]?.sideOneTwo
-                              ? Styles?.SpecialHotCold
-                              : Styles?.LeftPotionGif
-                          }
+                        // <img
+                        //   loading="eager"
+                        //   src={GifData[index]?.waitingOne}
+                        //   className={
+                        //     GifData[index]?.sideOneTwo
+                        //       ? Styles?.SpecialHotCold
+                        //       : Styles?.LeftPotionGif
+                        //   }
+                        // />
+                        <video
+                          playing={true}
+                          src={URL.createObjectURL(tempAllocations.waitingOne)}
+                          width={"500px"}
+                          height={"100vh"}
                         />
                       ) : box1Ratio < box2Ratio ? (
                         <div className={Styles?.BitCoinOne}>
@@ -1229,66 +1288,117 @@ const TablePage = () => {
                               marginTop: "13rem",
                               scale: 1.5,
                             }}
-                            src={ConclusionData?.BitCoinOne}
+                            url={ConclusionData?.BitCoinOne}
                             className={Styles?.LeftPotionGifWinner}
                           />
                           <WinEffect side="left" value={tableAmount} />
                         </div>
                       ) : (
-                        <img
-                          loading="eager"
-                          src={GifData[index].waitingOne}
-                          className={
-                            GifData[index].sideOneTwo
-                              ? Styles.SpecialHotCold
-                              : Styles.LeftPotionGif
-                          }
+                        <video
+                          playing={true}
+                          url={URL.createObjectURL(tempAllocations?.waitingOne)}
+                          width={"500px"}
+                          height={"100vh"}
                         />
+                        // <img
+                        //   loading="eager"
+                        //   src={GifData[index].waitingOne}
+                        //   className={
+                        //     GifData[index].sideOneTwo
+                        //       ? Styles.SpecialHotCold
+                        //       : Styles.LeftPotionGif
+                        //   }
+                        // />
                       )
-                    ) : !isOneWaiting ? (
-                      <img
-                        loading="eager"
-                        src={GifData[index].pressedOne}
-                        className={
-                          GifData[index].sideOneTwo
-                            ? Styles.SpecialHotCold
-                            : Styles.LeftPotionGif
-                        }
-                      />
                     ) : (
-                      <img
-                        loading="eager"
-                        src={GifData[index].waitingOne}
-                        className={
-                          GifData[index].sideOneTwo
-                            ? Styles.SpecialHotCold
-                            : Styles.LeftPotionGif
+                      // <img
+                      //   loading="eager"
+                      //   src={GifData[index].pressedOne}
+                      //   className={
+                      //     GifData[index].sideOneTwo
+                      //       ? Styles.SpecialHotCold
+                      //       : Styles.LeftPotionGif
+                      //   }
+                      // />
+                      // <ReactPlayer
+                      //   playing={true}
+                      //   url={tempAllocations.pressedOne}
+                      //   width={"500px"}
+                      //   height={"100vh"}
+                      // />
+                      <video
+                        width={"500px"}
+                        height={"100vh"}
+                        playing={true}
+                        loop={true}
+                        // controls
+                        preload={true}
+                        autoPlay
+                        // onEnded={handleVideoEnd}
+                        src={
+                          !isOneWaiting
+                            ? URL.createObjectURL(tempAllocations.pressedOne)
+                            : URL.createObjectURL(tempAllocations.waitingOne)
                         }
+                        type="video/mp4"
                       />
                     )
-                  ) : btn2Clicked ? (
+                  ) : // : (
+                  // <img
+                  //   loading="eager"
+                  //   src={GifData[index].waitingOne}
+                  //   className={
+                  //     GifData[index].sideOneTwo
+                  //       ? Styles.SpecialHotCold
+                  //       : Styles.LeftPotionGif
+                  //   }
+                  // />
+                  // <ReactPlayer
+                  //   playing={true}
+                  //   url={tempAllocations.waitingOne}
+                  //   loop={true}
+                  //   width={"500px"}
+                  //   height={"100vh"}
+                  // />
+                  // <video
+                  //   width={"500px"}
+                  //   height={"100vh"}
+                  //   // controls
+                  //   autoPlay
+                  //   // onEnded={handleVideoEnd}
+                  //   src={URL.createObjectURL(tempAllocations.waitingOne)}
+                  //   type="video/mp4"
+                  // />
+                  // )
+                  btn2Clicked ? (
                     isPaused ? (
                       box1Ratio < box2Ratio ? (
-                        <img
-                          loading="eager"
-                          style={
-                            GifData[index]?.designChangeTwo
-                              ? {
-                                  transform: "scale(0.8)",
-                                  marginTop: "-25px",
-                                }
-                              : GifData[index]?.rotateTwo
-                              ? {
-                                  transform: "rotateY(180deg)",
-                                }
-                              : {}
-                          }
-                          src={GifData[index]?.waitingTwo}
-                          className={
-                            GifData[index]?.sideOneTwo
-                              ? Styles.SpecialHotColdTwo
-                              : Styles.rightPortionGif
-                          }
+                        // <img
+                        //   loading="eager"
+                        //   style={
+                        //     GifData[index]?.designChangeTwo
+                        //       ? {
+                        //           transform: "scale(0.8)",
+                        //           marginTop: "-25px",
+                        //         }
+                        //       : GifData[index]?.rotateTwo
+                        //       ? {
+                        //           transform: "rotateY(180deg)",
+                        //         }
+                        //       : {}
+                        //   }
+                        //   src={GifData[index]?.waitingTwo}
+                        //   className={
+                        //     GifData[index]?.sideOneTwo
+                        //       ? Styles.SpecialHotColdTwo
+                        //       : Styles.rightPortionGif
+                        //   }
+                        // />
+                        <video
+                          playing={true}
+                          src={URL.createObjectURL(tempAllocations?.waitingTwo)}
+                          width={"500px"}
+                          height={"100vh"}
                         />
                       ) : box1Ratio > box2Ratio ? (
                         isCoinShowing && (
@@ -1307,79 +1417,106 @@ const TablePage = () => {
                           </div>
                         )
                       ) : (
-                        <img
-                          loading="eager"
-                          style={
-                            GifData[index].designChangeTwo
-                              ? {
-                                  transform: "scale(0.8)",
-                                  marginTop: "-25px",
-                                }
-                              : GifData[index].rotateTwo
-                              ? {
-                                  transform: "rotateY(180deg)",
-                                }
-                              : {}
-                          }
-                          src={GifData[index].waitingTwo}
-                          className={
-                            GifData[index].sideOneTwo
-                              ? Styles.SpecialHotColdTwo
-                              : Styles.rightPortionGif
-                          }
+                        // <img
+                        //   loading="eager"
+                        //   style={
+                        //     GifData[index].designChangeTwo
+                        //       ? {
+                        //           transform: "scale(0.8)",
+                        //           marginTop: "-25px",
+                        //         }
+                        //       : GifData[index].rotateTwo
+                        //       ? {
+                        //           transform: "rotateY(180deg)",
+                        //         }
+                        //       : {}
+                        //   }
+                        //   src={GifData[index].waitingTwo}
+                        //   className={
+                        //     GifData[index].sideOneTwo
+                        //       ? Styles.SpecialHotColdTwo
+                        //       : Styles.rightPortionGif
+                        //   }
+                        // />
+                        <ReactPlayer
+                          playing={true}
+                          url={URL.createObjectURL(tempAllocations?.waitingTwo)}
+                          loop={true}
+                          width={"500px"}
+                          height={"100vh"}
                         />
                       )
                     ) : !isTwoWaiting ? (
-                      <img
-                        loading="eager"
-                        src={GifData[index].pressedTwo}
-                        style={
-                          GifData[index].designChangeTwo
-                            ? {
-                                transform: "scale(0.8)",
-                                marginTop: "-25px",
-                              }
-                            : GifData[index].rotateTwo
-                            ? {
-                                transform: "rotateY(180deg)",
-                              }
-                            : {}
-                        }
-                        className={
-                          GifData[index].sideOneTwo
-                            ? Styles.SpecialHotColdTwo
-                            : Styles.rightPortionGif
-                        }
+                      // <img
+                      //   loading="eager"
+                      //   src={GifData[index].pressedTwo}
+                      //   style={
+                      //     GifData[index].designChangeTwo
+                      //       ? {
+                      //           transform: "scale(0.8)",
+                      //           marginTop: "-25px",
+                      //         }
+                      //       : GifData[index].rotateTwo
+                      //       ? {
+                      //           transform: "rotateY(180deg)",
+                      //         }
+                      //       : {}
+                      //   }
+                      //   className={
+                      //     GifData[index].sideOneTwo
+                      //       ? Styles.SpecialHotColdTwo
+                      //       : Styles.rightPortionGif
+                      //   }
+                      // />
+                      <ReactPlayer
+                        playing={true}
+                        url={URL.createObjectURL(tempAllocations?.pressedTwo)}
+                        width={"500px"}
+                        height={"100vh"}
                       />
                     ) : (
-                      <img
-                        loading="eager"
-                        src={GifData[index]?.waitingTwo}
-                        style={
-                          GifData[index]?.designChangeTwo
-                            ? {
-                                transform: "scale(0.8)",
-                                marginTop: "-25px",
-                              }
-                            : GifData[index]?.rotateTwo
-                            ? {
-                                transform: "rotateY(180deg)",
-                              }
-                            : {}
-                        }
-                        className={
-                          GifData[index]?.sideOneTwo
-                            ? Styles.SpecialHotColdTwo
-                            : Styles.rightPortionGif
-                        }
+                      // <img
+                      //   loading="eager"
+                      //   src={GifData[index]?.waitingTwo}
+                      //   style={
+                      //     GifData[index]?.designChangeTwo
+                      //       ? {
+                      //           transform: "scale(0.8)",
+                      //           marginTop: "-25px",
+                      //         }
+                      //       : GifData[index]?.rotateTwo
+                      //       ? {
+                      //           transform: "rotateY(180deg)",
+                      //         }
+                      //       : {}
+                      //   }
+                      //   className={
+                      //     GifData[index]?.sideOneTwo
+                      //       ? Styles.SpecialHotColdTwo
+                      //       : Styles.rightPortionGif
+                      //   }
+                      // />
+                      <ReactPlayer
+                        playing={true}
+                        url={URL.createObjectURL(tempAllocations?.waitingTwo)}
+                        loop={true}
+                        width={"500px"}
+                        height={"100vh"}
                       />
                     )
                   ) : (
-                    <img
-                      src={GifData[index]?.thumbnail}
-                      style={{
-                        opacity: time === 0 && 0.9,
-                      }}
+                    // <img
+                    //   src={GifData[index]?.thumbnail}
+                    //   style={{
+                    //     opacity: time === 0 && 0.9,
+                    //   }}
+                    // />
+                    <ReactPlayer
+                      playing={false}
+                      // url={GifData[index]?.thumbnail}
+                      url={URL.createObjectURL(tempAllocations?.thumbnail)}
+                      width={"500px"}
+                      height={"100vh"}
                     />
                   )}
                 </div>

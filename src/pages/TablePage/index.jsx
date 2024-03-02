@@ -265,6 +265,10 @@ const TablePage = () => {
   const [index, setIndex] = useState(0);
   //creating a usestate to manage when to show flip animation
   const [isFlip, setIsFlip] = useState(false);
+  const firstRef = useRef(null);
+  const secondRef = useRef(null);
+  const pressOneRef = useRef(null);
+  const pressTwoRef = useRef(null);
 
   const [isCoinShowing, setIsCoinShowing] = useState(true);
 
@@ -672,12 +676,16 @@ const TablePage = () => {
     if (mouseXPos <= halfDivWidth) {
       if (!lockChoice) {
         setWhichPart("first");
+        pressOneRef.current.play();
         setIsOneWaiting(false);
+        setIsTwoWaiting(false);
         handleButton1Click();
       }
     } else {
       if (!lockChoice) {
         setWhichPart("second");
+        pressTwoRef.current.play();
+        setIsOneWaiting(false);
         setIsTwoWaiting(false);
         handleButton2Click();
       }
@@ -946,6 +954,18 @@ const TablePage = () => {
   }, []);
 
   useEffect(() => {
+    if (isOneWaiting && firstRef.current) {
+      firstRef.current.play();
+    }
+  }, [firstRef, isOneWaiting]);
+
+  useEffect(() => {
+    if (isTwoWaiting && secondRef.current) {
+      secondRef.current.play();
+    }
+  }, [secondRef, isTwoWaiting]);
+
+  useEffect(() => {
     if (isPaused) {
       const timer = setTimeout(() => {
         setIndex(-1);
@@ -991,29 +1011,29 @@ const TablePage = () => {
     }
   }
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (whichPart === "first") {
-        setIsOneWaiting(true);
-      }
-    }, GifData[index]?.timerOne);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (whichPart === "first") {
+  //       setIsOneWaiting(true);
+  //     }
+  //   }, GifData[index]?.timerOne);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [isOneWaiting, whichPart]);
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [isOneWaiting, whichPart]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (whichPart === "second") {
-        setIsTwoWaiting(true);
-      }
-    }, GifData[index]?.timerTwo);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (whichPart === "second") {
+  //       setIsTwoWaiting(true);
+  //     }
+  //   }, GifData[index]?.timerTwo);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [isTwoWaiting, whichPart]);
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [isTwoWaiting, whichPart]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -1261,18 +1281,9 @@ const TablePage = () => {
                       </div>
                     </div>
                   </div>
-                  {btn1Clicked ? (
+                  {/* {btn1Clicked ? (
                     isPaused ? (
                       box1Ratio > box2Ratio ? (
-                        // <img
-                        //   loading="eager"
-                        //   src={GifData[index]?.waitingOne}
-                        //   className={
-                        //     GifData[index]?.sideOneTwo
-                        //       ? Styles?.SpecialHotCold
-                        //       : Styles?.LeftPotionGif
-                        //   }
-                        // />
                         <video
                           playing={true}
                           src={URL.createObjectURL(tempAllocations.waitingOne)}
@@ -1300,32 +1311,8 @@ const TablePage = () => {
                           width={"500px"}
                           height={"100vh"}
                         />
-                        // <img
-                        //   loading="eager"
-                        //   src={GifData[index].waitingOne}
-                        //   className={
-                        //     GifData[index].sideOneTwo
-                        //       ? Styles.SpecialHotCold
-                        //       : Styles.LeftPotionGif
-                        //   }
-                        // />
                       )
                     ) : (
-                      // <img
-                      //   loading="eager"
-                      //   src={GifData[index].pressedOne}
-                      //   className={
-                      //     GifData[index].sideOneTwo
-                      //       ? Styles.SpecialHotCold
-                      //       : Styles.LeftPotionGif
-                      //   }
-                      // />
-                      // <ReactPlayer
-                      //   playing={true}
-                      //   url={tempAllocations.pressedOne}
-                      //   width={"500px"}
-                      //   height={"100vh"}
-                      // />
                       <video
                         width={"500px"}
                         height={"100vh"}
@@ -1343,57 +1330,9 @@ const TablePage = () => {
                         type="video/mp4"
                       />
                     )
-                  ) : // : (
-                  // <img
-                  //   loading="eager"
-                  //   src={GifData[index].waitingOne}
-                  //   className={
-                  //     GifData[index].sideOneTwo
-                  //       ? Styles.SpecialHotCold
-                  //       : Styles.LeftPotionGif
-                  //   }
-                  // />
-                  // <ReactPlayer
-                  //   playing={true}
-                  //   url={tempAllocations.waitingOne}
-                  //   loop={true}
-                  //   width={"500px"}
-                  //   height={"100vh"}
-                  // />
-                  // <video
-                  //   width={"500px"}
-                  //   height={"100vh"}
-                  //   // controls
-                  //   autoPlay
-                  //   // onEnded={handleVideoEnd}
-                  //   src={URL.createObjectURL(tempAllocations.waitingOne)}
-                  //   type="video/mp4"
-                  // />
-                  // )
-                  btn2Clicked ? (
+                  ) : btn2Clicked ? (
                     isPaused ? (
                       box1Ratio < box2Ratio ? (
-                        // <img
-                        //   loading="eager"
-                        //   style={
-                        //     GifData[index]?.designChangeTwo
-                        //       ? {
-                        //           transform: "scale(0.8)",
-                        //           marginTop: "-25px",
-                        //         }
-                        //       : GifData[index]?.rotateTwo
-                        //       ? {
-                        //           transform: "rotateY(180deg)",
-                        //         }
-                        //       : {}
-                        //   }
-                        //   src={GifData[index]?.waitingTwo}
-                        //   className={
-                        //     GifData[index]?.sideOneTwo
-                        //       ? Styles.SpecialHotColdTwo
-                        //       : Styles.rightPortionGif
-                        //   }
-                        // />
                         <video
                           playing={true}
                           src={URL.createObjectURL(tempAllocations?.waitingTwo)}
@@ -1407,37 +1346,11 @@ const TablePage = () => {
                               loading="eager"
                               src={ConclusionData.BitCoinTwo}
                               className={Styles.rightPortionBitCoin}
-                              // style={{
-                              //   transform: "scale(1.1)",
-                              //   marginTop: "5rem",
-                              //   scale: 1.5,
-                              // }}
                             />
                             <WinEffect side="right" value={tableAmount} />
                           </div>
                         )
                       ) : (
-                        // <img
-                        //   loading="eager"
-                        //   style={
-                        //     GifData[index].designChangeTwo
-                        //       ? {
-                        //           transform: "scale(0.8)",
-                        //           marginTop: "-25px",
-                        //         }
-                        //       : GifData[index].rotateTwo
-                        //       ? {
-                        //           transform: "rotateY(180deg)",
-                        //         }
-                        //       : {}
-                        //   }
-                        //   src={GifData[index].waitingTwo}
-                        //   className={
-                        //     GifData[index].sideOneTwo
-                        //       ? Styles.SpecialHotColdTwo
-                        //       : Styles.rightPortionGif
-                        //   }
-                        // />
                         <ReactPlayer
                           playing={true}
                           url={URL.createObjectURL(tempAllocations?.waitingTwo)}
@@ -1447,27 +1360,6 @@ const TablePage = () => {
                         />
                       )
                     ) : !isTwoWaiting ? (
-                      // <img
-                      //   loading="eager"
-                      //   src={GifData[index].pressedTwo}
-                      //   style={
-                      //     GifData[index].designChangeTwo
-                      //       ? {
-                      //           transform: "scale(0.8)",
-                      //           marginTop: "-25px",
-                      //         }
-                      //       : GifData[index].rotateTwo
-                      //       ? {
-                      //           transform: "rotateY(180deg)",
-                      //         }
-                      //       : {}
-                      //   }
-                      //   className={
-                      //     GifData[index].sideOneTwo
-                      //       ? Styles.SpecialHotColdTwo
-                      //       : Styles.rightPortionGif
-                      //   }
-                      // />
                       <ReactPlayer
                         playing={true}
                         url={URL.createObjectURL(tempAllocations?.pressedTwo)}
@@ -1475,27 +1367,6 @@ const TablePage = () => {
                         height={"100vh"}
                       />
                     ) : (
-                      // <img
-                      //   loading="eager"
-                      //   src={GifData[index]?.waitingTwo}
-                      //   style={
-                      //     GifData[index]?.designChangeTwo
-                      //       ? {
-                      //           transform: "scale(0.8)",
-                      //           marginTop: "-25px",
-                      //         }
-                      //       : GifData[index]?.rotateTwo
-                      //       ? {
-                      //           transform: "rotateY(180deg)",
-                      //         }
-                      //       : {}
-                      //   }
-                      //   className={
-                      //     GifData[index]?.sideOneTwo
-                      //       ? Styles.SpecialHotColdTwo
-                      //       : Styles.rightPortionGif
-                      //   }
-                      // />
                       <ReactPlayer
                         playing={true}
                         url={URL.createObjectURL(tempAllocations?.waitingTwo)}
@@ -1505,20 +1376,53 @@ const TablePage = () => {
                       />
                     )
                   ) : (
-                    // <img
-                    //   src={GifData[index]?.thumbnail}
-                    //   style={{
-                    //     opacity: time === 0 && 0.9,
-                    //   }}
-                    // />
-                    <ReactPlayer
+                    <video
                       playing={false}
-                      // url={GifData[index]?.thumbnail}
-                      url={URL.createObjectURL(tempAllocations?.thumbnail)}
+                      src={URL.createObjectURL(tempAllocations?.thumbnail)}
                       width={"500px"}
                       height={"100vh"}
                     />
-                  )}
+                  )} */}
+                  {
+                    <>
+                      <video
+                        ref={pressOneRef}
+                        style={{ display: isOneWaiting  || btn2Clicked ? "none" : "block" }}
+                        // src={URL.createObjectURL(tempAllocations.pressedOne)}
+                        src={GifData[index].pressedOne}
+                        width={"500px"}
+                        height={"100vh"}
+                        onEnded={() => setIsOneWaiting(true)}
+                      />
+                      <video
+                        ref={pressTwoRef}
+                        style={{ display: isTwoWaiting || btn1Clicked ? "none" : "block" }}
+                        src={GifData[index].pressedTwo}
+                        width={"500px"}
+                        height={"100vh"}
+                        onEnded={() => setIsTwoWaiting(true)}
+                      />
+                      <video
+                        ref={firstRef}
+                        // autoPlay
+                        loop
+                        style={{ display: !isOneWaiting ? "none" : "block" }}
+                        // src={URL.createObjectURL(tempAllocations?.waitingOne)}
+                        src={GifData[index].waitingOne}
+                        width={"500px"}
+                        height={"100vh"}
+                      />
+                      <video
+                        ref={secondRef}
+                        loop
+                        style={{ display: !isTwoWaiting ? "none" : "block" }}
+                        // src={URL.createObjectURL(tempAllocations?.waitingTwo)}
+                        src={GifData[index].waitingTwo}
+                        width={"500px"}
+                        height={"100vh"}
+                      />
+                    </>
+                  }
                 </div>
               ) : (
                 <>

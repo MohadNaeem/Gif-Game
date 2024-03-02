@@ -314,76 +314,76 @@ const TablePage = () => {
     }
   };
 
-  useEffect(() => {
-    let isCancelled = false;
-    async function effect() {
-      if (isCancelled) {
-        return;
-      }
-      const imagesPromiseList = [];
-      for (const i of GifData) {
-        imagesPromiseList.push(preloadImage(i.thummbnailOne));
-        imagesPromiseList.push(preloadImage(i.thumbnailTwo));
-        imagesPromiseList.push(preloadImage(i.pressedOne));
-        imagesPromiseList.push(preloadImage(i.pressedTwo));
-        imagesPromiseList.push(preloadImage(i.waitingOne));
-        imagesPromiseList.push(preloadImage(i.waitingTwo));
-        imagesPromiseList.push(preloadImage(i.thumbnail));
-      }
-      await Promise.all(imagesPromiseList);
-      const conclusionImagesPromiseList = [];
+  // useEffect(() => {
+  //   let isCancelled = false;
+  //   async function effect() {
+  //     if (isCancelled) {
+  //       return;
+  //     }
+  //     const imagesPromiseList = [];
+  //     for (const i of GifData) {
+  //       imagesPromiseList.push(preloadImage(i.thummbnailOne));
+  //       imagesPromiseList.push(preloadImage(i.thumbnailTwo));
+  //       imagesPromiseList.push(preloadImage(i.pressedOne));
+  //       imagesPromiseList.push(preloadImage(i.pressedTwo));
+  //       imagesPromiseList.push(preloadImage(i.waitingOne));
+  //       imagesPromiseList.push(preloadImage(i.waitingTwo));
+  //       imagesPromiseList.push(preloadImage(i.thumbnail));
+  //     }
+  //     await Promise.all(imagesPromiseList);
+  //     const conclusionImagesPromiseList = [];
 
-      for (const i of Object.values(ConclusionData)) {
-        conclusionImagesPromiseList.push(preloadImage(i));
-      }
-      await Promise.all(conclusionImagesPromiseList);
-      const audioPromiseList = [];
-      audioFiles.map(async (audio) => {
-        const data = await preloadAudio(audio);
-        setPreloadedAudio((prevState) => [...prevState, data]);
-      });
+  //     for (const i of Object.values(ConclusionData)) {
+  //       conclusionImagesPromiseList.push(preloadImage(i));
+  //     }
+  //     await Promise.all(conclusionImagesPromiseList);
+  //     const audioPromiseList = [];
+  //     audioFiles.map(async (audio) => {
+  //       const data = await preloadAudio(audio);
+  //       setPreloadedAudio((prevState) => [...prevState, data]);
+  //     });
 
-      // await Promise.all(audioFiles);
-      if (isCancelled) {
-        return;
-      }
-      setAssetsLoaded(true);
-    }
-    effect();
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
+  //     // await Promise.all(audioFiles);
+  //     if (isCancelled) {
+  //       return;
+  //     }
+  //     setAssetsLoaded(true);
+  //   }
+  //   effect();
+  //   return () => {
+  //     isCancelled = true;
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    GifData.map((item) => {
-      [
-        "thumbnail",
-        "pressedOne",
-        "pressedTwo",
-        "waitingOne",
-        "waitingTwo",
-      ].forEach((keyItem) => {
-        fetch(item[keyItem])
-          .then((response) => response.blob())
-          .then((blob) => {
-            const url = blob;
-            setTempAllocations((prevAllocation) => {
-              let tempAlloc = { ...prevAllocation };
-              tempAlloc[keyItem] = url;
-              // window[url] = url;
-              return {
-                ...tempAlloc,
-              };
-            });
-          })
-          .catch((error) => {
-            console.error("Error fetching video:", error);
-          });
-      });
-    });
-  }, []);
-  console.log(tempAllocations);
+  // useEffect(() => {
+  //   GifData.map((item) => {
+  //     [
+  //       "thumbnail",
+  //       "pressedOne",
+  //       "pressedTwo",
+  //       "waitingOne",
+  //       "waitingTwo",
+  //     ].forEach((keyItem) => {
+  //       fetch(item[keyItem])
+  //         .then((response) => response.blob())
+  //         .then((blob) => {
+  //           const url = blob;
+  //           setTempAllocations((prevAllocation) => {
+  //             let tempAlloc = { ...prevAllocation };
+  //             tempAlloc[keyItem] = url;
+  //             // window[url] = url;
+  //             return {
+  //               ...tempAlloc,
+  //             };
+  //           });
+  //         })
+  //         .catch((error) => {
+  //           console.error("Error fetching video:", error);
+  //         });
+  //     });
+  //   });
+  // }, []);
+
   // useEffect(() => {
   // if ("caches" in window) {
   //   caches.keys().then((names) => {

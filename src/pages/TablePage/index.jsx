@@ -1387,6 +1387,7 @@ const TablePage = () => {
                     <>
                       <video
                         ref={pressOneRef}
+                        preload="auto"
                         style={{ display: isOneWaiting  || btn2Clicked ? "none" : "block" }}
                         // src={URL.createObjectURL(tempAllocations.pressedOne)}
                         src={GifData[index].pressedOne}
@@ -1400,6 +1401,7 @@ const TablePage = () => {
                         src={GifData[index].pressedTwo}
                         width={"500px"}
                         height={"100vh"}
+                        preload="auto"
                         onEnded={() => setIsTwoWaiting(true)}
                       />
                       <video
@@ -1411,6 +1413,7 @@ const TablePage = () => {
                         src={GifData[index].waitingOne}
                         width={"500px"}
                         height={"100vh"}
+                        preload="auto"
                       />
                       <video
                         ref={secondRef}
@@ -1419,6 +1422,7 @@ const TablePage = () => {
                         // src={URL.createObjectURL(tempAllocations?.waitingTwo)}
                         src={GifData[index].waitingTwo}
                         width={"500px"}
+                        preload="auto"
                         height={"100vh"}
                       />
                     </>

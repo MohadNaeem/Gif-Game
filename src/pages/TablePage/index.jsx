@@ -920,7 +920,7 @@ const TablePage = () => {
       } else {
         console.log("No such document!");
       }
-      setLoading(false);
+      // setLoading(false);
     });
 
     return () => unsubscribe();
@@ -1425,6 +1425,11 @@ const TablePage = () => {
                         width={"500px"}
                         height={"100vh"}
                         onEnded={() => setIsOneWaiting(true)}
+                        playsinline
+                        onLoadedData={() => {
+                          console.log("Data is loaded!");
+                          setLoading(false);
+                        }}
                       />
                       <video
                         ref={pressTwoRef}
@@ -1437,6 +1442,11 @@ const TablePage = () => {
                         height={"100vh"}
                         preload="auto"
                         onEnded={() => setIsTwoWaiting(true)}
+                        playsinline
+                        onLoadedData={() => {
+                          console.log("Data is loaded!");
+                          setLoading(false);
+                        }}
                       />
                       <video
                         ref={firstRef}
@@ -1448,6 +1458,7 @@ const TablePage = () => {
                         width={"500px"}
                         height={"100vh"}
                         preload="auto"
+                        playsinline
                       />
                       <video
                         ref={secondRef}
@@ -1458,6 +1469,7 @@ const TablePage = () => {
                         width={"500px"}
                         preload="auto"
                         height={"100vh"}
+                        playsinline
                       />
                     </>
                   }

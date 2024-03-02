@@ -920,7 +920,7 @@ const TablePage = () => {
       } else {
         console.log("No such document!");
       }
-      // setLoading(false);
+      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -1426,7 +1426,7 @@ const TablePage = () => {
                         height={"100vh"}
                         onEnded={() => setIsOneWaiting(true)}
                         playsinline
-                        onLoadedData={() => {
+                        onLoad={() => {
                           console.log("Data is loaded!");
                           setLoading(false);
                         }}
@@ -1443,7 +1443,7 @@ const TablePage = () => {
                         preload="auto"
                         onEnded={() => setIsTwoWaiting(true)}
                         playsinline
-                        onLoadedData={() => {
+                        onLoad={() => {
                           console.log("Data is loaded!");
                           setLoading(false);
                         }}

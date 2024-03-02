@@ -920,7 +920,7 @@ const TablePage = () => {
       } else {
         console.log("No such document!");
       }
-      setLoading(false);
+      // setLoading(false);
     });
 
     return () => unsubscribe();
@@ -1046,10 +1046,22 @@ const TablePage = () => {
   }, [isPaused]);
 
   return userAuthID ? (
-    loadingLiveUsers === true || loading === true || !assetsLoaded ? (
-      <LoadingSpinner />
-    ) : (
-      <div className="sm:w-[500px] h-[100vh] sm:mx-auto overflow-y-scroll overflow-x-hidden scrollbar-hide">
+    // loadingLiveUsers === true || loading === true || !assetsLoaded ? (
+    //   <LoadingSpinner />
+    // ) : (
+    <>
+      {(loadingLiveUsers === true || loading === true || !assetsLoaded) && (
+        <LoadingSpinner />
+      )}
+      <div
+        className="sm:w-[500px] h-[100vh] sm:mx-auto overflow-y-scroll overflow-x-hidden scrollbar-hide"
+        style={{
+          display:
+            loadingLiveUsers === true || loading === true || !assetsLoaded
+              ? "none"
+              : "block",
+        }}
+      >
         {/* <audio ref={audioRef} preload="auto" src={TimerSound} /> */}
         <audio ref={winRef} preload="auto" src={WinSound} />
         <div className="flex justify-between my-2 mx-1">
@@ -1426,9 +1438,8 @@ const TablePage = () => {
                         height={"100vh"}
                         onEnded={() => setIsOneWaiting(true)}
                         playsinline
-                        onLoad={() => {
+                        onLoadedData={() => {
                           console.log("Data is loaded!");
-                          setLoading(false);
                         }}
                       />
                       <video
@@ -1443,9 +1454,9 @@ const TablePage = () => {
                         preload="auto"
                         onEnded={() => setIsTwoWaiting(true)}
                         playsinline
-                        onLoad={() => {
-                          console.log("Data is loaded!");
+                        onLoadedData={() => {
                           setLoading(false);
+                          console.log("Data is loaded!");
                         }}
                       />
                       <video
@@ -1915,7 +1926,7 @@ const TablePage = () => {
         ></button>
         <Popup />
       </div>
-    )
+    </>
   ) : (
     <NotAuthorised />
   );

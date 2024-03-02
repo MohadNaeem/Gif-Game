@@ -705,9 +705,9 @@ const TablePage = () => {
       }
     });
     // Listen for updates to the timer value
-    // onValue(timerRef, (snapshot) => {
-    //   setTime(snapshot.val());
-    // });
+    onValue(timerRef, (snapshot) => {
+      setTime(snapshot.val());
+    });
 
     // Clean up the Firebase Realtime Database reference when the component unmounts
     return () => {
@@ -1385,10 +1385,41 @@ const TablePage = () => {
                   )} */}
                   {
                     <>
+                      {/* {isPaused ? (
+                        box1Ratio > box2Ratio ? (
+                          <div className={Styles.BitCoinPortion}>
+                            <img
+                              loading="eager"
+                              src={ConclusionData.BitCoinTwo}
+                              className={Styles.rightPortionBitCoin}
+                            />
+                            <WinEffect side="right" value={tableAmount} />
+                          </div>
+                        ) : (
+                          <div className={Styles?.BitCoinOne}>
+                            <img
+                              loading="eager"
+                              style={{
+                                transform: "scale(1.1)",
+                                marginTop: "13rem",
+                                scale: 1.5,
+                              }}
+                              url={ConclusionData?.BitCoinOne}
+                              className={Styles?.LeftPotionGifWinner}
+                            />
+                            <WinEffect side="left" value={tableAmount} />
+                          </div>
+                        )
+                      ) : (
+                        <></>
+                      )} */}
                       <video
                         ref={pressOneRef}
                         preload="auto"
-                        style={{ display: isOneWaiting  || btn2Clicked ? "none" : "block" }}
+                        style={{
+                          display:
+                            isOneWaiting || btn2Clicked ? "none" : "block",
+                        }}
                         // src={URL.createObjectURL(tempAllocations.pressedOne)}
                         src={GifData[index].pressedOne}
                         width={"500px"}
@@ -1397,7 +1428,10 @@ const TablePage = () => {
                       />
                       <video
                         ref={pressTwoRef}
-                        style={{ display: isTwoWaiting || btn1Clicked ? "none" : "block" }}
+                        style={{
+                          display:
+                            isTwoWaiting || btn1Clicked ? "none" : "block",
+                        }}
                         src={GifData[index].pressedTwo}
                         width={"500px"}
                         height={"100vh"}

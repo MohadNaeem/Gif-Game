@@ -1460,7 +1460,7 @@ const TablePage = () => {
                         onEnded={() => setIsTwoWaiting(true)}
                         playsInline
                         onCanPlayThrough={() => {
-                          setLoading(false);
+                          // setLoading(false);
                           console.log("Data is loaded!");
                         }}
                       />

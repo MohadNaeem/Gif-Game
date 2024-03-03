@@ -1455,7 +1455,7 @@ const TablePage = () => {
                           }
                         }}
                         playsinline
-                        progressInterval={300}
+                        progressInterval={700}
                         onCanPlayThrough={() => {
                           console.log("Data is loaded!");
                         }}
@@ -1468,7 +1468,7 @@ const TablePage = () => {
                             isTwoWaiting || btn1Clicked ? "none" : "block",
                         }}
                         url={GifData[index].pressedTwo}
-                        progressInterval={300}
+                        progressInterval={700}
                         width={"500px"}
                         height={"100vh"}
                         preload="auto"

@@ -1446,12 +1446,12 @@ const TablePage = () => {
 
                         onProgress={(e) => {
                           console.log(e)
-                          if (e.played >= 0.90) {
+                          if (e.played >= 0.85) {
                             setIsOneWaiting(true);
                           }
                         }}
                         playsinline
-                        progressInterval={500}
+                        progressInterval={300}
                         onCanPlayThrough={() => {
                           console.log("Data is loaded!");
                         }}
@@ -1464,14 +1464,14 @@ const TablePage = () => {
                             isTwoWaiting || btn1Clicked ? "none" : "block",
                         }}
                         url={GifData[index].pressedTwo}
-                        progressInterval={500}
+                        progressInterval={300}
                         width={"500px"}
                         height={"100vh"}
                         preload="auto"
                         // onEnded={() => setIsTwoWaiting(true)}
                         onProgress={(e) => {
                           console.log(e)
-                          if (e.played >= 0.90) {
+                          if (e.played >= 0.85) {
                             setIsTwoWaiting(true);
                           }
                         }}

@@ -1442,8 +1442,16 @@ const TablePage = () => {
                         url={GifData[index].pressedOne}
                         width={"500px"}
                         height={"100vh"}
-                        onEnded={() => setIsOneWaiting(true)}
+                        // onEnded={() => setIsOneWaiting(true)}
+
+                        onProgress={(e) => {
+                          console.log(e)
+                          if (e.played >= 0.90) {
+                            setIsOneWaiting(true);
+                          }
+                        }}
                         playsinline
+                        progressInterval={500}
                         onCanPlayThrough={() => {
                           console.log("Data is loaded!");
                         }}
@@ -1456,10 +1464,17 @@ const TablePage = () => {
                             isTwoWaiting || btn1Clicked ? "none" : "block",
                         }}
                         url={GifData[index].pressedTwo}
+                        progressInterval={500}
                         width={"500px"}
                         height={"100vh"}
                         preload="auto"
-                        onEnded={() => setIsTwoWaiting(true)}
+                        // onEnded={() => setIsTwoWaiting(true)}
+                        onProgress={(e) => {
+                          console.log(e)
+                          if (e.played >= 0.90) {
+                            setIsTwoWaiting(true);
+                          }
+                        }}
                         playsinline
                         onReady={() => {
                           setLoading(false);

@@ -1444,10 +1444,11 @@ const TablePage = () => {
                         height={"100vh"}
                         // onEnded={() => setIsOneWaiting(true)}
 
-                        onProgress={(e) => {
-                          console.log(e)
-                          if (e.played >= 0.85) {
-                            setIsOneWaiting(true);
+                        onEnded={(e) => {
+                          console.log(e);
+                          pressOneRef.current.seekTo(2.62, "seconds");
+                          if (e.played >= 0.9) {
+                            // setIsOneWaiting(true);
                           }
                         }}
                         playsinline
@@ -1469,10 +1470,10 @@ const TablePage = () => {
                         height={"100vh"}
                         preload="auto"
                         // onEnded={() => setIsTwoWaiting(true)}
-                        onProgress={(e) => {
-                          console.log(e)
-                          if (e.played >= 0.85) {
-                            setIsTwoWaiting(true);
+                        onEnded={(e) => {
+                          pressTwoRef.current.seekTo(1.55, "seconds");
+                          if (e.played >= 0.9) {
+                            // setIsOneWaiting(true);
                           }
                         }}
                         playsinline
@@ -1481,7 +1482,7 @@ const TablePage = () => {
                           console.log("Data is loaded!");
                         }}
                       />
-                      <ReactPlayer
+                      {/* <ReactPlayer
                         // ref={firstRef}
                         playing={isOneWaiting}
                         // autoPlay
@@ -1505,7 +1506,7 @@ const TablePage = () => {
                         preload="auto"
                         height={"100vh"}
                         playsinline
-                      />
+                      /> */}
                       {/* <ReactPlayer
                         // ref={pressOneRef}
                         preload="auto"

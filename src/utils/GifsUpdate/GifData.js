@@ -136,9 +136,9 @@ import SwordPressThumbnail from "../../assets/gif/Sorted Gifs/re public/sword-pr
 import SwordWaiting from "../../assets/gif/Sorted Gifs/re public/sword-waiting.gif";
 import Lock from "../../assets/gif/Conclusion gifs/Lock.gif";
 import Spectator from "../../assets/gif/Conclusion gifs/Spectator.gif";
-import YodaPress from "../../assets/gif/Sorted Gifs/yoda vader fix/yoda-press.mp4";
+import YodaPress from "../../assets/gif/Sorted Gifs/yoda vader fix/yoda.mp4";
 import YodaLoop from "../../assets/gif/Sorted Gifs/yoda vader fix/yoda-loop.mp4";
-import VaderPress from "../../assets/gif/Sorted Gifs/yoda vader fix/vader-press.mp4";
+import VaderPress from "../../assets/gif/Sorted Gifs/yoda vader fix/vader.mp4";
 import VaderLoop from "../../assets/gif/Sorted Gifs/yoda vader fix/vader-loop.mp4";
 
 const time1 = 2000; 

@@ -1443,7 +1443,7 @@ const TablePage = () => {
                         width={"500px"}
                         height={"100vh"}
                         onEnded={() => setIsOneWaiting(true)}
-                        playsInline
+                        playsinline
                         onCanPlayThrough={() => {
                           console.log("Data is loaded!");
                         }}
@@ -1460,7 +1460,7 @@ const TablePage = () => {
                         height={"100vh"}
                         preload="auto"
                         onEnded={() => setIsTwoWaiting(true)}
-                        playsInline
+                        playsinline
                         onReady={() => {
                           setLoading(false);
                           console.log("Data is loaded!");
@@ -1477,7 +1477,7 @@ const TablePage = () => {
                         width={"500px"}
                         height={"100vh"}
                         preload="auto"
-                        playsInline
+                        playsinline
                       />
                       <ReactPlayer
                         ref={secondRef}
@@ -1489,7 +1489,7 @@ const TablePage = () => {
                         width={"500px"}
                         preload="auto"
                         height={"100vh"}
-                        playsInline
+                        playsinline
                       />
                       {/* <ReactPlayer
                         // ref={pressOneRef}

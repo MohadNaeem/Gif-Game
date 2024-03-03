@@ -1442,7 +1442,7 @@ const TablePage = () => {
                         width={"500px"}
                         height={"100vh"}
                         onEnded={() => setIsOneWaiting(true)}
-                        playsinline
+                        playsInline
                         onCanPlayThrough={() => {
                           console.log("Data is loaded!");
                         }}
@@ -1458,7 +1458,7 @@ const TablePage = () => {
                         height={"100vh"}
                         preload="auto"
                         onEnded={() => setIsTwoWaiting(true)}
-                        playsinline
+                        playsInline
                         onCanPlayThrough={() => {
                           setLoading(false);
                           console.log("Data is loaded!");
@@ -1474,7 +1474,7 @@ const TablePage = () => {
                         width={"500px"}
                         height={"100vh"}
                         preload="auto"
-                        playsinline
+                        playsInline
                       />
                       <video
                         ref={secondRef}
@@ -1485,7 +1485,7 @@ const TablePage = () => {
                         width={"500px"}
                         preload="auto"
                         height={"100vh"}
-                        playsinline
+                        playsInline
                       />
                     </>
                   }

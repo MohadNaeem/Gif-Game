@@ -671,7 +671,7 @@ const TablePage = () => {
     const halfDivWidth = divWidth / 2;
     const mouseXPos =
       window.innerWidth <= 560
-        ? e.nativeEvent.offsetX * 2
+        ? e.nativeEvent.offsetX 
         : e.nativeEvent.offsetX;
     if (mouseXPos <= halfDivWidth) {
       if (!lockChoice) {

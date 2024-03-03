@@ -920,7 +920,7 @@ const TablePage = () => {
       } else {
         console.log("No such document!");
       }
-      setLoading(false);
+      // setLoading(false);
     });
 
     return () => unsubscribe();
@@ -1459,8 +1459,8 @@ const TablePage = () => {
                         preload="auto"
                         onEnded={() => setIsTwoWaiting(true)}
                         playsInline
-                        onCanPlayThrough={() => {
-                          // setLoading(false);
+                        onLoadedMetadata={() => {
+                          setLoading(false);
                           console.log("Data is loaded!");
                         }}
                       />

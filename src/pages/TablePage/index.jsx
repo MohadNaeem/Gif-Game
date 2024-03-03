@@ -983,8 +983,8 @@ const TablePage = () => {
         setIsFlip(true);
         setIsOneWaiting(false);
         setIsTwoWaiting(false);
-        setBtn1Clicked(false);
-        setBtn2Clicked(false);
+        // setBtn1Clicked(false);
+        // setBtn2Clicked(false);
       }, 4500);
 
       return () => {
@@ -1447,9 +1447,6 @@ const TablePage = () => {
                         onEnded={(e) => {
                           console.log(e);
                           pressOneRef.current.seekTo(2.62, "seconds");
-                          if (e.played >= 0.9) {
-                            // setIsOneWaiting(true);
-                          }
                         }}
                         playsinline
                         progressInterval={300}
@@ -1472,9 +1469,6 @@ const TablePage = () => {
                         // onEnded={() => setIsTwoWaiting(true)}
                         onEnded={(e) => {
                           pressTwoRef.current.seekTo(1.55, "seconds");
-                          if (e.played >= 0.9) {
-                            // setIsOneWaiting(true);
-                          }
                         }}
                         playsinline
                         onReady={() => {

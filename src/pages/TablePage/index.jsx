@@ -920,7 +920,7 @@ const TablePage = () => {
       } else {
         console.log("No such document!");
       }
-      // setLoading(false);
+      setLoading(false);
     });
 
     return () => unsubscribe();

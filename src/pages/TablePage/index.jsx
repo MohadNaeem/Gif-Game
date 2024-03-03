@@ -676,7 +676,7 @@ const TablePage = () => {
     if (mouseXPos <= halfDivWidth) {
       if (!lockChoice) {
         setWhichPart("first");
-        pressOneRef.current.play();
+        // pressOneRef.current.play();
         setIsOneWaiting(false);
         setIsTwoWaiting(false);
         handleButton1Click();
@@ -684,7 +684,7 @@ const TablePage = () => {
     } else {
       if (!lockChoice) {
         setWhichPart("second");
-        pressTwoRef.current.play();
+        // pressTwoRef.current.play();
         setIsOneWaiting(false);
         setIsTwoWaiting(false);
         handleButton2Click();
@@ -920,7 +920,7 @@ const TablePage = () => {
       } else {
         console.log("No such document!");
       }
-      // setLoading(false);
+      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -955,13 +955,13 @@ const TablePage = () => {
 
   useEffect(() => {
     if (isOneWaiting && firstRef.current) {
-      firstRef.current.play();
+      // firstRef.current.play();
     }
   }, [firstRef, isOneWaiting]);
 
   useEffect(() => {
     if (isTwoWaiting && secondRef.current) {
-      secondRef.current.play();
+      // secondRef.current.play();
     }
   }, [secondRef, isTwoWaiting]);
 
@@ -981,10 +981,10 @@ const TablePage = () => {
           window[GifData[index]?.thumbnailTwo] = undefined;
         }
         setIsFlip(true);
-        setIsOneWaiting(false)
-        setIsTwoWaiting(false)
-        setBtn1Clicked(false)
-        setBtn2Clicked(false)
+        setIsOneWaiting(false);
+        setIsTwoWaiting(false);
+        setBtn1Clicked(false);
+        setBtn2Clicked(false);
       }, 4500);
 
       return () => {
@@ -1429,16 +1429,17 @@ const TablePage = () => {
                       ) : (
                         <></>
                       )} */}
-                      <video
+                      <ReactPlayer
                         ref={pressOneRef}
+                        playing={btn1Clicked}
                         preload="auto"
                         style={{
                           display:
                             isOneWaiting || btn2Clicked ? "none" : "block",
-                            // visibility : ( !isOneWaiting || !btn2Clicked ) && 'hidden'
+                          // visibility : ( !isOneWaiting || !btn2Clicked ) && 'hidden'
                         }}
                         // src={URL.createObjectURL(tempAllocations.pressedOne)}
-                        src={GifData[index].pressedOne}
+                        url={GifData[index].pressedOne}
                         width={"500px"}
                         height={"100vh"}
                         onEnded={() => setIsOneWaiting(true)}
@@ -1447,46 +1448,71 @@ const TablePage = () => {
                           console.log("Data is loaded!");
                         }}
                       />
-                      <video
+                      <ReactPlayer
                         ref={pressTwoRef}
+                        playing={btn2Clicked}
                         style={{
                           display:
                             isTwoWaiting || btn1Clicked ? "none" : "block",
                         }}
-                        src={GifData[index].pressedTwo}
+                        url={GifData[index].pressedTwo}
                         width={"500px"}
                         height={"100vh"}
                         preload="auto"
                         onEnded={() => setIsTwoWaiting(true)}
                         playsInline
-                        onLoadedMetadata={() => {
+                        onReady={() => {
                           setLoading(false);
                           console.log("Data is loaded!");
                         }}
                       />
-                      <video
-                        ref={firstRef}
+                      <ReactPlayer
+                        // ref={firstRef}
+                        playing={isOneWaiting}
                         // autoPlay
                         loop
                         style={{ display: !isOneWaiting ? "none" : "block" }}
                         // src={URL.createObjectURL(tempAllocations?.waitingOne)}
-                        src={GifData[index].waitingOne}
+                        url={GifData[index].waitingOne}
                         width={"500px"}
                         height={"100vh"}
                         preload="auto"
                         playsInline
                       />
-                      <video
+                      <ReactPlayer
                         ref={secondRef}
+                        playing={isTwoWaiting}
                         loop
                         style={{ display: !isTwoWaiting ? "none" : "block" }}
                         // src={URL.createObjectURL(tempAllocations?.waitingTwo)}
-                        src={GifData[index].waitingTwo}
+                        url={GifData[index].waitingTwo}
                         width={"500px"}
                         preload="auto"
                         height={"100vh"}
                         playsInline
                       />
+                      {/* <ReactPlayer
+                        // ref={pressOneRef}
+                        preload="auto"
+                        // style={{
+                        //   display:
+                        //     isOneWaiting || btn2Clicked ? "none" : "block",
+                        //   // visibility : ( !isOneWaiting || !btn2Clicked ) && 'hidden'
+                        // }}
+                        // src={URL.createObjectURL(tempAllocations.pressedOne)}
+                        url={[
+                          GifData[index].pressedOne,
+                          GifData[index].waitingOne,
+                        ]}
+                        playing={true}
+                        width={"500px"}
+                        height={"100vh"}
+                        onEnded={() => setIsOneWaiting(true)}
+                        playsInline
+                        onCanPlayThrough={() => {
+                          console.log("Data is loaded!");
+                        }}
+                      /> */}
                     </>
                   }
                 </div>

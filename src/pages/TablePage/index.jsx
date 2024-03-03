@@ -1444,9 +1444,14 @@ const TablePage = () => {
                         height={"100vh"}
                         // onEnded={() => setIsOneWaiting(true)}
 
-                        onEnded={(e) => {
-                          console.log(e);
-                          pressOneRef.current.seekTo(2.62, "seconds");
+                        // onEnded={(e) => {
+                        //   console.log(e);
+                        // }}
+                        onProgress={(e) => {
+                          if(e.played === 1) {
+                            pressOneRef.current.seekTo(2.62, "seconds");
+                            // pressTwoRef.current.seekTo(1.55, "seconds");
+                          }
                         }}
                         playsinline
                         progressInterval={300}
@@ -1467,8 +1472,10 @@ const TablePage = () => {
                         height={"100vh"}
                         preload="auto"
                         // onEnded={() => setIsTwoWaiting(true)}
-                        onEnded={(e) => {
-                          pressTwoRef.current.seekTo(1.55, "seconds");
+                        onProgress={(e) => {
+                          if(e.played === 1) {
+                            pressTwoRef.current.seekTo(1.55, "seconds");
+                          }
                         }}
                         playsinline
                         onReady={() => {

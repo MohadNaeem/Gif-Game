@@ -1448,6 +1448,7 @@ const TablePage = () => {
                         //   console.log(e);
                         // }}
                         onProgress={(e) => {
+                          console.log(e)
                           if(e.played === 1) {
                             pressOneRef.current.seekTo(2.62, "seconds");
                             // pressTwoRef.current.seekTo(1.55, "seconds");

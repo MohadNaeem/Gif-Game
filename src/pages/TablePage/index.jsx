@@ -981,6 +981,10 @@ const TablePage = () => {
           window[GifData[index]?.thumbnailTwo] = undefined;
         }
         setIsFlip(true);
+        setIsOneWaiting(false)
+        setIsTwoWaiting(false)
+        setBtn1Clicked(false)
+        setBtn2Clicked(false)
       }, 4500);
 
       return () => {
@@ -1431,6 +1435,7 @@ const TablePage = () => {
                         style={{
                           display:
                             isOneWaiting || btn2Clicked ? "none" : "block",
+                            // visibility : ( !isOneWaiting || !btn2Clicked ) && 'hidden'
                         }}
                         // src={URL.createObjectURL(tempAllocations.pressedOne)}
                         src={GifData[index].pressedOne}
@@ -1438,7 +1443,7 @@ const TablePage = () => {
                         height={"100vh"}
                         onEnded={() => setIsOneWaiting(true)}
                         playsinline
-                        onLoadedData={() => {
+                        onCanPlayThrough={() => {
                           console.log("Data is loaded!");
                         }}
                       />
@@ -1454,7 +1459,7 @@ const TablePage = () => {
                         preload="auto"
                         onEnded={() => setIsTwoWaiting(true)}
                         playsinline
-                        onLoadedData={() => {
+                        onCanPlayThrough={() => {
                           setLoading(false);
                           console.log("Data is loaded!");
                         }}

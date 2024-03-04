@@ -1429,7 +1429,7 @@ const TablePage = () => {
                       )} */}
                       <ReactPlayer
                         ref={pressOneRef}
-                        playing={btn1Clicked}
+                        playing={true}
                         preload="auto"
                         style={{
                           display:
@@ -1451,6 +1451,7 @@ const TablePage = () => {
                           if (parseInt(e.played) === 1) {
                             console.log("hurrayyyy", e);
                             pressOneRef.current.seekTo(2.62, "seconds");
+                            
                             // pressTwoRef.current.seekTo(1.55, "seconds");
                           }
                         }}

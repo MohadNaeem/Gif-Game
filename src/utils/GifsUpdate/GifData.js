@@ -110,7 +110,7 @@ import MoneyWait from "../../assets/gif/Sorted Gifs/Love vs Money/Money/money-wa
 import MailPress from "../../assets/gif/Sorted Gifs/Mail vs Letter/mail-press.gif";
 import MailWaiting from "../../assets/gif/Sorted Gifs/Mail vs Letter/mail-waiting.gif";
 import MailLetter from "../../assets/gif/Sorted Gifs/Mail vs Letter/MailLetter.png";
-import LetterPress from "../../assets/gif/Sorted Gifs/Mail vs Letter/letter-press.gif";
+// import LetterPress from "../../assets/gif/Sorted Gifs/Mail vs Letter/letter-press.gif";
 import LetterWaiting from "../../assets/gif/Sorted Gifs/Mail vs Letter/letter-waiting.gif";
 import HerbPress from "../../assets/gif/Sorted Gifs/herb vs fpharma/herb/herb-press.gif";
 import HerbWaiting from "../../assets/gif/Sorted Gifs/herb vs fpharma/herb/herb-waiting.gif";
@@ -140,6 +140,10 @@ import YodaPress from "../../assets/gif/Sorted Gifs/yoda vader fix/yoda-press.mp
 import YodaLoop from "../../assets/gif/Sorted Gifs/yoda vader fix/yoda-loop.mp4";
 import VaderPress from "../../assets/gif/Sorted Gifs/yoda vader fix/vader-press.mp4";
 import VaderLoop from "../../assets/gif/Sorted Gifs/yoda vader fix/vader-loop.mp4";
+import EmailLoop from '../../assets/gif/Sorted Gifs/mail/email loop.mp4';
+import EmailPress from '../../assets/gif/Sorted Gifs/mail/email press.mp4';
+import LetterPress from '../../assets/gif/Sorted Gifs/mail/letter-press.mp4';
+import LetterLoop from '../../assets/gif/Sorted Gifs/mail/letter-loop.mp4';
 
 const time1 = 2000; 
 const time2 = 3000;
@@ -419,6 +423,19 @@ export const GifData = [
     waitingOne: VaderLoop,
     pressedTwo: YodaPress,
     waitingTwo: YodaLoop,
+    timerOne: 2500,
+    timerTwo: 1800,
+    styles: {
+      className: "herbAloStyles", 
+      variant: "SingleBox",
+    },
+  },
+  {
+    thumbnail: EmailPress,
+    pressedOne: LetterPress,
+    waitingOne: LetterLoop,
+    pressedTwo: EmailPress,
+    waitingTwo: EmailLoop,
     timerOne: 2500,
     timerTwo: 1800,
     styles: {

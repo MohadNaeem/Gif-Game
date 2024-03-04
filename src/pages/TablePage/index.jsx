@@ -1431,6 +1431,13 @@ const TablePage = () => {
                         ref={pressOneRef}
                         playing={btn1Clicked}
                         preload="auto"
+                        config={{
+                          file: {
+                            attributes: {
+                              preload: "auto",
+                            },
+                          },
+                        }}
                         style={{
                           display:
                             isOneWaiting || btn2Clicked ? "none" : "block",
@@ -1451,8 +1458,8 @@ const TablePage = () => {
                           if (parseInt(e.played) === 1) {
                             console.log("hurrayyyy", e);
                             // pressOneRef.current.seekTo(2.62, "seconds");
-                            setIsOneWaiting(true)
-                            
+                            setIsOneWaiting(true);
+
                             // pressTwoRef.current.seekTo(1.55, "seconds");
                           }
                         }}
@@ -1476,11 +1483,18 @@ const TablePage = () => {
                         height={"100vh"}
                         // loop
                         preload="auto"
+                        config={{
+                          file: {
+                            attributes: {
+                              preload: "auto",
+                            },
+                          },
+                        }}
                         // onEnded={() => setIsTwoWaiting(true)}
                         onProgress={(e) => {
                           if (parseInt(e.played) === 1) {
                             // pressTwoRef.current.seekTo(1.55, "seconds");
-                            setIsTwoWaiting(true)
+                            setIsTwoWaiting(true);
                           }
                         }}
                         playsinline
@@ -1500,6 +1514,13 @@ const TablePage = () => {
                         width={"500px"}
                         height={"100vh"}
                         preload="auto"
+                        config={{
+                          file: {
+                            attributes: {
+                              preload: "auto",
+                            },
+                          },
+                        }}
                         playsinline
                       />
                       <ReactPlayer
@@ -1511,6 +1532,13 @@ const TablePage = () => {
                         url={GifData[index].waitingTwo}
                         width={"500px"}
                         preload="auto"
+                        config={{
+                          file: {
+                            attributes: {
+                              preload: "auto",
+                            },
+                          },
+                        }}
                         height={"100vh"}
                         playsinline
                       />

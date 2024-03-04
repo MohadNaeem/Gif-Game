@@ -257,6 +257,7 @@ const TablePage = () => {
   const [btn1Clicked, setBtn1Clicked] = useState(false);
   const [btn2Clicked, setBtn2Clicked] = useState(false);
   const [assetsLoaded, setAssetsLoaded] = useState(false);
+  const [loadingVideo, setLoadingVideo] = useState(true);
 
   const [isBonusRound, setIsBonusRound] = useState(false);
   const [isFreeRound, setIsFreeRound] = useState(false);
@@ -915,7 +916,7 @@ const TablePage = () => {
       } else {
         console.log("No such document!");
       }
-      // setLoading(false);
+      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -976,6 +977,7 @@ const TablePage = () => {
         //   window[GifData[index]?.thumbnailTwo] = undefined;
         // }
         setIsFlip(true);
+        setLoadingVideo(true)
         setIsOneWaiting(false);
         setIsTwoWaiting(false);
         // setBtn1Clicked(false);
@@ -1457,6 +1459,28 @@ const TablePage = () => {
                       ) : (
                         <></>
                       )}
+                      {loadingVideo && (
+                        <div
+                          className="spinner center"
+                          style={{
+                            // height: "100vh",
+                            opacity: "0.8",
+                          }}
+                        >
+                          <div className="spinner-blade"></div>
+                          <div className="spinner-blade"></div>
+                          <div className="spinner-blade"></div>
+                          <div className="spinner-blade"></div>
+                          <div className="spinner-blade"></div>
+                          <div className="spinner-blade"></div>
+                          <div className="spinner-blade"></div>
+                          <div className="spinner-blade"></div>
+                          <div className="spinner-blade"></div>
+                          <div className="spinner-blade"></div>
+                          <div className="spinner-blade"></div>
+                          <div className="spinner-blade"></div>
+                        </div>
+                      )}
                       <ReactPlayer
                         ref={pressOneRef}
                         playing={btn1Clicked}
@@ -1470,7 +1494,9 @@ const TablePage = () => {
                         }}
                         style={{
                           display:
-                            isOneWaiting || btn2Clicked ? "none" : "block",
+                            isOneWaiting || btn2Clicked || loadingVideo
+                              ? "none"
+                              : "block",
                           // visibility : ( !isOneWaiting || !btn2Clicked ) && 'hidden'
                         }}
                         // src={URL.createObjectURL(tempAllocations.pressedOne)}
@@ -1505,7 +1531,9 @@ const TablePage = () => {
                         playing={btn2Clicked}
                         style={{
                           display:
-                            isTwoWaiting || btn1Clicked ? "none" : "block",
+                            isTwoWaiting || btn1Clicked || loadingVideo
+                              ? "none"
+                              : "block",
                         }}
                         url={GifData[index].pressedTwo}
                         progressInterval={300}
@@ -1530,7 +1558,7 @@ const TablePage = () => {
                         }}
                         playsinline
                         onReady={() => {
-                          setLoading(false);
+                          setLoadingVideo(false);
                           console.log("Data is loaded!");
                         }}
                       />

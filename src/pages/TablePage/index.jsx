@@ -1442,7 +1442,7 @@ const TablePage = () => {
                         url={GifData[index].pressedOne}
                         width={"500px"}
                         height={"100vh"}
-                        loop
+                        // loop
                         // onEnded={() => setIsOneWaiting(true)}
 
                         // onEnded={(e) => {
@@ -1450,7 +1450,7 @@ const TablePage = () => {
                         // }}
                         onProgress={(e) => {
                           console.log(e)
-                          if(e.played === 1) {
+                          if(e.played >=0.8) {
                             pressOneRef.current.seekTo(2.62, "seconds");
                             // pressTwoRef.current.seekTo(1.55, "seconds");
                           }
@@ -1472,11 +1472,11 @@ const TablePage = () => {
                         progressInterval={700}
                         width={"500px"}
                         height={"100vh"}
-                        loop
+                        // loop
                         preload="auto"
                         // onEnded={() => setIsTwoWaiting(true)}
                         onProgress={(e) => {
-                          if(e.played === 1) {
+                          if(e.played >= 0.8) {
                             pressTwoRef.current.seekTo(1.55, "seconds");
                           }
                         }}

@@ -1429,7 +1429,7 @@ const TablePage = () => {
                       )} */}
                       <ReactPlayer
                         ref={pressOneRef}
-                        playing={true}
+                        playing={btn1Clicked}
                         preload="auto"
                         style={{
                           display:
@@ -1450,7 +1450,8 @@ const TablePage = () => {
                           // console.log(e);
                           if (parseInt(e.played) === 1) {
                             console.log("hurrayyyy", e);
-                            pressOneRef.current.seekTo(2.62, "seconds");
+                            // pressOneRef.current.seekTo(2.62, "seconds");
+                            setIsOneWaiting(true)
                             
                             // pressTwoRef.current.seekTo(1.55, "seconds");
                           }
@@ -1478,7 +1479,8 @@ const TablePage = () => {
                         // onEnded={() => setIsTwoWaiting(true)}
                         onProgress={(e) => {
                           if (parseInt(e.played) === 1) {
-                            pressTwoRef.current.seekTo(1.55, "seconds");
+                            // pressTwoRef.current.seekTo(1.55, "seconds");
+                            setIsTwoWaiting(true)
                           }
                         }}
                         playsinline
@@ -1487,8 +1489,8 @@ const TablePage = () => {
                           console.log("Data is loaded!");
                         }}
                       />
-                      {/* <ReactPlayer
-                        // ref={firstRef}
+                      <ReactPlayer
+                        ref={firstRef}
                         playing={isOneWaiting}
                         // autoPlay
                         loop
@@ -1511,7 +1513,7 @@ const TablePage = () => {
                         preload="auto"
                         height={"100vh"}
                         playsinline
-                      /> */}
+                      />
                       {/* <ReactPlayer
                         // ref={pressOneRef}
                         preload="auto"

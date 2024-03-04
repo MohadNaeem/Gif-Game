@@ -1445,7 +1445,7 @@ const TablePage = () => {
                         }}
                         // src={URL.createObjectURL(tempAllocations.pressedOne)}
                         url={GifData[index].pressedOne}
-                        width={"500px"}
+                        width={"550px"}
                         height={"100vh"}
                         // loop
                         // onEnded={() => setIsOneWaiting(true)}
@@ -1479,7 +1479,7 @@ const TablePage = () => {
                         }}
                         url={GifData[index].pressedTwo}
                         progressInterval={300}
-                        width={"500px"}
+                        width={"550px"}
                         height={"100vh"}
                         // loop
                         preload="auto"
@@ -1512,7 +1512,7 @@ const TablePage = () => {
                         style={{ display: !isOneWaiting ? "none" : "block" }}
                         // src={URL.createObjectURL(tempAllocations?.waitingOne)}
                         url={GifData[index].waitingOne}
-                        width={"500px"}
+                        width={"550px"}
                         height={"100vh"}
                         preload="auto"
                         config={{
@@ -1531,7 +1531,7 @@ const TablePage = () => {
                         style={{ display: !isTwoWaiting ? "none" : "block" }}
                         // src={URL.createObjectURL(tempAllocations?.waitingTwo)}
                         url={GifData[index].waitingTwo}
-                        width={"500px"}
+                        width={"550px"}
                         preload="auto"
                         config={{
                           file: {

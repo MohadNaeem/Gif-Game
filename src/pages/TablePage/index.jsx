@@ -1447,13 +1447,15 @@ const TablePage = () => {
                         //   console.log(e);
                         // }}
                         onProgress={(e) => {
-                          console.log(e);
+                          // console.log(e);
                           if (parseInt(e.played) === 1) {
+                            console.log("hurrayyyy", e);
                             pressOneRef.current.seekTo(2.62, "seconds");
                             // pressTwoRef.current.seekTo(1.55, "seconds");
                           }
                         }}
                         playsinline
+                        onSeek={(e) => console.log(e)}
                         progressInterval={700}
                         onCanPlayThrough={() => {
                           console.log("Data is loaded!");

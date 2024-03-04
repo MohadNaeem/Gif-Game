@@ -1455,8 +1455,8 @@ const TablePage = () => {
                         // }}
                         onProgress={(e) => {
                           // console.log(e);
-                          if (parseInt(e.played) === 1) {
-                            console.log("hurrayyyy", e);
+                          console.log("hurrayyyy", e);
+                          if (parseInt(e.played) >= 0.9) {
                             // pressOneRef.current.seekTo(2.62, "seconds");
                             setIsOneWaiting(true);
 
@@ -1465,7 +1465,7 @@ const TablePage = () => {
                         }}
                         playsinline
                         onSeek={(e) => console.log(e)}
-                        progressInterval={700}
+                        progressInterval={100}
                         onCanPlayThrough={() => {
                           console.log("Data is loaded!");
                         }}
@@ -1478,7 +1478,7 @@ const TablePage = () => {
                             isTwoWaiting || btn1Clicked ? "none" : "block",
                         }}
                         url={GifData[index].pressedTwo}
-                        progressInterval={700}
+                        progressInterval={300}
                         width={"500px"}
                         height={"100vh"}
                         // loop
@@ -1492,7 +1492,8 @@ const TablePage = () => {
                         }}
                         // onEnded={() => setIsTwoWaiting(true)}
                         onProgress={(e) => {
-                          if (parseInt(e.played) === 1) {
+                          // console.log(e)
+                          if (parseInt(e.played) >= 0.9) {
                             // pressTwoRef.current.seekTo(1.55, "seconds");
                             setIsTwoWaiting(true);
                           }

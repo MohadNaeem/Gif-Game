@@ -670,9 +670,7 @@ const TablePage = () => {
     const divWidth = divRef.current.getBoundingClientRect().width;
     const halfDivWidth = divWidth / 2;
     const mouseXPos =
-      window.innerWidth <= 560
-        ? e.nativeEvent.offsetX 
-        : e.nativeEvent.offsetX;
+      window.innerWidth <= 560 ? e.nativeEvent.offsetX : e.nativeEvent.offsetX;
     if (mouseXPos <= halfDivWidth) {
       if (!lockChoice) {
         setWhichPart("first");
@@ -1449,8 +1447,8 @@ const TablePage = () => {
                         //   console.log(e);
                         // }}
                         onProgress={(e) => {
-                          console.log(e)
-                          if(e.played >=0.8) {
+                          console.log(e);
+                          if (parseInt(e.played) === 1) {
                             pressOneRef.current.seekTo(2.62, "seconds");
                             // pressTwoRef.current.seekTo(1.55, "seconds");
                           }
@@ -1476,7 +1474,7 @@ const TablePage = () => {
                         preload="auto"
                         // onEnded={() => setIsTwoWaiting(true)}
                         onProgress={(e) => {
-                          if(e.played >= 0.8) {
+                          if (parseInt(e.played) === 1) {
                             pressTwoRef.current.seekTo(1.55, "seconds");
                           }
                         }}

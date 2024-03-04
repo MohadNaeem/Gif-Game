@@ -700,9 +700,9 @@ const TablePage = () => {
       }
     });
     // Listen for updates to the timer value
-    // onValue(timerRef, (snapshot) => {
-    //   setTime(snapshot.val());
-    // });
+    onValue(timerRef, (snapshot) => {
+      setTime(snapshot.val());
+    });
 
     // Clean up the Firebase Realtime Database reference when the component unmounts
     return () => {

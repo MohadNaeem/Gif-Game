@@ -256,7 +256,7 @@ const TablePage = () => {
   const [tableResultType, setTableResultType] = useState("BACKGROUND_COLORED");
   const [btn1Clicked, setBtn1Clicked] = useState(false);
   const [btn2Clicked, setBtn2Clicked] = useState(false);
-  const [assetsLoaded, setAssetsLoaded] = useState(true);
+  const [assetsLoaded, setAssetsLoaded] = useState(false);
 
   const [isBonusRound, setIsBonusRound] = useState(false);
   const [isFreeRound, setIsFreeRound] = useState(false);
@@ -314,46 +314,35 @@ const TablePage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   let isCancelled = false;
-  //   async function effect() {
-  //     if (isCancelled) {
-  //       return;
-  //     }
-  //     const imagesPromiseList = [];
-  //     for (const i of GifData) {
-  //       imagesPromiseList.push(preloadImage(i.thummbnailOne));
-  //       imagesPromiseList.push(preloadImage(i.thumbnailTwo));
-  //       imagesPromiseList.push(preloadImage(i.pressedOne));
-  //       imagesPromiseList.push(preloadImage(i.pressedTwo));
-  //       imagesPromiseList.push(preloadImage(i.waitingOne));
-  //       imagesPromiseList.push(preloadImage(i.waitingTwo));
-  //       imagesPromiseList.push(preloadImage(i.thumbnail));
-  //     }
-  //     await Promise.all(imagesPromiseList);
-  //     const conclusionImagesPromiseList = [];
+  useEffect(() => {
+    let isCancelled = false;
+    async function effect() {
+      if (isCancelled) {
+        return;
+      }
+      const conclusionImagesPromiseList = [];
 
-  //     for (const i of Object.values(ConclusionData)) {
-  //       conclusionImagesPromiseList.push(preloadImage(i));
-  //     }
-  //     await Promise.all(conclusionImagesPromiseList);
-  //     const audioPromiseList = [];
-  //     audioFiles.map(async (audio) => {
-  //       const data = await preloadAudio(audio);
-  //       setPreloadedAudio((prevState) => [...prevState, data]);
-  //     });
+      for (const i of Object.values(ConclusionData)) {
+        conclusionImagesPromiseList.push(preloadImage(i));
+      }
+      await Promise.all(conclusionImagesPromiseList);
+      const audioPromiseList = [];
+      audioFiles.map(async (audio) => {
+        const data = await preloadAudio(audio);
+        setPreloadedAudio((prevState) => [...prevState, data]);
+      });
 
-  //     // await Promise.all(audioFiles);
-  //     if (isCancelled) {
-  //       return;
-  //     }
-  //     setAssetsLoaded(true);
-  //   }
-  //   effect();
-  //   return () => {
-  //     isCancelled = true;
-  //   };
-  // }, []);
+      // await Promise.all(audioFiles);
+      if (isCancelled) {
+        return;
+      }
+      setAssetsLoaded(true);
+    }
+    effect();
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
 
   // useEffect(() => {
   //   GifData.map((item) => {
@@ -673,7 +662,11 @@ const TablePage = () => {
       window.innerWidth <= 560 ? e.nativeEvent.offsetX : e.nativeEvent.offsetX;
     if (mouseXPos <= halfDivWidth) {
       if (!lockChoice) {
+        if (btn1Clicked) {
+          return;
+        }
         setWhichPart("first");
+        pressOneRef.current.seekTo(0);
         // pressOneRef.current.play();
         setIsOneWaiting(false);
         setIsTwoWaiting(false);
@@ -681,7 +674,11 @@ const TablePage = () => {
       }
     } else {
       if (!lockChoice) {
+        if (btn2Clicked) {
+          return;
+        }
         setWhichPart("second");
+        pressTwoRef.current.seekTo(0);
         // pressTwoRef.current.play();
         setIsOneWaiting(false);
         setIsTwoWaiting(false);
@@ -703,9 +700,9 @@ const TablePage = () => {
       }
     });
     // Listen for updates to the timer value
-    onValue(timerRef, (snapshot) => {
-      setTime(snapshot.val());
-    });
+    // onValue(timerRef, (snapshot) => {
+    //   setTime(snapshot.val());
+    // });
 
     // Clean up the Firebase Realtime Database reference when the component unmounts
     return () => {
@@ -968,16 +965,16 @@ const TablePage = () => {
       const timer = setTimeout(() => {
         setIndex(-1);
         audioPlayer("swapsound");
-        window[GifData[index]?.pressedOne] = undefined;
-        window[GifData[index]?.pressedTwo] = undefined;
-        window[GifData[index]?.waitingOne] = undefined;
-        window[GifData[index]?.waitingTwo] = undefined;
-        if (GifData[index]?.styles.variant === "SingleBox") {
-          window[GifData[index]?.thumbnail] = undefined;
-        } else {
-          window[GifData[index]?.thummbnailOne] = undefined;
-          window[GifData[index]?.thumbnailTwo] = undefined;
-        }
+        // window[GifData[index]?.pressedOne] = undefined;
+        // window[GifData[index]?.pressedTwo] = undefined;
+        // window[GifData[index]?.waitingOne] = undefined;
+        // window[GifData[index]?.waitingTwo] = undefined;
+        // if (GifData[index]?.styles.variant === "SingleBox") {
+        //   window[GifData[index]?.thumbnail] = undefined;
+        // } else {
+        //   window[GifData[index]?.thummbnailOne] = undefined;
+        //   window[GifData[index]?.thumbnailTwo] = undefined;
+        // }
         setIsFlip(true);
         setIsOneWaiting(false);
         setIsTwoWaiting(false);
@@ -1427,6 +1424,39 @@ const TablePage = () => {
                       ) : (
                         <></>
                       )} */}
+                      {isPaused ? (
+                        box1Ratio > box2Ratio ? (
+                          isCoinShowing &&
+                          isTwoWaiting && (
+                            <div className={Styles.BitCoinPortion}>
+                              <img
+                                loading="eager"
+                                src={ConclusionData.BitCoinTwo}
+                                className={Styles.rightPortionBitCoin}
+                              />
+                              <WinEffect side="right" value={tableAmount} />
+                            </div>
+                          )
+                        ) : (
+                          isCoinShowing && (
+                            <div className={Styles?.BitCoinOne}>
+                              <img
+                                loading="eager"
+                                style={{
+                                  transform: "scale(1.1)",
+                                  marginTop: "13rem",
+                                  scale: 1.5,
+                                }}
+                                url={ConclusionData?.BitCoinOne}
+                                className={Styles?.LeftPotionGifWinner}
+                              />
+                              <WinEffect side="left" value={tableAmount} />
+                            </div>
+                          )
+                        )
+                      ) : (
+                        <></>
+                      )}
                       <ReactPlayer
                         ref={pressOneRef}
                         playing={btn1Clicked}

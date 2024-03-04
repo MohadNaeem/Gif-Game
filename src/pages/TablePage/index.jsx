@@ -1442,6 +1442,7 @@ const TablePage = () => {
                         url={GifData[index].pressedOne}
                         width={"500px"}
                         height={"100vh"}
+                        loop
                         // onEnded={() => setIsOneWaiting(true)}
 
                         // onEnded={(e) => {
@@ -1471,6 +1472,7 @@ const TablePage = () => {
                         progressInterval={700}
                         width={"500px"}
                         height={"100vh"}
+                        loop
                         preload="auto"
                         // onEnded={() => setIsTwoWaiting(true)}
                         onProgress={(e) => {
